@@ -1,0 +1,1 @@
+include ':app', ':loadmore', ':fragmentation_core', ':fragmentation_swipeback', ':fragmentation'

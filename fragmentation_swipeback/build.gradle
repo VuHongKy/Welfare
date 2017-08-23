@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+    }
+}
+
+dependencies {
+    provided 'com.android.support:appcompat-v7:26.+'
+    provided project(':fragmentation')
+}

@@ -1,0 +1,159 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "com.qd.welfare"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    productFlavors {
+
+        NNY_1001 {
+            manifestPlaceholders = [CHANNEL_ID: 1001]
+        }
+        NNY_1002 {
+            manifestPlaceholders = [CHANNEL_ID: 1002]
+        }
+        NNY_1003 {
+            manifestPlaceholders = [CHANNEL_ID: 1003]
+        }
+        NNY_1004 {
+            manifestPlaceholders = [CHANNEL_ID: 1004]
+        }
+        NNY_1005 {
+            manifestPlaceholders = [CHANNEL_ID: 1005]
+        }
+        NNY_1006 {
+            manifestPlaceholders = [CHANNEL_ID: 1006]
+        }
+        NNY_1007 {
+            manifestPlaceholders = [CHANNEL_ID: 1007]
+        }
+        NNY_1008 {
+            manifestPlaceholders = [CHANNEL_ID: 1008]
+        }
+        NNY_1009 {
+            manifestPlaceholders = [CHANNEL_ID: 1009]
+        }
+        NNY_1010 {
+            manifestPlaceholders = [CHANNEL_ID: 1010]
+        }
+        NNY_1011 {
+            manifestPlaceholders = [CHANNEL_ID: 1011]
+        }
+        NNY_1012 {
+            manifestPlaceholders = [CHANNEL_ID: 1012]
+        }
+        NNY_1013 {
+            manifestPlaceholders = [CHANNEL_ID: 1013]
+        }
+        NNY_1014 {
+            manifestPlaceholders = [CHANNEL_ID: 1014]
+        }
+        NNY_1015 {
+            manifestPlaceholders = [CHANNEL_ID: 1015]
+        }
+        NNY_1016 {
+            manifestPlaceholders = [CHANNEL_ID: 1016]
+        }
+        NNY_1017 {
+            manifestPlaceholders = [CHANNEL_ID: 1017]
+        }
+        NNY_1018 {
+            manifestPlaceholders = [CHANNEL_ID: 1018]
+        }
+        NNY_1019 {
+            manifestPlaceholders = [CHANNEL_ID: 1019]
+        }
+        NNY_1020 {
+            manifestPlaceholders = [CHANNEL_ID: 1020]
+        }
+        NNY_1021 {
+            manifestPlaceholders = [CHANNEL_ID: 1021]
+        }
+        NNY_1022 {
+            manifestPlaceholders = [CHANNEL_ID: 1022]
+        }
+        NNY_1023 {
+            manifestPlaceholders = [CHANNEL_ID: 1023]
+        }
+        NNY_1024 {
+            manifestPlaceholders = [CHANNEL_ID: 1024]
+        }
+        NNY_1025 {
+            manifestPlaceholders = [CHANNEL_ID: 1025]
+        }
+        NNY_1026 {
+            manifestPlaceholders = [CHANNEL_ID: 1026]
+        }
+        NNY_1027 {
+            manifestPlaceholders = [CHANNEL_ID: 1027]
+        }
+        NNY_1028 {
+            manifestPlaceholders = [CHANNEL_ID: 1028]
+        }
+        NNY_1029 {
+            manifestPlaceholders = [CHANNEL_ID: 1029]
+        }
+        NNY_1030 {
+            manifestPlaceholders = [CHANNEL_ID: 1030]
+        }
+
+    }
+    signingConfigs {
+        release {
+            storeFile file('Welfare.jks')
+            storePassword '123456'
+            keyAlias '1'
+            keyPassword '123456'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+//    compile project(':loadmore')
+//    compile project(':fragmentation_swipeback')
+//    compile project(':fragmentation')
+    //官方兼容库
+    compile 'com.android.support:design:26.+'
+    //butterKnife
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    //glide
+    compile 'com.github.bumptech.glide:glide:3.8.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.squareup.okio:okio:1.13.0'
+    compile 'com.lzy.net:okgo:3.0.1'
+    //glide 集成okhttp3
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.5.0@aar'
+    //glide 变换
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    //EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //权限适配
+    compile 'com.yanzhenjie:permission:1.0.8'
+    //json解析
+    compile 'com.google.code.gson:gson:2.8.1'
+    //banner
+    compile 'com.youth.banner:banner:1.4.9'
+    //倒计时
+    compile 'com.github.iwgang:countdownview:2.1.5'
+    //类似ios的滑动选中
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
+    //列表侧滑删除
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    //对话框
+    compile 'com.github.yilylong:CBDialog:V1.0.1'
+}

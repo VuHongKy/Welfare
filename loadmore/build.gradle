@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'me.zhanghai.android.materialprogressbar:library:1.4.1'
+    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
+}
