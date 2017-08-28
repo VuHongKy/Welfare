@@ -28,10 +28,12 @@
             android:value="${CHANNEL_ID}" />
         <!-- 配置Glide -->
         <meta-data
-            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:name="com.qd.welfare.config.GlideModelConfig"
             android:value="GlideModule" />
 
-        <activity android:name=".LauncherActivity">
+        <activity
+            android:name=".LauncherActivity"
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
