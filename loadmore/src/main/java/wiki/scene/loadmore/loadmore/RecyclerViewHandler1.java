@@ -7,16 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
 import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF1;
 
-public class RecyclerViewHandler implements ViewHandler {
+public class RecyclerViewHandler1 implements ViewHandler {
 
     @Override
     public boolean handleSetAdapter(View contentView, ILoadViewMoreFactory.ILoadMoreView loadMoreView, OnClickListener onClickLoadMoreListener) {
         final RecyclerView recyclerView = (RecyclerView) contentView;
         boolean hasInit = false;
-
+        final RecyclerAdapterWithHF1 adapter = (RecyclerAdapterWithHF1) recyclerView.getAdapter();
         if (loadMoreView != null) {
             final Context context = recyclerView.getContext().getApplicationContext();
             loadMoreView.init(new ILoadViewMoreFactory.FootViewAdder() {
@@ -29,14 +28,7 @@ public class RecyclerViewHandler implements ViewHandler {
 
                 @Override
                 public View addFootView(View view) {
-                    if (recyclerView.getAdapter() instanceof RecyclerAdapterWithHF) {
-                        final RecyclerAdapterWithHF adapter = (RecyclerAdapterWithHF) recyclerView.getAdapter();
-                        adapter.addFooter(view);
-                    } else {
-                        final RecyclerAdapterWithHF1 adapter = (RecyclerAdapterWithHF1) recyclerView.getAdapter();
-                        adapter.addFooter(view);
-                    }
-
+                    adapter.addFooter(view);
                     return view;
                 }
             }, onClickLoadMoreListener);

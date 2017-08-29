@@ -22,6 +22,9 @@ public class ApiUtil {
     public static final String CATEGORY = "/gallery";
     public static final String CATEGORY_TAG = "CATEGORY_TAG";
 
+    public static final String CATEGORY_ACTOR = "/gallery/actor";
+    public static final String CATEGORY_ACTOR_TAG = "CATEGORY_ACTOR_TAG";
+
     public static final String COMMON = "/common";
     public static final String COMMON_TAG = "COMMON_TAG";
 

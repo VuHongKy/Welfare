@@ -80,4 +80,7 @@ dependencies {
     compile 'com.github.yilylong:CBDialog:V1.0.1'
     //倾斜45°的textview
     compile 'com.haozhang.libary:android-slanted-textview:1.2'
+    //圆角界面
+    compile 'com.joooonho:selectableroundedimageview:1.0.1'
+    compile 'com.android.support:cardview-v7:26.+'
 }

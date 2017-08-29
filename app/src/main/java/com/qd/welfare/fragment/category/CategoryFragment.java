@@ -15,10 +15,13 @@ import com.qd.welfare.R;
 import com.qd.welfare.adapter.CateGroyViewPagerAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.entity.CateGroyInfo;
+import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.NetWorkUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -94,6 +97,7 @@ public class CategoryFragment extends BaseMainFragment {
 
             }
         });
+
     }
 
 
@@ -112,6 +116,12 @@ public class CategoryFragment extends BaseMainFragment {
                                 CateGroyViewPagerAdapter adapter = new CateGroyViewPagerAdapter(getContext(), response.body().data);
                                 viewPager.setAdapter(adapter);
                                 tab.setupWithViewPager(viewPager);
+                                adapter.setOnCateGoryItemClickListener(new CateGroyViewPagerAdapter.OnCateGoryItemClickListener() {
+                                    @Override
+                                    public void onCateGoryItemClick(CateGroyInfo info) {
+                                        EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
+                                    }
+                                });
                             }
                         }
 

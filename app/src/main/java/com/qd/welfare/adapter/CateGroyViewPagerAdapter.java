@@ -17,10 +17,14 @@ import com.qd.welfare.widgets.RatioImageView;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 public class CateGroyViewPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private List<CateGroyInfo> mDrawableResIdList;
+
+    private OnCateGoryItemClickListener onCateGoryItemClickListener;
 
     public CateGroyViewPagerAdapter(Context context, List<CateGroyInfo> resIdList) {
         super();
@@ -28,6 +32,10 @@ public class CateGroyViewPagerAdapter extends PagerAdapter {
         mDrawableResIdList = resIdList;
     }
 
+
+    public void setOnCateGoryItemClickListener(OnCateGoryItemClickListener onCateGoryItemClickListener) {
+        this.onCateGoryItemClickListener = onCateGoryItemClickListener;
+    }
 
     @Override
     public int getCount() {
@@ -53,15 +61,25 @@ public class CateGroyViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(View container, int position) {
+    public Object instantiateItem(View container, final int position) {
         if (mDrawableResIdList != null && position < mDrawableResIdList.size()) {
             String filePath = mDrawableResIdList.get(position).getThumb();
             if (filePath != null) {
                 View itemView = LayoutInflater.from(mContext).inflate(R.layout.fragment_categroy_item, null);
                 RatioImageView imageView = itemView.findViewById(R.id.image);
+                ImageView backImage = itemView.findViewById(R.id.backImage);
                 Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).centerCrop().into(imageView);
+                Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).bitmapTransform(new BlurTransformation(mContext)).into(backImage);
                 itemView.setTag(filePath);
                 ((ViewPager) container).addView(itemView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (onCateGoryItemClickListener != null) {
+                            onCateGoryItemClickListener.onCateGoryItemClick(mDrawableResIdList.get(position));
+                        }
+                    }
+                });
                 return itemView;
             }
         }
@@ -119,5 +137,9 @@ public class CateGroyViewPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mDrawableResIdList.get(position).getTitle();
+    }
+
+    public interface OnCateGoryItemClickListener {
+        void onCateGoryItemClick(CateGroyInfo info);
     }
 }

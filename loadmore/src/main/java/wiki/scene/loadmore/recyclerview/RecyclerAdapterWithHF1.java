@@ -15,7 +15,7 @@ import java.util.List;
 
 import wiki.scene.loadmore.utils.SceneLogUtil;
 
-public class RecyclerAdapterWithHF extends RecyclerView.Adapter<ViewHolder> {
+public class RecyclerAdapterWithHF1 extends RecyclerView.Adapter<ViewHolder> {
 
     public static final int TYPE_MANAGER_OTHER = 0;
     public static final int TYPE_MANAGER_LINEAR = 1;
@@ -140,13 +140,11 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<ViewHolder> {
     private void prepareHeaderFooter(HeaderFooterViewHolder vh, View view) {
 
         // if it's a staggered grid, span the whole layout
-        if (mManagerType == TYPE_MANAGER_STAGGERED_GRID) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams
-                    (ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
-            layoutParams.setFullSpan(true);
-            vh.itemView.setLayoutParams(layoutParams);
-        }
+        StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.setFullSpan(true);
+        vh.itemView.setLayoutParams(layoutParams);
 
         // if the view already belongs to another layout, remove it
         if (view.getParent() != null) {
@@ -274,8 +272,8 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<ViewHolder> {
         @Override
         public void onClick(View v) {
             int position = getRealPosition(vh.getLayoutPosition());
-            if (RecyclerAdapterWithHF.this.onItemClickListener != null) {
-                RecyclerAdapterWithHF.this.onItemClickListener.onItemClick(RecyclerAdapterWithHF.this, vh, position);
+            if (RecyclerAdapterWithHF1.this.onItemClickListener != null) {
+                RecyclerAdapterWithHF1.this.onItemClickListener.onItemClick(RecyclerAdapterWithHF1.this, vh, position);
             }
             onItemClick(vh, position);
         }
@@ -292,8 +290,8 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<ViewHolder> {
         @Override
         public boolean onLongClick(View v) {
             int position = getRealPosition(vh.getLayoutPosition());
-            if (RecyclerAdapterWithHF.this.onItemLongClickListener != null) {
-                RecyclerAdapterWithHF.this.onItemLongClickListener.onItemLongClick(RecyclerAdapterWithHF.this, vh,
+            if (RecyclerAdapterWithHF1.this.onItemLongClickListener != null) {
+                RecyclerAdapterWithHF1.this.onItemLongClickListener.onItemLongClick(RecyclerAdapterWithHF1.this, vh,
                         position);
             }
             onItemLongClick(vh, position);
@@ -311,16 +309,16 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public static interface OnItemClickListener {
-        void onItemClick(RecyclerAdapterWithHF adapter, ViewHolder vh, int position);
+        void onItemClick(RecyclerAdapterWithHF1 adapter, ViewHolder vh, int position);
     }
 
     public static interface OnItemLongClickListener {
-        void onItemLongClick(RecyclerAdapterWithHF adapter, ViewHolder vh, int position);
+        void onItemLongClick(RecyclerAdapterWithHF1 adapter, ViewHolder vh, int position);
     }
 
     private RecyclerView.Adapter<ViewHolder> mAdapter;
 
-    public RecyclerAdapterWithHF(RecyclerView.Adapter<ViewHolder> adapter) {
+    public RecyclerAdapterWithHF1(RecyclerView.Adapter<ViewHolder> adapter) {
         super();
         this.mAdapter = adapter;
         adapter.registerAdapterDataObserver(adapterDataObserver);
