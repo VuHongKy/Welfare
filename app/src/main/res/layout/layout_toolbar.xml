@@ -22,7 +22,7 @@
         android:textAppearance="@style/Toolbar_TextAppearance_White" />
 
     <ImageView
-        android:id="@+id/toolbar_message"
+        android:id="@+id/toolbar_mine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

@@ -10,9 +10,6 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class MainActivity extends SupportActivity {
-    // 再点一次退出程序时间设置
-    private static final long WAIT_TIME = 2000L;
-    private long TOUCH_TIME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +19,6 @@ public class MainActivity extends SupportActivity {
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
-    }
-
-    @Override
-    public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
-            this.finish();
-        } else {
-            TOUCH_TIME = System.currentTimeMillis();
-            ToastUtils.getInstance(this).showToast(getString(R.string.press_again_exit));
-        }
-        return;
     }
 
     @Override
@@ -52,6 +38,5 @@ public class MainActivity extends SupportActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
 }

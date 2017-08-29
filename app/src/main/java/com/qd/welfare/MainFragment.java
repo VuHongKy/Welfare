@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qd.welfare.base.BaseFragment;
@@ -14,6 +13,7 @@ import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
 import com.qd.welfare.fragment.category.CategoryFragment;
+import com.qd.welfare.fragment.mine.MineFragment;
 import com.qd.welfare.fragment.shop.ShopFragment;
 import com.qd.welfare.fragment.video.VideoFragment;
 import com.qd.welfare.view.BottomBar;
@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
 import wiki.scene.loadmore.utils.SceneLogUtil;
@@ -47,8 +48,6 @@ public class MainFragment extends BaseFragment {
     Toolbar toolbar;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R.id.toolbar_message)
-    ImageView toolbarMessage;
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
 
@@ -143,6 +142,11 @@ public class MainFragment extends BaseFragment {
         }
     }
 
+    @OnClick(R.id.toolbar_mine)
+    public void onClickToolbarMine() {
+        start(MineFragment.newInstance());
+    }
+
     /**
      * start other BrotherFragment
      */
@@ -158,6 +162,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
     }
