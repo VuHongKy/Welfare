@@ -22,8 +22,11 @@ public class ApiUtil {
     public static final String CATEGORY = "/gallery";
     public static final String CATEGORY_TAG = "CATEGORY_TAG";
 
-    public static final String COMMON="/common";
-    public static final String COMMON_TAG="COMMON_TAG";
+    public static final String COMMON = "/common";
+    public static final String COMMON_TAG = "COMMON_TAG";
+
+    public static final String ACTRESS = "/actor";
+    public static final String ACTRESS_TAG = "ACTRESS_TAG";
 
     /**
      * Case By:创建参数基础信息

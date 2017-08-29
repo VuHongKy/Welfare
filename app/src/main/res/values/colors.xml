@@ -10,5 +10,7 @@
     <color name="tab_bar_bg">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="line_color">#c0c0c0</color>
+    <color name="line_color">#C0C0C0</color>
+
+    <color name="diver_color">#DEDEDE</color>
 </resources>
