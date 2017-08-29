@@ -8,7 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.qd.welfare.entity.CommonInfo;
+import com.qd.welfare.http.api.ApiUtil;
+import com.qd.welfare.http.base.LzyResponse;
+import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.SharedPreferencesUtil;
+import com.qd.welfare.utils.ToastUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
@@ -58,7 +65,7 @@ public class LauncherActivity extends SupportActivity {
                             e.printStackTrace();
                         }
                         beginTime = System.currentTimeMillis();
-                        toMainActivity();
+                        getCommonInfo();
                     }
 
                     @Override
@@ -136,5 +143,25 @@ public class LauncherActivity extends SupportActivity {
                 });
             }
         }, delayTime > 0 ? delayTime : 0);
+    }
+
+
+    private void getCommonInfo() {
+        OkGo.<LzyResponse<CommonInfo>>get(ApiUtil.API_PRE + ApiUtil.COMMON)
+                .tag(ApiUtil.COMMON_TAG)
+                .execute(new JsonCallback<LzyResponse<CommonInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<CommonInfo>> response) {
+                        App.commonInfo = response.body().data;
+                        toMainActivity();
+                    }
+
+                    @Override
+                    public void onError(Response<LzyResponse<CommonInfo>> response) {
+                        super.onError(response);
+                        ToastUtils.getInstance(LauncherActivity.this).showToast("数据获取失败，请稍后再试");
+                        finish();
+                    }
+                });
     }
 }

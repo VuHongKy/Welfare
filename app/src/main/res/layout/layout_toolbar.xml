@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="55dp" />
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -31,4 +31,10 @@
         android:padding="5dp"
         android:src="@drawable/ic_toolbar_mine"
         android:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/line_color" />
 </RelativeLayout>

@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.request.Request;
+import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.base.SimpleResponse;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -19,16 +21,17 @@ import okhttp3.ResponseBody;
  * Author：scene on 2017/6/27 11:38
  */
 
+@SuppressWarnings("unchecked")
 public abstract class JsonCallback<T> extends AbsCallback<T> {
     @Override
     public void onStart(Request<T, ? extends Request> request) {
         super.onStart(request);
-//        HashMap<String, String> params = ApiUtil.createParams();
+        HashMap<String, String> params = ApiUtil.createParams();
 //        if (ShopApplication.hasLogin && ShopApplication.userInfo != null && !ShopApplication.userInfo.getAccess_token().isEmpty()) {
 //            params.put("access_token", ShopApplication.userInfo.getAccess_token());
 //            params.put("mobile", ShopApplication.userInfo.getMobile());
 //        }
-//        request.getParams().put(params);
+        request.getParams().put(params);
     }
 
     @Override

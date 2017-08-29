@@ -14,7 +14,16 @@ import java.util.HashMap;
 
 public class ApiUtil {
     private static final String SIGN_KEY = "045448f765b0c0592563123a2652fb63";
-    public static final String API_PRE = "http://119.23.110.78:8082";
+    public static final String API_PRE = "http://119.23.110.78:8088";
+
+    public static final String USER = "/user";
+    public static final String USER_TAG = "USER_TAG";
+
+    public static final String CATEGORY = "/gallery";
+    public static final String CATEGORY_TAG = "CATEGORY_TAG";
+
+    public static final String COMMON="/common";
+    public static final String COMMON_TAG="COMMON_TAG";
 
     /**
      * Case By:创建参数基础信息
@@ -23,9 +32,10 @@ public class ApiUtil {
     public static HashMap<String, String> createParams() {
         HashMap<String, String> params = new HashMap<>();
         long timestamp = System.currentTimeMillis();
-        params.put("agent_id", App.CHANNEL_ID + "");
+        params.put("agent_id", App.CHANNEL_ID);
+        params.put("resource_id", App.RESOURCE_ID);
         params.put("timestamp", timestamp + "");
-        params.put("signature", getSign(App.CHANNEL_ID + "", timestamp + ""));
+        params.put("signature", getSign(App.CHANNEL_ID, timestamp + ""));
         params.put("app_type", "1");
         params.put("uuid", App.UUID);
         params.put("version", App.versionCode + "");
@@ -37,6 +47,6 @@ public class ApiUtil {
      * Author: scene on 2017/5/19 13:19
      */
     private static String getSign(String agent_id, String timestamp) {
-        return MD5Util.string2Md5(MD5Util.string2Md5(agent_id + timestamp + 1 + App.UUID + App.versionCode, "UTF-8") + SIGN_KEY, "UTF-8");
+        return MD5Util.string2Md5(MD5Util.string2Md5(agent_id + 1 + App.RESOURCE_ID + timestamp + App.UUID + App.versionCode, "UTF-8") + SIGN_KEY, "UTF-8");
     }
 }
