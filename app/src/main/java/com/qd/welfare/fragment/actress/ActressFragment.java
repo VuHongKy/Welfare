@@ -126,9 +126,10 @@ public class ActressFragment extends BaseMainFragment {
                         public void onError(Response<LzyResponse<List<ActressInfo>>> response) {
                             super.onError(response);
                             if (isFirst) {
-                                statusLayout.showFailed(retryListener);
+                                statusLayout.showNetError(retryListener);
                             } else {
                                 ptrLayout.refreshComplete();
+                                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
                             }
                         }
                     });

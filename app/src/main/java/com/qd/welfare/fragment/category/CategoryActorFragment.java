@@ -187,7 +187,8 @@ public class CategoryActorFragment extends BaseBackFragment {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
-                toastUtils.showToast("请检查网络链接");
+                ptrLayout.refreshComplete();
+                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
             }
         }
 

@@ -25,6 +25,7 @@ import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.itemDecoration.ActorDetailSpacingItemDecoration;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.CustomeGridView;
 import com.qd.welfare.widgets.RatioImageView;
 
@@ -220,7 +221,12 @@ public class ActorDetailFragment extends BaseBackFragment {
                     });
 
         } else {
-            statusLayout.showNetError(retryListener);
+            if (isFirst) {
+                statusLayout.showNetError(retryListener);
+            } else {
+                ptrLayout.refreshComplete();
+                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+            }
         }
     }
 

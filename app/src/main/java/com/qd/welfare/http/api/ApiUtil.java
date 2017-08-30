@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ApiUtil {
     private static final String SIGN_KEY = "045448f765b0c0592563123a2652fb63";
-    public static final String API_PRE = "http://119.23.110.78:8088";
+    public static final String API_PRE = "http://api.tsacw.com";
 
     public static final String USER = "/user";
     public static final String USER_TAG = "USER_TAG";
@@ -39,6 +39,12 @@ public class ApiUtil {
 
     public static final String ACTOR_DETAIL = "/actor/detail";
     public static final String ACTOR_DETAIL_TAG = "ACTOR_DETAIL_TAG";
+
+    public static final String VIDEO = "/video";
+    public static final String VIDEO_TAG = "VIDEO_TAG";
+
+    public static final String VIDEO_DETAIL = "/video/play";
+    public static final String VIDEO_DETAIL_TAG = "VIDEO_DETAIL_TAG";
 
 
     /**
