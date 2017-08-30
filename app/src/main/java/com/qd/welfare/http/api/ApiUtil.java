@@ -31,8 +31,11 @@ public class ApiUtil {
     public static final String ACTRESS = "/actor";
     public static final String ACTRESS_TAG = "ACTRESS_TAG";
 
-    public static final String GALLERY="/gallery/detail";
-    public static final String GALLERY_TAG="GALLERY_TAG";
+    public static final String GALLERY = "/gallery/detail";
+    public static final String GALLERY_TAG = "GALLERY_TAG";
+
+    public static final String RECOMMEND = "/video/hot";
+    public static final String RECOMMEND_TAG = "RECOMMEND_TAG";
 
 
     /**

@@ -2,24 +2,29 @@ package com.qd.welfare.fragment.mine;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.R;
+import com.qd.welfare.adapter.RecommendAdapter;
 import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.entity.RecommendInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.widgets.RatioImageView;
+import com.qd.welfare.widgets.CustomeGridView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import wiki.scene.loadmore.utils.SceneLogUtil;
 
 /**
  * 我的
@@ -27,8 +32,13 @@ import wiki.scene.loadmore.utils.SceneLogUtil;
  */
 
 public class MineFragment extends BaseBackFragment {
-    @BindView(R.id.image)
-    RatioImageView image;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.gridView)
+    CustomeGridView gridView;
+
     Unbinder unbinder;
 
     public static MineFragment newInstance() {
@@ -49,11 +59,29 @@ public class MineFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        Glide.with(this).load("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2434998280,2186154073&fm=26&gp=0.jpg").centerCrop().into(image);
+        toolbarTitle.setText("我的");
+        initToolbarNav(toolbar);
+        getData();
+    }
+
+    private void getData() {
+        HttpParams params = new HttpParams();
+        params.put("video_id", 0);
+        OkGo.<LzyResponse<List<RecommendInfo>>>get(ApiUtil.API_PRE + ApiUtil.RECOMMEND)
+                .tag(ApiUtil.RECOMMEND_TAG)
+                .params(params)
+                .execute(new JsonCallback<LzyResponse<List<RecommendInfo>>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<List<RecommendInfo>>> response) {
+                        RecommendAdapter adapter = new RecommendAdapter(getContext(), response.body().data);
+                        gridView.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override
     public void onDestroyView() {
+        OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }
