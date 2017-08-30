@@ -139,6 +139,7 @@ public class ActorDetailFragment extends BaseBackFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new ActorDetailSpacingItemDecoration());
         recyclerView.setAdapter(mAdapter);
+        ptrLayout.setLoadMoreEnable(true);
         initHeaderView();
     }
 
@@ -152,6 +153,16 @@ public class ActorDetailFragment extends BaseBackFragment {
         headerAdapter = new ActressDetailHeaderAdapter(getContext(), headerList);
         headerGridView.setAdapter(headerAdapter);
         mAdapter.addHeader(headerView);
+        mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (ActorDetailResultInfo.GalleryBean.DataBean dataBean : list) {
+                    arrayList.add(dataBean.getThumb());
+                }
+                start(BigImageFragment.newInstance(arrayList, position));
+            }
+        });
     }
 
     private void bindHeaderView(ActorDetailResultInfo.ActorBean actorBean) {
@@ -190,7 +201,6 @@ public class ActorDetailFragment extends BaseBackFragment {
                                 ptrLayout.refreshComplete();
                             }
                             boolean hasMore = page < response.body().data.getGallery().getInfo().getPage_total();
-                            ptrLayout.setLoadMoreEnable(hasMore);
                             if (ptrLayout.isLoading()) {
                                 ptrLayout.loadMoreComplete(hasMore);
                             }
