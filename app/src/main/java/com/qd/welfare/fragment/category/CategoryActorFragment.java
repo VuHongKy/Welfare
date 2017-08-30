@@ -18,6 +18,7 @@ import com.qd.welfare.adapter.CategoryActorAdapter;
 import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.entity.CateGroyActorResultInfo;
 import com.qd.welfare.entity.CateGroyInfo;
+import com.qd.welfare.fragment.actress.ActorGalleryFragment;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -133,6 +134,13 @@ public class CategoryActorFragment extends BaseBackFragment {
         recyclerView.setAdapter(mAdapter);
         ptrLayout.setLoadMoreEnable(true);
         getData(true, 1);
+
+        mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
+                start(ActorGalleryFragment.newInstance(list.get(position).getId(), list.get(position).getName()));
+            }
+        });
     }
 
     private void getData(final boolean isFirst, final int currentPage) {

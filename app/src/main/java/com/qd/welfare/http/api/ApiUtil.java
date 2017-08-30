@@ -31,6 +31,10 @@ public class ApiUtil {
     public static final String ACTRESS = "/actor";
     public static final String ACTRESS_TAG = "ACTRESS_TAG";
 
+    public static final String GALLERY="/gallery/detail";
+    public static final String GALLERY_TAG="GALLERY_TAG";
+
+
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19

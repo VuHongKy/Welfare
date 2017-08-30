@@ -82,5 +82,6 @@ dependencies {
     compile 'com.haozhang.libary:android-slanted-textview:1.2'
     //圆角界面
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
-    compile 'com.android.support:cardview-v7:26.+'
+    //图片缩放
+    compile 'com.bm.photoview:library:1.4.1'
 }
