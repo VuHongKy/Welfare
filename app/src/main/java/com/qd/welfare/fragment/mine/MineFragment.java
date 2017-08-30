@@ -59,7 +59,7 @@ public class MineFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText("我的");
+        toolbarTitle.setText("用户中心");
         initToolbarNav(toolbar);
         getData();
     }

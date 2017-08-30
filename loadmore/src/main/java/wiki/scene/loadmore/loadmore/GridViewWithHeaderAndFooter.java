@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package wiki.scene.loadmore.loadmore;
 
 import android.annotation.TargetApi;
@@ -21,25 +6,17 @@ import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.WrapperListAdapter;
-
-import wiki.scene.loadmore.utils.SceneLogUtil;
+import android.widget.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
  * A {@link GridView} that supports adding header rows in a
- * very similar way to {@link ListView}.
+ * very similar way to {@link android.widget.ListView}.
  * See {@link GridViewWithHeaderAndFooter#addHeaderView(View, Object, boolean)}
  * See {@link GridViewWithHeaderAndFooter#addFooterView(View, Object, boolean)}
  */
@@ -162,7 +139,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
         if (lyp != null) {
             v.setLayoutParams(new FrameLayout.LayoutParams(lyp.width, lyp.height));
-            fl.setLayoutParams(new LayoutParams(lyp.width, lyp.height));
+            fl.setLayoutParams(new AbsListView.LayoutParams(lyp.width, lyp.height));
         }
         fl.addView(v);
         info.view = v;
@@ -184,8 +161,8 @@ public class GridViewWithHeaderAndFooter extends GridView {
     public void addFooterView(View v, Object data, boolean isSelectable) {
         ListAdapter mAdapter = getAdapter();
         if (mAdapter != null && !(mAdapter instanceof HeaderViewGridAdapter)) {
-//            throw new IllegalStateException(
-//                    "Cannot add header view to grid -- setAdapter has already been called.");
+            throw new IllegalStateException(
+                    "Cannot add header view to grid -- setAdapter has already been called.");
         }
 
         ViewGroup.LayoutParams lyp = v.getLayoutParams();
@@ -195,7 +172,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
         if (lyp != null) {
             v.setLayoutParams(new FrameLayout.LayoutParams(lyp.width, lyp.height));
-            fl.setLayoutParams(new LayoutParams(lyp.width, lyp.height));
+            fl.setLayoutParams(new AbsListView.LayoutParams(lyp.width, lyp.height));
         }
         fl.addView(v);
         info.view = v;
@@ -205,7 +182,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         mFooterViewInfos.add(info);
 
         if (mAdapter != null) {
-//            ((HeaderViewGridAdapter) mAdapter).notifyDataSetChanged();
+            ((HeaderViewGridAdapter) mAdapter).notifyDataSetChanged();
         }
     }
 
@@ -326,7 +303,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         int value = 0;
 
         try {
-            int currentapiVersion = Build.VERSION.SDK_INT;
+            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentapiVersion < Build.VERSION_CODES.JELLY_BEAN) {
                 Field field = GridView.class.getDeclaredField("mVerticalSpacing");
                 field.setAccessible(true);
@@ -346,7 +323,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         int value = 0;
 
         try {
-            int currentapiVersion = Build.VERSION.SDK_INT;
+            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentapiVersion < Build.VERSION_CODES.JELLY_BEAN) {
                 Field field = GridView.class.getDeclaredField("mHorizontalSpacing");
                 field.setAccessible(true);
@@ -374,9 +351,9 @@ public class GridViewWithHeaderAndFooter extends GridView {
         }
         int mColumnWidth = getColumnWidthCompatible();
         View view = getAdapter().getView(numColumns * mHeaderViewInfos.size(), mViewForMeasureRowHeight, this);
-        LayoutParams p = (LayoutParams) view.getLayoutParams();
+        AbsListView.LayoutParams p = (AbsListView.LayoutParams) view.getLayoutParams();
         if (p == null) {
-            p = new LayoutParams(-1, -2, 0);
+            p = new AbsListView.LayoutParams(-1, -2, 0);
             view.setLayoutParams(p);
         }
         int childHeightSpec = getChildMeasureSpec(
@@ -688,7 +665,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (DEBUG) {
-                SceneLogUtil.d(LOG_TAG, String.format("getView: %s, reused: %s", position, convertView == null));
+                Log.d(LOG_TAG, String.format("getView: %s, reused: %s", position, convertView == null));
             }
             // Header (negative positions will throw an ArrayIndexOutOfBoundsException)
             int numHeadersAndPlaceholders = getHeadersCount() * mNumColumns;
@@ -791,7 +768,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
                 }
             }
             if (DEBUG) {
-                SceneLogUtil.d(LOG_TAG, String.format("getItemViewType: pos: %s, result: %s", position, type, mCachePlaceHoldView, mCacheFirstHeaderView));
+                Log.d(LOG_TAG, String.format("getItemViewType: pos: %s, result: %s", position, type, mCachePlaceHoldView, mCacheFirstHeaderView));
             }
             return type;
         }
@@ -812,7 +789,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
                 count += offset;
             }
             if (DEBUG) {
-                SceneLogUtil.d(LOG_TAG, String.format("getViewTypeCount: " + count));
+                Log.d(LOG_TAG, String.format("getViewTypeCount: %s", count));
             }
             return count;
         }
@@ -870,7 +847,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return mItemClickHandler;
     }
 
-    private class ItemClickHandler implements OnItemClickListener, OnItemLongClickListener {
+    private class ItemClickHandler implements android.widget.AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

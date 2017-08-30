@@ -37,6 +37,9 @@ public class ApiUtil {
     public static final String RECOMMEND = "/video/hot";
     public static final String RECOMMEND_TAG = "RECOMMEND_TAG";
 
+    public static final String ACTOR_DETAIL = "/actor/detail";
+    public static final String ACTOR_DETAIL_TAG = "ACTOR_DETAIL_TAG";
+
 
     /**
      * Case By:创建参数基础信息

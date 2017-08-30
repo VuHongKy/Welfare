@@ -14,12 +14,15 @@ import com.qd.welfare.R;
 import com.qd.welfare.adapter.ActressAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.entity.ActressInfo;
+import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.itemDecoration.SpacesItemDecoration;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +94,12 @@ public class ActressFragment extends BaseMainFragment {
         RecyclerAdapterWithHF mAdapter = new RecyclerAdapterWithHF(adapter);
         recyclerView.setAdapter(mAdapter);
         getData(true);
+        mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
+                EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment.newInstance(list.get(position).getId(), list.get(position).getName())));
+            }
+        });
     }
 
     private void getData(final boolean isFirst) {
