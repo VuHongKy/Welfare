@@ -7,9 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.ActressAdapter;
 import com.qd.welfare.base.BaseMainFragment;
@@ -30,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import wiki.scene.loadmore.PtrClassicFrameLayout;
 import wiki.scene.loadmore.PtrDefaultHandler;
 import wiki.scene.loadmore.PtrFrameLayout;
@@ -55,6 +62,17 @@ public class ActressFragment extends BaseMainFragment {
 
     private List<ActressInfo> list = new ArrayList<>();
     private ActressAdapter adapter;
+
+
+    private LinearLayout layout1;
+    private LinearLayout layout2;
+    private LinearLayout layout3;
+    private TextView name1;
+    private TextView name2;
+    private TextView name3;
+    private ImageView image1;
+    private ImageView image2;
+    private ImageView image3;
 
     public static ActressFragment newInstance() {
         Bundle args = new Bundle();
@@ -100,6 +118,41 @@ public class ActressFragment extends BaseMainFragment {
                 EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment.newInstance(list.get(position).getId(), list.get(position).getName())));
             }
         });
+        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_actress_header, null);
+        layout1 = headerView.findViewById(R.id.layout1);
+        layout2 = headerView.findViewById(R.id.layout2);
+        layout3 = headerView.findViewById(R.id.layout3);
+        name1 = headerView.findViewById(R.id.name1);
+        name2 = headerView.findViewById(R.id.name2);
+        name3 = headerView.findViewById(R.id.name3);
+        image1 = headerView.findViewById(R.id.image1);
+        image2 = headerView.findViewById(R.id.image2);
+        image3 = headerView.findViewById(R.id.image3);
+        mAdapter.addHeader(headerView);
+    }
+
+    private void bindHeaderView(List<ActressInfo> headerList) {
+        layout1.setVisibility(View.INVISIBLE);
+        layout2.setVisibility(View.INVISIBLE);
+        layout3.setVisibility(View.INVISIBLE);
+        switch (headerList.size()) {
+            case 3:
+                layout3.setVisibility(View.VISIBLE);
+                Glide.with(getContext()).load(App.commonInfo.getFile_domain() + headerList.get(2).getThumb())
+                        .bitmapTransform(new CropCircleTransformation(getContext())).into(image3);
+                name3.setText(headerList.get(2).getName());
+            case 2:
+                layout2.setVisibility(View.VISIBLE);
+                Glide.with(getContext()).load(App.commonInfo.getFile_domain() + headerList.get(1).getThumb())
+                        .bitmapTransform(new CropCircleTransformation(getContext())).into(image2);
+                name2.setText(headerList.get(1).getName());
+            case 1:
+                layout1.setVisibility(View.VISIBLE);
+                Glide.with(getContext()).load(App.commonInfo.getFile_domain() + headerList.get(0).getThumb())
+                        .bitmapTransform(new CropCircleTransformation(getContext())).into(image1);
+                name1.setText(headerList.get(0).getName());
+                break;
+        }
     }
 
     private void getData(final boolean isFirst) {
@@ -117,9 +170,23 @@ public class ActressFragment extends BaseMainFragment {
                             } else {
                                 ptrLayout.refreshComplete();
                             }
-                            list.clear();
-                            list.addAll(response.body().data);
-                            adapter.notifyDataSetChanged();
+                            if (response.body().data == null || response.body().data.size() == 0) {
+                                statusLayout.showNone(retryListener);
+                            } else {
+                                list.clear();
+                                List<ActressInfo> headerList = new ArrayList<ActressInfo>();
+                                for (int i = 0; i < response.body().data.size(); i++) {
+                                    if (i < 3) {
+                                        headerList.add(response.body().data.get(i));
+                                    } else {
+                                        list.add(response.body().data.get(i));
+                                    }
+                                }
+                                bindHeaderView(headerList);
+                                adapter.notifyDataSetChanged();
+                            }
+
+
                         }
 
                         @Override
