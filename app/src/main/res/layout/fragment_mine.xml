@@ -4,7 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_toolbar_back" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#2F2B4C">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textAppearance="@style/Toolbar_TextAppearance_White" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,14 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/white"
+                android:background="#2F2B4C"
                 android:padding="10dp"
                 android:src="@drawable/ic_default_avater" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="#2F2B4C"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingBottom="14dp"
@@ -36,19 +57,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:gravity="center_horizontal"
                     android:text="用户ID:"
-                    android:textColor="@color/tab_select"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:gravity="center_horizontal"
                     android:text="123456"
-                    android:textColor="#333333"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -69,7 +88,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_vip_tequan"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="14dp"
@@ -97,7 +115,7 @@
                     android:drawableTop="@drawable/ic_video_hd"
                     android:gravity="center_horizontal"
                     android:text="高清视频"
-                    android:textColor="#999999"
+                    android:textColor="@color/tab_select"
                     android:textSize="12sp" />
 
                 <TextView
@@ -108,7 +126,7 @@
                     android:drawableTop="@drawable/ic_image_hd"
                     android:gravity="center_horizontal"
                     android:text="高清图片"
-                    android:textColor="#999999"
+                    android:textColor="@color/tab_select"
                     android:textSize="12sp" />
 
                 <TextView
@@ -119,7 +137,7 @@
                     android:drawableTop="@drawable/ic_speed_play"
                     android:gravity="center_horizontal"
                     android:text="极速播放"
-                    android:textColor="#999999"
+                    android:textColor="@color/tab_select"
                     android:textSize="12sp" />
 
                 <TextView
@@ -130,7 +148,7 @@
                     android:drawableTop="@drawable/ic_meinv_kefu"
                     android:gravity="center_horizontal"
                     android:text="美女客服"
-                    android:textColor="#999999"
+                    android:textColor="@color/tab_select"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -139,7 +157,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_my_notice"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -156,7 +173,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_clear_cache"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -173,7 +189,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_version_update"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -190,7 +205,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_hot_recommend"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingBottom="10dp"
@@ -219,7 +233,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_user_agreement"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"
@@ -236,7 +249,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/ic_lianxi_kefu"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical"

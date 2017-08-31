@@ -59,8 +59,13 @@ public class MineFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText("用户中心");
-        initToolbarNav(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _mActivity.onBackPressed();
+            }
+        });
         getData();
     }
 

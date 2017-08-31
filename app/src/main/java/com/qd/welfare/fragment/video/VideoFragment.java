@@ -8,14 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.qd.welfare.R;
 import com.qd.welfare.base.BaseMainFragment;
+import com.qd.welfare.entity.VideoResultInfo;
 import com.qd.welfare.http.api.ApiUtil;
+import com.qd.welfare.http.base.LzyResponse;
+import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.qd.welfare.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import wiki.scene.loadmore.PtrClassicFrameLayout;
 import wiki.scene.loadmore.StatusViewLayout;
@@ -60,14 +64,41 @@ public class VideoFragment extends BaseMainFragment {
 
     }
 
-    private void getData(boolean isFirst) {
+    private void getData(final boolean isFirst) {
         if (NetWorkUtils.isNetworkConnected(getContext())) {
+            if (isFirst) {
+                statusLayout.showLoading();
+            }
+            OkGo.<LzyResponse<VideoResultInfo>>get(ApiUtil.API_PRE + ApiUtil.VIDEO)
+                    .tag(ApiUtil.VIDEO_TAG)
+                    .execute(new JsonCallback<LzyResponse<VideoResultInfo>>() {
+                        @Override
+                        public void onSuccess(Response<LzyResponse<VideoResultInfo>> response) {
+                            if (isFirst) {
+                                statusLayout.showContent();
+                            } else {
+                                ptrLayout.refreshComplete();
+                            }
 
+
+                        }
+
+                        @Override
+                        public void onError(Response<LzyResponse<VideoResultInfo>> response) {
+                            super.onError(response);
+                            if (isFirst) {
+                                statusLayout.showFailed(retryListener);
+                            } else {
+                                ptrLayout.refreshComplete();
+                            }
+                        }
+                    });
         } else {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
                 ptrLayout.refreshComplete();
+                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
             }
         }
     }
