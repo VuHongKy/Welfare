@@ -8,27 +8,29 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.VideoInfo;
-import com.qd.welfare.widgets.RatioImageView;
+import com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.lujun.androidtagview.TagContainerLayout;
 
 /**
- * 女优百科
- * Created by scene on 17-8-29.
+ * 视频热门推荐
+ * Created by scene on 2017/9/1.
  */
 
-public class RecommendAdapter extends BaseAdapter {
+public class VideoRecommendAdapter extends BaseAdapter {
     private Context context;
     private List<VideoInfo> list;
     private LayoutInflater inflater;
 
-    public RecommendAdapter(Context context, List<VideoInfo> list) {
+    public VideoRecommendAdapter(Context context, List<VideoInfo> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -51,27 +53,36 @@ public class RecommendAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ActressItemViewHolder viewHolder;
+        VideoDetailViewHolder viewHolder;
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_actress_item_item, viewGroup, false);
-            viewHolder = new ActressItemViewHolder(view);
+            view = inflater.inflate(R.layout.fragment_video_detail_item, viewGroup, false);
+            viewHolder = new VideoDetailViewHolder(view);
             view.setTag(viewHolder);
         } else {
-            viewHolder = (ActressItemViewHolder) view.getTag();
+            viewHolder = (VideoDetailViewHolder) view.getTag();
         }
         VideoInfo info = list.get(position);
-        viewHolder.title.setText(info.getTitle());
+        viewHolder.videoName.setText(info.getTitle());
+        viewHolder.ratingBar.setRating((int) info.getStar());
+        viewHolder.tagLayout.setTags(info.getTags());
+        viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
         return view;
     }
 
-    static class ActressItemViewHolder {
+    static class VideoDetailViewHolder {
         @BindView(R.id.image)
-        RatioImageView image;
-        @BindView(R.id.title)
-        TextView title;
+        SelectableRoundedImageView image;
+        @BindView(R.id.videoName)
+        TextView videoName;
+        @BindView(R.id.videoPlayCount)
+        TextView videoPlayCount;
+        @BindView(R.id.ratingBar)
+        DrawableRatingBar ratingBar;
+        @BindView(R.id.tag_layout)
+        TagContainerLayout tagLayout;
 
-        ActressItemViewHolder(View view) {
+        VideoDetailViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

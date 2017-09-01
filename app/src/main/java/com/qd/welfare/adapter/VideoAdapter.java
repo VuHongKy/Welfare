@@ -4,16 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
+import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
 import com.qd.welfare.widgets.CustomeGridView;
-import com.qd.welfare.widgets.RatioImageView;
 import com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar;
 
 import java.util.List;
@@ -21,8 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.lujun.androidtagview.TagContainerLayout;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
  * 视频
@@ -37,10 +37,16 @@ public class VideoAdapter extends BaseAdapter {
     private List<VideoResultInfo.VideoIndexInfo> list;
     private LayoutInflater inflater;
 
+    private OnVideoItemClickListener onVideoItemClickListener;
+
     public VideoAdapter(Context context, List<VideoResultInfo.VideoIndexInfo> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
+    }
+
+    public void setOnVideoItemClickListener(OnVideoItemClickListener onVideoItemClickListener) {
+        this.onVideoItemClickListener = onVideoItemClickListener;
     }
 
     @Override
@@ -82,7 +88,7 @@ public class VideoAdapter extends BaseAdapter {
             }
         }
 
-        VideoResultInfo.VideoIndexInfo info = list.get(position);
+        final VideoResultInfo.VideoIndexInfo info = list.get(position);
 
         if (type == TYPE_IMAGE_1) {
             holder1.title.setText(info.getTitle());
@@ -94,11 +100,27 @@ public class VideoAdapter extends BaseAdapter {
                 Glide.with(context).load(App.commonInfo.getFile_domain() + info.getVideo().get(0).getThumb())
                         .centerCrop().into(holder1.image);
                 holder1.tagLayout.setTags(info.getVideo().get(0).getTags());
+                holder1.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (onVideoItemClickListener != null) {
+                            onVideoItemClickListener.onVideoItemClick(info.getVideo().get(0));
+                        }
+                    }
+                });
             }
         } else {
             holder2.title.setText(info.getTitle());
             VideoItemAdapter adapter = new VideoItemAdapter(context, info.getVideo());
             holder2.itemGridView.setAdapter(adapter);
+            holder2.itemGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (onVideoItemClickListener != null) {
+                        onVideoItemClickListener.onVideoItemClick(info.getVideo().get(i));
+                    }
+                }
+            });
         }
         return view;
     }
@@ -114,6 +136,8 @@ public class VideoAdapter extends BaseAdapter {
     }
 
     static class ViewHolder1 {
+        @BindView(R.id.itemView)
+        LinearLayout itemView;
         @BindView(R.id.title)
         TextView title;
         @BindView(R.id.videoName)
@@ -141,5 +165,9 @@ public class VideoAdapter extends BaseAdapter {
         ViewHolder2(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnVideoItemClickListener {
+        void onVideoItemClick(VideoInfo info);
     }
 }

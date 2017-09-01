@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/itemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#000000"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="今日精选"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,11 +13,11 @@
             android:id="@+id/image1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
             app:base="horizontal"
             app:horizontal_weight="1014"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             app:vertical_weight="504" />
 
         <com.joooonho.SelectableRoundedImageView
@@ -41,10 +28,8 @@
             android:layout_alignLeft="@+id/image1"
             android:layout_alignRight="@+id/image1"
             android:layout_alignTop="@+id/image1"
-            app:sriv_left_bottom_corner_radius="8dp"
-            app:sriv_right_bottom_corner_radius="8dp"
-            app:sriv_left_top_corner_radius="8dp"
-            app:sriv_right_top_corner_radius="8dp" />
+            app:sriv_left_bottom_corner_radius="20dp"
+            app:sriv_right_bottom_corner_radius="20dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -63,7 +48,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="视频名称"
-        android:textColor="@color/white"
+        android:textColor="#333333"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -82,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="播放：5666"
-            android:textColor="#DFDFDF" />
+            android:textColor="#999999" />
 
         <com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar
             android:id="@+id/ratingBar"
@@ -90,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawablePadding="3dp"
-            android:progressDrawable="@drawable/ratingbar_bg"
+            android:progressDrawable="@drawable/ratingbar_yellow_bg"
             app:drbGravity="center"
             app:drbManually="true"
             app:drbMax="5"
@@ -107,17 +92,19 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:container_background_color="#000000"
+        app:container_background_color="@color/white"
         app:container_enable_drag="false"
         app:container_max_lines="1"
         app:horizontal_interval="3dp"
-        app:tag_background_color="#FF5FDF"
-        app:tag_border_color="#FF5FDF"
+        app:tag_background_color="#EFF4FB"
+        app:tag_border_color="#EFF4FB"
         app:tag_clickable="false"
         app:tag_corner_radius="5dp"
-        app:tag_text_color="@color/white"
+        app:tag_text_color="#666666"
         app:tag_text_size="12sp"
         app:tag_theme="none"
+        app:container_border_color="#00000000"
+        app:container_border_width="0dp"
         app:tag_vertical_padding="3dp"
         app:vertical_interval="10dp" />
 

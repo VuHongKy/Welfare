@@ -14,7 +14,7 @@ import com.lzy.okgo.model.Response;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.RecommendAdapter;
 import com.qd.welfare.base.BaseBackFragment;
-import com.qd.welfare.entity.RecommendInfo;
+import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -72,12 +72,12 @@ public class MineFragment extends BaseBackFragment {
     private void getData() {
         HttpParams params = new HttpParams();
         params.put("video_id", 0);
-        OkGo.<LzyResponse<List<RecommendInfo>>>get(ApiUtil.API_PRE + ApiUtil.RECOMMEND)
+        OkGo.<LzyResponse<List<VideoInfo>>>get(ApiUtil.API_PRE + ApiUtil.RECOMMEND)
                 .tag(ApiUtil.RECOMMEND_TAG)
                 .params(params)
-                .execute(new JsonCallback<LzyResponse<List<RecommendInfo>>>() {
+                .execute(new JsonCallback<LzyResponse<List<VideoInfo>>>() {
                     @Override
-                    public void onSuccess(Response<LzyResponse<List<RecommendInfo>>> response) {
+                    public void onSuccess(Response<LzyResponse<List<VideoInfo>>> response) {
                         RecommendAdapter adapter = new RecommendAdapter(getContext(), response.body().data);
                         gridView.setAdapter(adapter);
                     }

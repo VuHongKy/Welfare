@@ -15,6 +15,7 @@ import com.qd.welfare.adapter.VideoAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
+import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -24,6 +25,8 @@ import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.utils.ViewUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,7 @@ import wiki.scene.loadmore.utils.PtrLocalDisplay;
  * Created by scene on 17-8-29.
  */
 
-public class VideoFragment extends BaseMainFragment {
+public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVideoItemClickListener {
     @BindView(R.id.listView)
     ListView listView;
     @BindView(R.id.ptr_layout)
@@ -97,6 +100,7 @@ public class VideoFragment extends BaseMainFragment {
         }
         initBanner();
         listView.setAdapter(adapter);
+        adapter.setOnVideoItemClickListener(this);
     }
 
     private void initBanner() {
@@ -184,5 +188,10 @@ public class VideoFragment extends BaseMainFragment {
         OkGo.getInstance().cancelTag(ApiUtil.VIDEO_TAG);
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onVideoItemClick(VideoInfo info) {
+        EventBus.getDefault().post(new StartBrotherEvent(VideoDetailFragment.newInstance(info.getId())));
     }
 }

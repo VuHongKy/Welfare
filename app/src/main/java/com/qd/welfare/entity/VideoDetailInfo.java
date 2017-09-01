@@ -1,38 +1,45 @@
 package com.qd.welfare.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * 相关推荐
- * Created by scene on 17-8-30.
+ * 视频详情
+ * Created by scene on 2017/9/1.
  */
 
-public class RecommendInfo implements Serializable {
+public class VideoDetailInfo implements Serializable {
 
     /**
      * id : 1
      * title : 韩国女团写真
+     * position_id : 1
      * thumb : /img/2017/08/b480d4833af20b6c96f08fd5679ebd84.jpeg
      * thumb_shu : /img/2017/08/ac9dc0be2e1e769f2d6e4562a7c78e9b.jpeg
      * type : 1
      * star : 5
-     * tags : ["美腿","大长腿"]
-     * play_times : 2
+     * tags : 美腿,大长腿
      * url : /video/cdn/video/248.mp4
+     * weight : 0
+     * play_times : 0
+     * status : 1
+     * create_time : 0
      * duration : 0
      */
 
     private int id;
     private String title;
+    private int position_id;
     private String thumb;
     private String thumb_shu;
     private int type;
     private int star;
-    private int play_times;
+    private String tags;
     private String url;
-    private int duration;
-    private List<String> tags;
+    private int weight;
+    private int play_times;
+    private int status;
+    private long create_time;
+    private long duration;
 
     public int getId() {
         return id;
@@ -48,6 +55,14 @@ public class RecommendInfo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getPosition_id() {
+        return position_id;
+    }
+
+    public void setPosition_id(int position_id) {
+        this.position_id = position_id;
     }
 
     public String getThumb() {
@@ -82,12 +97,12 @@ public class RecommendInfo implements Serializable {
         this.star = star;
     }
 
-    public int getPlay_times() {
-        return play_times;
+    public String getTags() {
+        return tags;
     }
 
-    public void setPlay_times(int play_times) {
-        this.play_times = play_times;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getUrl() {
@@ -98,19 +113,43 @@ public class RecommendInfo implements Serializable {
         this.url = url;
     }
 
-    public int getDuration() {
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getPlay_times() {
+        return play_times;
+    }
+
+    public void setPlay_times(int play_times) {
+        this.play_times = play_times;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public long getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(long create_time) {
+        this.create_time = create_time;
+    }
+
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
     }
 }
