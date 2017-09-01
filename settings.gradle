@@ -1,1 +1,1 @@
-include ':app', ':loadmore', ':fragmentation_core', ':fragmentation_swipeback', ':fragmentation'
+include ':app', ':loadmore', ':fragmentation_core', ':fragmentation_swipeback', ':fragmentation', ':jcvideoplayer-lib'

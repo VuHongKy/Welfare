@@ -47,6 +47,7 @@ dependencies {
     compile project(':loadmore')
     compile project(':fragmentation_swipeback')
     compile project(':fragmentation')
+    compile project(':jcvideoplayer-lib')
     //官方兼容库
     compile 'com.android.support:design:26.+'
     //butterKnife

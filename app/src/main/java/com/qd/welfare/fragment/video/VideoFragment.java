@@ -1,5 +1,6 @@
 package com.qd.welfare.fragment.video;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import com.qd.welfare.adapter.VideoAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
-import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -25,8 +25,7 @@ import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.utils.ViewUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-
-import org.greenrobot.eventbus.EventBus;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,13 +116,21 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         banner.start();
     }
 
-    void bindBanner(List<VideoInfo> bannerList) {
+    private void bindBanner(final List<VideoInfo> bannerList) {
         bannerImageUrls.clear();
         for (VideoInfo info : bannerList) {
             bannerImageUrls.add(App.commonInfo.getFile_domain() + info.getThumb());
         }
         banner.setImages(bannerImageUrls);
         banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+                intent.putExtra("id", bannerList.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void getData(final boolean isFirst) {
@@ -192,6 +199,8 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     @Override
     public void onVideoItemClick(VideoInfo info) {
-        EventBus.getDefault().post(new StartBrotherEvent(VideoDetailFragment.newInstance(info.getId())));
+        Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+        intent.putExtra("id", info.getId());
+        startActivity(intent);
     }
 }

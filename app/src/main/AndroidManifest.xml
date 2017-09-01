@@ -33,6 +33,7 @@
 
         <activity
             android:name=".LauncherActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +43,11 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.video.VideoDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait" />
     </application>
 
