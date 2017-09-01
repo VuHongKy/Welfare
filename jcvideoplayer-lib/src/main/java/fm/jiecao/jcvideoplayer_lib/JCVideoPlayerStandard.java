@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -457,7 +458,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void setProgressAndText(int progress, int position, int duration) {
         super.setProgressAndText(progress, position, duration);
-        if (progress != 0) bottomProgressBar.setProgress(progress);
+        if (progress != 0) {
+            bottomProgressBar.setProgress(progress);
+            Log.e("当前播放的时长：", "---------->" + position + "");
+            onCurrentPositionListener(position);
+        }
+    }
+
+    protected void onCurrentPositionListener(int position) {
+        if (position > 10000) {
+//            startButton.performClick();
+//            JCVideoPlayer.releaseAllVideos();
+        }
     }
 
     @Override
