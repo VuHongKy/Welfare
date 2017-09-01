@@ -16,6 +16,7 @@ import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.qd.welfare.entity.CommonInfo;
+import com.qd.welfare.entity.UserInfo;
 
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ public class App extends Application {
     public static int versionCode = 0;
 
     public static CommonInfo commonInfo;
+    public static UserInfo userInfo;
 
     @Override
     public void onCreate() {

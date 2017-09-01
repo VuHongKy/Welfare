@@ -13,4 +13,6 @@
     <color name="line_color">#C0C0C0</color>
 
     <color name="diver_color">#DEDEDE</color>
+
+    <color name="tint">#F85788</color>
 </resources>

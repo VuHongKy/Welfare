@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="今日精选"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.qd.welfare.widgets.RatioImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            app:base="horizontal"
+            app:horizontal_weight="1014"
+            app:vertical_weight="504" />
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/image1"
+            android:layout_alignLeft="@+id/image1"
+            android:layout_alignRight="@+id/image1"
+            android:layout_alignTop="@+id/image1"
+            app:sriv_left_bottom_corner_radius="8dp"
+            app:sriv_right_bottom_corner_radius="8dp"
+            app:sriv_left_top_corner_radius="8dp"
+            app:sriv_right_top_corner_radius="8dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_play_big"
+            android:padding="5dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/videoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="视频名称"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/videoPlayCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="播放：5666"
+            android:textColor="#DFDFDF" />
+
+        <com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="3dp"
+            android:progressDrawable="@drawable/ratingbar_bg"
+            app:drbGravity="center"
+            app:drbManually="true"
+            app:drbMax="5"
+            app:drbMin="1"
+            app:drbOnlyItemTouchable="false"
+            app:drbRating="5" />
+
+    </LinearLayout>
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:container_background_color="#000000"
+        app:container_enable_drag="false"
+        app:container_max_lines="1"
+        app:horizontal_interval="3dp"
+        app:tag_background_color="#FF5FDF"
+        app:tag_border_color="#FF5FDF"
+        app:tag_clickable="false"
+        app:tag_corner_radius="5dp"
+        app:tag_text_color="@color/white"
+        app:tag_text_size="12sp"
+        app:tag_theme="none"
+        app:tag_vertical_padding="3dp"
+        app:vertical_interval="10dp" />
+
+</LinearLayout>

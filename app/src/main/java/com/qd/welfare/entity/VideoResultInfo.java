@@ -9,8 +9,17 @@ import java.util.List;
  */
 
 public class VideoResultInfo implements Serializable {
+    private VideoIndexInfo try_banner;
     private List<VideoIndexInfo> try_other;
     private List<VideoIndexInfo> vip_other;
+
+    public VideoIndexInfo getTry_banner() {
+        return try_banner;
+    }
+
+    public void setTry_banner(VideoIndexInfo try_banner) {
+        this.try_banner = try_banner;
+    }
 
     public List<VideoIndexInfo> getTry_other() {
         return try_other;

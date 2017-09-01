@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.entity.CommonInfo;
+import com.qd.welfare.entity.UserInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -153,7 +154,7 @@ public class LauncherActivity extends SupportActivity {
                     @Override
                     public void onSuccess(Response<LzyResponse<CommonInfo>> response) {
                         App.commonInfo = response.body().data;
-                        toMainActivity();
+                        getUserInfo();
                     }
 
                     @Override
@@ -163,5 +164,31 @@ public class LauncherActivity extends SupportActivity {
                         finish();
                     }
                 });
+    }
+
+    private void getUserInfo() {
+        OkGo.<LzyResponse<UserInfo>>get(ApiUtil.API_PRE + ApiUtil.USER)
+                .tag(ApiUtil.USER_TAG)
+                .execute(new JsonCallback<LzyResponse<UserInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<UserInfo>> response) {
+                        App.userInfo = response.body().data;
+                        toMainActivity();
+                    }
+
+                    @Override
+                    public void onError(Response<LzyResponse<UserInfo>> response) {
+                        super.onError(response);
+                        ToastUtils.getInstance(LauncherActivity.this).showToast("数据获取失败，请稍后再试");
+                        finish();
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        OkGo.getInstance().cancelTag(ApiUtil.COMMON_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.USER_TAG);
+        super.onDestroy();
     }
 }
