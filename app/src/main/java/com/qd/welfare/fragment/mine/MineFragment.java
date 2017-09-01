@@ -11,9 +11,11 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.RecommendAdapter;
 import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -66,6 +68,7 @@ public class MineFragment extends BaseBackFragment {
                 _mActivity.onBackPressed();
             }
         });
+        MainActivity.upLoadPageInfo(PageConfig.MINE, 0);
         getData();
     }
 

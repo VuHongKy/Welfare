@@ -11,9 +11,11 @@ import android.widget.ImageView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.CateGroyViewPagerAdapter;
 import com.qd.welfare.base.BaseMainFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.CateGroyInfo;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
@@ -71,6 +73,7 @@ public class CategoryFragment extends BaseMainFragment {
     }
 
     private void initView() {
+        MainActivity.upLoadPageInfo(PageConfig.CATEGORY, 0);
         getData();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

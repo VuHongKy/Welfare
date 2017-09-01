@@ -46,6 +46,12 @@ public class ApiUtil {
     public static final String VIDEO_DETAIL = "/video/play";
     public static final String VIDEO_DETAIL_TAG = "VIDEO_DETAIL_TAG";
 
+    public static final String UPLOAD_USER_INFO = "/data/stay";
+    public static final String UPLOAD_USER_INFO_TAG = "UPLOAD_USER_INFO_TAG";
+
+    public static final String UPLOAD_POSITION = "/data/position";
+    public static final String UPLOAD_POSITION_TAG = "UPLOAD_POSITION_TAG";
+
 
     /**
      * Case By:创建参数基础信息

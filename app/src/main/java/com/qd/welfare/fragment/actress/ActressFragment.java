@@ -16,9 +16,11 @@ import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.ActressAdapter;
 import com.qd.welfare.base.BaseMainFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.ActressInfo;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
@@ -92,6 +94,7 @@ public class ActressFragment extends BaseMainFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        MainActivity.upLoadPageInfo(PageConfig.ACTOR_LIST, 0);
         initView();
     }
 

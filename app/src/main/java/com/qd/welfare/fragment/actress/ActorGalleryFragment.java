@@ -17,8 +17,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.GalleryInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -92,6 +94,7 @@ public class ActorGalleryFragment extends BaseBackFragment {
     }
 
     private void initView() {
+        MainActivity.upLoadPageInfo(PageConfig.CATEGORY_ACTOR_IMAGE_DETAIL, actorId);
         getData();
     }
 

@@ -22,7 +22,7 @@ public class AppConfig {
     public static final int PAY_TYPE_BALANCE = 1;
     public static final int PAY_TYPE_WECHAT = 2;
     public static final int PAY_TYPE_ALPAY = 3;
-    public static final int DEFAULT_PAY_WAY = PAY_TYPE_WECHAT;
+    public static int DEFAULT_PAY_WAY = PAY_TYPE_WECHAT;
 
     public static final int GET_WINNER_NOTICE_DELAY = 60 * 1000;
     public static final int GET_DANMU_DELAY = 60 * 1000;

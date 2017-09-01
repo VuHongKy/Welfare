@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.CategoryActorAdapter;
 import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.CateGroyActorResultInfo;
 import com.qd.welfare.entity.CateGroyInfo;
 import com.qd.welfare.fragment.actress.ActorGalleryFragment;
@@ -96,6 +98,7 @@ public class CategoryActorFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
+        MainActivity.upLoadPageInfo(PageConfig.CATEGORY_ACTOR, 0);
         initView();
         toolbarTitle.setText(info.getTitle());
         initToolbarNav(toolbar);

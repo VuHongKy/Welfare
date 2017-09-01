@@ -14,8 +14,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.VideoRecommendAdapter;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoDetailInfo;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.http.api.ApiUtil;
@@ -70,6 +72,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
         videoId = getIntent().getIntExtra("id", 0);
         initToolbar();
         initView();
+        MainActivity.upLoadPageInfo(PageConfig.VIDEO_DETAIL_TRY, 0);
     }
 
     private void initToolbar() {

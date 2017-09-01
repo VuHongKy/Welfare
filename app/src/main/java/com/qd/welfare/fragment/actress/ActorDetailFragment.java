@@ -15,10 +15,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.ActressDetailAdapter;
 import com.qd.welfare.adapter.ActressDetailHeaderAdapter;
 import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.ActorDetailResultInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -111,6 +113,7 @@ public class ActorDetailFragment extends BaseBackFragment {
         toolbarTitle.setText(actorName);
         initToolbarNav(toolbar);
         initView();
+        MainActivity.upLoadPageInfo(PageConfig.ACTOR_DETAIL, actorId);
         getData(true, 1);
     }
 
@@ -162,6 +165,7 @@ public class ActorDetailFragment extends BaseBackFragment {
                     arrayList.add(dataBean.getThumb());
                 }
                 start(BigImageFragment.newInstance(arrayList, position));
+                MainActivity.upLoadPageInfo(PageConfig.ACTOR_IMAGE_DETAIL, list.get(position).getId());
             }
         });
     }
