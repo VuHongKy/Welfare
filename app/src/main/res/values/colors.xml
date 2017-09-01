@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#2F2B4C</color>
     <color name="colorAccent">#F85788</color>
 
-    <color name="toolbar_color">#FFFFFF</color>
     <color name="tab_unselect">#999999</color>
     <color name="tab_select">#F85788</color>
     <color name="tab_bar_bg">#2F2B4C</color>
@@ -14,5 +13,4 @@
 
     <color name="diver_color">#DEDEDE</color>
 
-    <color name="tint">#F85788</color>
 </resources>
