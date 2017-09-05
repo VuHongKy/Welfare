@@ -3,8 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/text"
+
+    <wiki.scene.loadmore.StatusViewLayout
+        android:id="@+id/status_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <wiki.scene.loadmore.PtrClassicFrameLayout
+            android:id="@+id/ptr_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </wiki.scene.loadmore.PtrClassicFrameLayout>
+    </wiki.scene.loadmore.StatusViewLayout>
 </LinearLayout>

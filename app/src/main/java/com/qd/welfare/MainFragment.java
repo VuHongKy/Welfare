@@ -14,6 +14,7 @@ import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
 import com.qd.welfare.fragment.category.CategoryFragment;
 import com.qd.welfare.fragment.mine.MineFragment;
+import com.qd.welfare.fragment.novel.NovelFragment;
 import com.qd.welfare.fragment.shop.ShopFragment;
 import com.qd.welfare.fragment.video.VideoFragment;
 import com.qd.welfare.view.BottomBar;
@@ -44,6 +45,7 @@ public class MainFragment extends BaseFragment {
     public static final int SECOND = 1;
     public static final int THIRD = 2;
     public static final int FOUR = 3;
+    public static final int FIVE = 4;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbar_title)
@@ -51,7 +53,7 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
 
-    private SupportFragment[] mFragments = new SupportFragment[4];
+    private SupportFragment[] mFragments = new SupportFragment[5];
     private List<String> tabNames = new ArrayList<>();
 
     Unbinder unbinder;
@@ -78,24 +80,28 @@ public class MainFragment extends BaseFragment {
         tabNames.add(getString(R.string.tab_name_video));
         tabNames.add(getString(R.string.tab_name_category));
         tabNames.add(getString(R.string.tab_name_actress));
+        tabNames.add(getString(R.string.tab_name_novel));
         tabNames.add(getString(R.string.tab_name_shop));
         if (firstFragment == null) {
             mFragments[FIRST] = VideoFragment.newInstance();
             mFragments[SECOND] = CategoryFragment.newInstance();
             mFragments[THIRD] = ActressFragment.newInstance();
-            mFragments[FOUR] = ShopFragment.newInstance();
+            mFragments[FOUR] = NovelFragment.newInstance();
+            mFragments[FIVE] = ShopFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
                     mFragments[FIRST],
                     mFragments[SECOND],
                     mFragments[THIRD],
-                    mFragments[FOUR]);
+                    mFragments[FOUR],
+                    mFragments[FIVE]);
         } else {
             // 这里我们需要拿到mFragments的引用,也可以通过getChildFragmentManager.findFragmentByTag自行进行判断查找(效率更高些),用下面的方法查找更方便些
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findChildFragment(CategoryFragment.class);
             mFragments[THIRD] = findChildFragment(ActressFragment.class);
-            mFragments[FOUR] = findChildFragment(ShopFragment.class);
+            mFragments[FOUR] = findChildFragment(NovelFragment.class);
+            mFragments[FIVE] = findChildFragment(ShopFragment.class);
         }
         try {
             toolbarTitle.setText(tabNames.get(0));
@@ -112,7 +118,8 @@ public class MainFragment extends BaseFragment {
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_video_d, R.drawable.ic_tab_video_s, tabNames.get(FIRST)))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_category_d, R.drawable.ic_tab_category_s, tabNames.get(SECOND)))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_actress_d, R.drawable.ic_tab_actress_s, tabNames.get(THIRD)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_shop_d, R.drawable.ic_tab_shop_s, tabNames.get(FOUR)));
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_novel_d, R.drawable.ic_tab_novel_s, tabNames.get(FOUR)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_shop_d, R.drawable.ic_tab_shop_s, tabNames.get(FIVE)));
 
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {

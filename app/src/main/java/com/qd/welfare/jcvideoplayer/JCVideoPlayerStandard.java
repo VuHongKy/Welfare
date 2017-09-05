@@ -27,7 +27,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qd.welfare.App;
 import com.qd.welfare.R;
+import com.qd.welfare.config.PageConfig;
+import com.qd.welfare.utils.DialogUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -242,7 +245,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
                     if (mChangePosition) {
-
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         bottomProgressBar.setProgress(progress);
@@ -469,11 +471,20 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
+    private int currentTime;
+
     protected void onCurrentPositionListener(int position) {
-        if (position > 10000) {
-//            startButton.performClick();
-//            JCVideoPlayer.releaseAllVideos();
+
+        if (App.userInfo.getRole() <= 1 && position > 10000 && position > currentTime + 10) {
+            onEvent(JCUserAction.ON_CLICK_PAUSE);
+            JCMediaManager.instance().mediaPlayer.pause();
+            onStatePause();
+//            if (!TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
+//                JCUtils.clearSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
+//            }
+            DialogUtil.showOpenViewDialog(getContext(), PageConfig.VIDEO_DETAIL_TRY, 0);
         }
+        currentTime = position;
     }
 
     @Override

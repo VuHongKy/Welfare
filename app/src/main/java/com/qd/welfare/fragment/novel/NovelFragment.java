@@ -28,4 +28,10 @@ public class NovelFragment extends BaseMainFragment {
         View view = inflater.inflate(R.layout.fragment_novel, container, false);
         return view;
     }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
+    }
 }
