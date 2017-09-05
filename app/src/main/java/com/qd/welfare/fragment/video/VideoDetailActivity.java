@@ -25,6 +25,9 @@ import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.jcvideoplayer.JCVideoPlayer;
+import com.qd.welfare.jcvideoplayer.JCVideoPlayerStandard;
+import com.qd.welfare.jcvideoplayer.MyJCVideoPlayerStandard;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
@@ -39,9 +42,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import fm.jiecao.jcvideoplayer_lib.MyJCVideoPlayerStandard;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import wiki.scene.loadmore.StatusViewLayout;
 
@@ -127,7 +127,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
             @Override
             public void onClick(View view) {
                 JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
+                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
             }
         });
     }

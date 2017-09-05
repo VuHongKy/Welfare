@@ -1,10 +1,13 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.qd.welfare.R;
+
 
 /**
  * Manage UI

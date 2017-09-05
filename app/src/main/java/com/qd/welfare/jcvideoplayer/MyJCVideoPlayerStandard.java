@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 import android.content.Context;
 import android.util.AttributeSet;

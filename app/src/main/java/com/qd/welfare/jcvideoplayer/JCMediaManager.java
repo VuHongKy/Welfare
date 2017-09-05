@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
@@ -30,7 +30,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
-    private static JCMediaManager JCMediaManager;
+    private static com.qd.welfare.jcvideoplayer.JCMediaManager JCMediaManager;
     public MediaPlayer mediaPlayer = new MediaPlayer();
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
@@ -45,7 +45,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler = new Handler();
     }
 
-    public static JCMediaManager instance() {
+    public static com.qd.welfare.jcvideoplayer.JCMediaManager instance() {
         if (JCMediaManager == null) {
             JCMediaManager = new JCMediaManager();
         }
@@ -197,14 +197,14 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mediaPlayer.setLooping(CURRENT_PLING_LOOP);
-                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
-                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
-                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
+                        mediaPlayer.setOnPreparedListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
+                        mediaPlayer.setOnCompletionListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
+                        mediaPlayer.setOnBufferingUpdateListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
                         mediaPlayer.setScreenOnWhilePlaying(true);
-                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
-                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
-                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
-                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
+                        mediaPlayer.setOnSeekCompleteListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
+                        mediaPlayer.setOnErrorListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
+                        mediaPlayer.setOnInfoListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
+                        mediaPlayer.setOnVideoSizeChangedListener(com.qd.welfare.jcvideoplayer.JCMediaManager.this);
                         Class<MediaPlayer> clazz = MediaPlayer.class;
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);

@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 /**
  * Created by Nathen

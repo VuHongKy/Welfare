@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,11 +27,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qd.welfare.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 /**
  * Created by Nathen
@@ -239,6 +242,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
                     if (mChangePosition) {
+
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         bottomProgressBar.setProgress(progress);
@@ -327,7 +331,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             clarityPopWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
             clarityPopWindow.setContentView(layout);
             clarityPopWindow.showAsDropDown(clarity);
-            layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            layout.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
             clarityPopWindow.update(clarity, -40, 46, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         }
     }

@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package com.qd.welfare.jcvideoplayer;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -28,11 +28,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qd.welfare.R;
+
 import java.lang.reflect.Constructor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 /**
  * Created by Nathen on 16/7/30.
@@ -165,7 +168,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             Constructor<JCVideoPlayer> constructor = _class.getConstructor(Context.class);
             final JCVideoPlayer jcVideoPlayer = constructor.newInstance(context);
             jcVideoPlayer.setId(JCVideoPlayer.FULLSCREEN_ID);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+            LayoutParams lp = new LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
 //            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
@@ -701,8 +704,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
-        FrameLayout.LayoutParams layoutParams =
-                new FrameLayout.LayoutParams(
+        LayoutParams layoutParams =
+                new LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
@@ -864,7 +867,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
             jcVideoPlayer.setId(FULLSCREEN_ID);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+            LayoutParams lp = new LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
@@ -897,7 +900,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
             jcVideoPlayer.setId(TINY_ID);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
+            LayoutParams lp = new LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
