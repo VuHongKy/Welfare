@@ -58,6 +58,9 @@ public class ApiUtil {
     public static final String CHECK_ORDER_STATUS = "/pay_vip/is_success";
     public static final String ChECK_ORDER_GOODS_TAG = "ChECK_ORDER_GOODS_TAG";
 
+    public static final String UPDATE_VERSION = "/version/android";
+    public static final String UPDATE_VERSION_TAG = "UPDATE_VERSION_TAG";
+
 
     /**
      * Case By:创建参数基础信息

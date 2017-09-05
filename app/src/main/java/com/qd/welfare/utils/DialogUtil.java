@@ -2,8 +2,10 @@ package com.qd.welfare.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.provider.Settings;
 import android.widget.TextView;
 
+import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.config.PageConfig;

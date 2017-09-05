@@ -1,22 +1,35 @@
 package com.qd.welfare;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.config.AppConfig;
 import com.qd.welfare.entity.DefaultPayTypeInfo;
 import com.qd.welfare.entity.PayResultInfo;
+import com.qd.welfare.entity.UpdateVersionInfo;
 import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.utils.AppUtils;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.ToastUtils;
+import com.qd.welfare.widgets.DownLoadDialog;
 import com.qd.welfare.widgets.LoadingDialog;
+import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -34,6 +47,7 @@ public class MainActivity extends SupportActivity {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
         startUpLoad();
+        getUpdateVersion(false);
     }
 
     @Override
@@ -65,6 +79,7 @@ public class MainActivity extends SupportActivity {
         OkGo.getInstance().cancelTag(ApiUtil.UPLOAD_POSITION_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.UPLOAD_USER_INFO_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.ChECK_ORDER_GOODS_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.UPDATE_VERSION_TAG);
         super.onDestroy();
     }
 
@@ -176,5 +191,110 @@ public class MainActivity extends SupportActivity {
                         }
                     }
                 });
+    }
+
+    public void getUpdateVersion(final boolean isMine) {
+        OkGo.<LzyResponse<UpdateVersionInfo>>get(ApiUtil.API_PRE + ApiUtil.UPDATE_VERSION)
+                .tag(ApiUtil.UPDATE_VERSION_TAG)
+                .execute(new JsonCallback<LzyResponse<UpdateVersionInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<UpdateVersionInfo>> response) {
+                        try {
+                            UpdateVersionInfo updateInfo = response.body().data;
+                            int versionCode = AppUtils.getVersion(MainActivity.this);
+                            if (versionCode != 0 && updateInfo.getVersion() > versionCode) {
+                                showUpdateDialog(MainActivity.this, updateInfo.getUrl());
+                            } else {
+                                if (isMine) {
+                                    ToastUtils.getInstance(MainActivity.this).showToast("当前已经是最新版本");
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void showUpdateDialog(Context context, final String apkUrl) {
+        CBDialogBuilder builder = new CBDialogBuilder(context);
+        TextView titleView = builder.getView(R.id.dialog_title);
+        titleView.setSingleLine(false);
+        builder.setTouchOutSideCancelable(false)
+                .showCancelButton(false)
+                .setTitle("检测到应用有新版本，立即更新")
+                .setMessage("")
+                .setConfirmButtonText("确定")
+                .setCancelButtonText("取消")
+                .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                    @Override
+                    public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                        switch (whichBtn) {
+                            case BUTTON_CONFIRM:
+                                showUploadDialog(apkUrl);
+                                break;
+                            case BUTTON_CANCEL:
+                                //退出APP
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })
+                .create().show();
+    }
+
+    /**
+     * Case By:提示更新的对话框
+     * Author: scene on 2017/4/27 16:52
+     */
+    private DownLoadDialog downLoadDialog;
+
+    private void showUploadDialog(final String url) {
+        DownLoadDialog.Builder downLoadDialogBuilder = new DownLoadDialog.Builder(MainActivity.this);
+        downLoadDialog = downLoadDialogBuilder.create();
+        downLoadDialog.show();
+        downLoadFile(url);
+        downLoadDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+        });
+
+    }
+
+    private void downLoadFile(String url) {
+        OkGo.<File>get(url).tag("DOWNLOAD_APK").execute(new FileCallback() {
+            @Override
+            public void onSuccess(Response<File> response) {
+                try {
+                    installAPK(MainActivity.this, response.body().getAbsolutePath());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * 安装app
+     *
+     * @param mContext
+     * @param fileName
+     */
+    private static void installAPK(Context mContext, String fileName) {
+        File file = new File(fileName);
+        if (!file.exists()) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.parse("file://" + fileName), "application/vnd.android.package-archive");
+        mContext.startActivity(intent);
     }
 }

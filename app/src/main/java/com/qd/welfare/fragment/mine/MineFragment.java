@@ -121,4 +121,12 @@ public class MineFragment extends BaseBackFragment {
         EventBus.getDefault().post(new StartBrotherEvent(UserAgreementFragment.newInstance()));
     }
 
+    @OnClick(R.id.update_version)
+    public void onClickUpdateVersion() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).getUpdateVersion(true);
+        }
+    }
+
+
 }
