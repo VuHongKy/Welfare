@@ -11,17 +11,22 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.RecommendAdapter;
 import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
+import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.pay.OpenVipDialog;
+import com.qd.welfare.utils.DialogUtil;
+import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.CustomeGridView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -44,8 +49,9 @@ public class MineFragment extends BaseBackFragment {
     CustomeGridView gridView;
 
     Unbinder unbinder;
+    @BindView(R.id.userId)
+    TextView userId;
 
-    private OpenVipDialog dialog;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -72,6 +78,7 @@ public class MineFragment extends BaseBackFragment {
                 _mActivity.onBackPressed();
             }
         });
+        userId.setText(String.valueOf(App.userInfo.getId()));
         MainActivity.upLoadPageInfo(PageConfig.MINE, 0);
         getData();
     }
@@ -93,9 +100,7 @@ public class MineFragment extends BaseBackFragment {
 
     @Override
     public void onDestroyView() {
-        if (dialog != null) {
-            dialog.cancel();
-        }
+        DialogUtil.cancelDialog();
         OkGo.getInstance().cancelTag(ApiUtil.GET_PAY_INFO_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
         super.onDestroyView();
@@ -104,11 +109,16 @@ public class MineFragment extends BaseBackFragment {
 
     @OnClick(R.id.openVip)
     public void onClickOpenVip() {
-        if (dialog == null) {
-            OpenVipDialog.Builder builder = new OpenVipDialog.Builder(getContext(), PageConfig.MINE, 0);
-            dialog = builder.create();
+        if (App.userInfo.getRole() <= 1) {
+            DialogUtil.showVipDialog(getContext(), PageConfig.VIDEO_TRY, 0);
+        } else {
+            ToastUtils.getInstance(getContext()).showToast("您已经是会员了，不需要再次开通");
         }
-        dialog.show();
+    }
+
+    @OnClick(R.id.user_agreement)
+    public void onClickUserAgreement() {
+        EventBus.getDefault().post(new StartBrotherEvent(UserAgreementFragment.newInstance()));
     }
 
 }

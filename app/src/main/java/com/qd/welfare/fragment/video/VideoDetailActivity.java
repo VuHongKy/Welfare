@@ -18,13 +18,20 @@ import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.VideoRecommendAdapter;
 import com.qd.welfare.config.PageConfig;
+import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.VideoDetailInfo;
 import com.qd.welfare.entity.VideoInfo;
+import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.qd.welfare.utils.ToastUtils;
+import com.qd.welfare.widgets.LoadingDialog;
 import com.qd.welfare.widgets.RatioImageView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +106,14 @@ public class VideoDetailActivity extends SwipeBackActivity {
         image = headerView.findViewById(R.id.image);
         openVip = headerView.findViewById(R.id.openVip);
         playVideo = headerView.findViewById(R.id.play_video);
+        openVip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (App.userInfo.getRole() <= 1) {
+                    DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
+                }
+            }
+        });
     }
 
     private void bindHeaderView(VideoDetailInfo info) {
@@ -194,5 +209,74 @@ public class VideoDetailActivity extends SwipeBackActivity {
             return;
         }
         super.onBackPressedSupport();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (App.isNeedCheckOrder && App.orderIdInt != 0) {
+                checkOrder();
+            } else {
+                App.isNeedCheckOrder = false;
+                App.orderIdInt = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private LoadingDialog loadingDialog;
+
+    private void checkOrder() {
+        loadingDialog = LoadingDialog.getInstance(VideoDetailActivity.this);
+        loadingDialog.showLoadingDialog("正在获取支付结果...");
+        HttpParams params = new HttpParams();
+        params.put("order_id", App.orderIdInt);
+        OkGo.<LzyResponse<PayResultInfo>>get(ApiUtil.API_PRE + ApiUtil.CHECK_ORDER_STATUS)
+                .tag(ApiUtil.ChECK_ORDER_GOODS_TAG)
+                .params(params)
+                .execute(new JsonCallback<LzyResponse<PayResultInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<PayResultInfo>> response) {
+                        try {
+                            if (response.body().data.isPay_success()) {
+                                DialogUtil.showOpenVipSuccess(VideoDetailActivity.this);
+                                App.userInfo.setRole(response.body().data.getRole());
+                                EventBus.getDefault().post(new OpenVipSuccessEvent());
+                                if (App.userInfo.getRole() > 1) {
+                                    openVip.setVisibility(View.GONE);
+                                }
+                            } else {
+                                ToastUtils.getInstance(VideoDetailActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtils.getInstance(VideoDetailActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<LzyResponse<PayResultInfo>> response) {
+                        super.onError(response);
+                        try {
+                            ToastUtils.getInstance(VideoDetailActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        try {
+                            loadingDialog.cancelLoadingDialog();
+                            App.isNeedCheckOrder = false;
+                            App.orderIdInt = 0;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

@@ -31,9 +31,7 @@ public class DialogUtil {
                     public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
                         switch (whichBtn) {
                             case BUTTON_CONFIRM:
-                                OpenVipDialog.Builder builder1 = new OpenVipDialog.Builder(context, positionId, dataId);
-                                OpenVipDialog dialog1 = builder1.create();
-                                dialog1.show();
+                                DialogUtil.showVipDialog(context,positionId,dataId);
                                 dialog.cancel();
                                 break;
                             default:
@@ -45,15 +43,31 @@ public class DialogUtil {
     }
 
     public static void showOpenVipSuccess(Context context) {
+        cancelDialog();
         CBDialogBuilder builder = new CBDialogBuilder(context);
         TextView titleView = builder.getView(R.id.dialog_title);
         titleView.setSingleLine(false);
         builder.setTouchOutSideCancelable(false)
                 .showCancelButton(false)
                 .setTitle("恭喜你成功开通会员")
+                .setMessage("")
                 .setConfirmButtonText("确定")
                 .setCancelButtonText("取消")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
                 .create().show();
+    }
+
+    private static OpenVipDialog dialog;
+
+    public static void showVipDialog(Context context, int positionId, int dataId) {
+        OpenVipDialog.Builder builder = new OpenVipDialog.Builder(context, positionId, dataId);
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public static void cancelDialog() {
+        if (dialog != null) {
+            dialog.cancel();
+        }
     }
 }

@@ -23,7 +23,7 @@ import com.qd.welfare.utils.ViewUtils;
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
- * Case By:开通黄金VIP
+ * Case By:开通VIP
  * package:
  * Author：scene on 2017/4/18 13:53
  */

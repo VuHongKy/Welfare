@@ -18,9 +18,11 @@ import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
+import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.GlideImageLoader;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
@@ -28,6 +30,9 @@ import com.qd.welfare.utils.ViewUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +85,12 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initView();
@@ -103,6 +114,14 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         initBanner();
         listView.setAdapter(adapter);
         adapter.setOnVideoItemClickListener(this);
+        footerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (App.userInfo.getRole() == 1) {
+                    DialogUtil.showVipDialog(getContext(), PageConfig.VIDEO_TRY, 0);
+                }
+            }
+        });
     }
 
     private void initBanner() {
@@ -195,6 +214,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         OkGo.getInstance().cancelTag(ApiUtil.VIDEO_TAG);
         super.onDestroyView();
         unbinder.unbind();
@@ -205,5 +225,10 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         Intent intent = new Intent(getContext(), VideoDetailActivity.class);
         intent.putExtra("id", info.getId());
         startActivity(intent);
+    }
+
+    @Subscribe
+    public void openVipSuccess(OpenVipSuccessEvent event) {
+        ptrLayout.autoRefresh();
     }
 }

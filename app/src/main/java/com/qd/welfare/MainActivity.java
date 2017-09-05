@@ -8,12 +8,15 @@ import com.lzy.okgo.model.Response;
 import com.qd.welfare.config.AppConfig;
 import com.qd.welfare.entity.DefaultPayTypeInfo;
 import com.qd.welfare.entity.PayResultInfo;
+import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.LoadingDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -140,6 +143,8 @@ public class MainActivity extends SupportActivity {
                         try {
                             if (response.body().data.isPay_success()) {
                                 DialogUtil.showOpenVipSuccess(MainActivity.this);
+                                App.userInfo.setRole(response.body().data.getRole());
+                                EventBus.getDefault().post(new OpenVipSuccessEvent());
                             } else {
                                 ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
                             }
