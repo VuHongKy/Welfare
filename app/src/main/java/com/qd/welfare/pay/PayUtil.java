@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.App;
 import com.qd.welfare.config.AppConfig;
 import com.qd.welfare.entity.PayInfo;
 import com.qd.welfare.http.api.ApiUtil;
@@ -40,10 +41,14 @@ public class PayUtil {
                             PayInfo payInfo = response.body().data;
                             if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_SCAN) {
                                 //扫码
-
+                                WxQRCodePayDialog.Builder builder = new WxQRCodePayDialog.Builder(context, payInfo.getQr_url());
+                                WxQRCodePayDialog wxQRCodePayDialog = builder.create();
+                                wxQRCodePayDialog.show();
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_SCAN) {
                                 //公众号扫码
-
+                                WxQRCodePayDialog.Builder builder = new WxQRCodePayDialog.Builder(context, payInfo.getQr_url());
+                                WxQRCodePayDialog wxQRCodePayDialog = builder.create();
+                                wxQRCodePayDialog.show();
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_CHANGE) {
                                 //公众号跳转
                                 Intent intent = new Intent(context, WechatPayActivity.class);
@@ -54,6 +59,8 @@ public class PayUtil {
                                 intent.putExtra(AliPayActivity.ALIPAY_URL, payInfo.getUrl());
                                 context.startActivity(intent);
                             }
+                            App.isNeedCheckOrder = true;
+                            App.orderIdInt = payInfo.getOrder_id();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

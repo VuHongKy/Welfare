@@ -128,7 +128,7 @@ public class CategoryFragment extends BaseMainFragment {
                                         if (App.userInfo.getRole() > 1) {
                                             EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
                                         } else {
-                                            DialogUtil.showOpenViewDialog(getContext());
+                                            DialogUtil.showOpenViewDialog(getContext(), PageConfig.CATEGORY, info.getId());
                                         }
                                     }
                                 });

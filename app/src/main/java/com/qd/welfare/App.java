@@ -33,7 +33,6 @@ import wiki.scene.loadmore.utils.PtrLocalDisplay;
  */
 
 public class App extends Application {
-    public static final String USER_INFO_KEY = "user_info_key";
     public static final String UUID_KEY = "uuid";
     public static String UUID = "";
     public static String CHANNEL_ID = "";
@@ -42,6 +41,9 @@ public class App extends Application {
 
     public static CommonInfo commonInfo;
     public static UserInfo userInfo;
+
+    public static boolean isNeedCheckOrder = false;
+    public static int orderIdInt = 0;
 
     @Override
     public void onCreate() {
