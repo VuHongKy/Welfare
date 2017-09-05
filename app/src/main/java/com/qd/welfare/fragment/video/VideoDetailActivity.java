@@ -26,7 +26,6 @@ import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.jcvideoplayer.JCVideoPlayer;
-import com.qd.welfare.jcvideoplayer.JCVideoPlayerStandard;
 import com.qd.welfare.jcvideoplayer.MyJCVideoPlayerStandard;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;

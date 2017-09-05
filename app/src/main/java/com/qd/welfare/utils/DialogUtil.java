@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.widget.TextView;
 
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.pay.OpenVipDialog;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 /**
+ * dialog相关
  * Created by scene on 2017/9/4.
  */
 
@@ -31,7 +34,7 @@ public class DialogUtil {
                     public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
                         switch (whichBtn) {
                             case BUTTON_CONFIRM:
-                                DialogUtil.showVipDialog(context,positionId,dataId);
+                                DialogUtil.showVipDialog(context, positionId, dataId);
                                 dialog.cancel();
                                 break;
                             default:
@@ -60,6 +63,7 @@ public class DialogUtil {
     private static OpenVipDialog dialog;
 
     public static void showVipDialog(Context context, int positionId, int dataId) {
+        MainActivity.upLoadPageInfo(PageConfig.OPEN_VIP, dataId);
         OpenVipDialog.Builder builder = new OpenVipDialog.Builder(context, positionId, dataId);
         dialog = builder.create();
         dialog.show();
