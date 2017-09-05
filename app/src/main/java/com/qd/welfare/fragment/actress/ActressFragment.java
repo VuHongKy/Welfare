@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +26,7 @@ import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.itemDecoration.SpacesItemDecoration;
+import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
 
@@ -118,7 +118,11 @@ public class ActressFragment extends BaseMainFragment {
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment.newInstance(list.get(position).getId(), list.get(position).getName())));
+                if (App.userInfo.getRole() > 1) {
+                    EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment.newInstance(list.get(position).getId(), list.get(position).getName())));
+                } else {
+                    DialogUtil.showOpenViewDialog(getContext());
+                }
             }
         });
         View headerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_actress_header, null);
@@ -134,7 +138,7 @@ public class ActressFragment extends BaseMainFragment {
         mAdapter.addHeader(headerView);
     }
 
-    private void bindHeaderView(List<ActressInfo> headerList) {
+    private void bindHeaderView(final List<ActressInfo> headerList) {
         layout1.setVisibility(View.INVISIBLE);
         layout2.setVisibility(View.INVISIBLE);
         layout3.setVisibility(View.INVISIBLE);
@@ -156,6 +160,39 @@ public class ActressFragment extends BaseMainFragment {
                 name1.setText(headerList.get(0).getName());
                 break;
         }
+        layout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (App.userInfo.getRole() > 1) {
+                    EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
+                            .newInstance(list.get(0).getId(), list.get(0).getName())));
+                } else {
+                    DialogUtil.showOpenViewDialog(getContext());
+                }
+            }
+        });
+        layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (App.userInfo.getRole() > 1) {
+                    EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
+                            .newInstance(list.get(1).getId(), list.get(1).getName())));
+                } else {
+                    DialogUtil.showOpenViewDialog(getContext());
+                }
+            }
+        });
+        layout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (App.userInfo.getRole() > 1) {
+                    EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
+                            .newInstance(list.get(2).getId(), list.get(2).getName())));
+                } else {
+                    DialogUtil.showOpenViewDialog(getContext());
+                }
+            }
+        });
     }
 
     private void getData(final boolean isFirst) {

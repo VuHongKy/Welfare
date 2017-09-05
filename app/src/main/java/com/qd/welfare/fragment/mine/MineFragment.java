@@ -20,12 +20,14 @@ import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.pay.OpenVipDialog;
 import com.qd.welfare.widgets.CustomeGridView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -42,6 +44,8 @@ public class MineFragment extends BaseBackFragment {
     CustomeGridView gridView;
 
     Unbinder unbinder;
+
+    private OpenVipDialog dialog;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -89,8 +93,22 @@ public class MineFragment extends BaseBackFragment {
 
     @Override
     public void onDestroyView() {
+        if (dialog != null) {
+            dialog.cancel();
+        }
+        OkGo.getInstance().cancelTag(ApiUtil.GET_PAY_INFO_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @OnClick(R.id.openVip)
+    public void onClickOpenVip() {
+        if (dialog == null) {
+            OpenVipDialog.Builder builder = new OpenVipDialog.Builder(getContext(), PageConfig.MINE, 0);
+            dialog = builder.create();
+        }
+        dialog.show();
+    }
+
 }

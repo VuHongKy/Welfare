@@ -6,9 +6,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.config.AppConfig;
+import com.qd.welfare.entity.DefaultPayTypeInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -43,20 +46,20 @@ public class MainActivity extends SupportActivity {
 
     @Override
     protected void onDestroy() {
+        isWork = false;
         OkGo.getInstance().cancelTag(ApiUtil.UPLOAD_POSITION_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.UPLOAD_USER_INFO_TAG);
         super.onDestroy();
     }
 
-    /**
-     * Case By:上传使用信息每隔10s
-     * Author: scene on 2017/4/20 10:25
-     */
-    private Thread thread;
     private boolean isWork = true;
 
+    /*
+        Case By:上传使用信息每隔10s
+        Author: scene on 2017/4/20 10:25
+       */
     private void startUpLoad() {
-        thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -77,12 +80,16 @@ public class MainActivity extends SupportActivity {
      * 上报用户信息
      */
     private void uploadUseInfo() {
-        OkGo.<LzyResponse<String>>get(ApiUtil.API_PRE + ApiUtil.UPLOAD_USER_INFO)
+        OkGo.<LzyResponse<DefaultPayTypeInfo>>get(ApiUtil.API_PRE + ApiUtil.UPLOAD_USER_INFO)
                 .tag(ApiUtil.UPLOAD_USER_INFO_TAG)
-                .execute(new JsonCallback<LzyResponse<String>>() {
+                .execute(new JsonCallback<LzyResponse<DefaultPayTypeInfo>>() {
                     @Override
-                    public void onSuccess(Response<LzyResponse<String>> response) {
-                        AppConfig.DEFAULT_PAY_WAY = AppConfig.PAY_TYPE_ALPAY;
+                    public void onSuccess(Response<LzyResponse<DefaultPayTypeInfo>> response) {
+                        try {
+                            AppConfig.DEFAULT_PAY_WAY = response.body().data.getDefault_pay_type();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

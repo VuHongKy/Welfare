@@ -52,6 +52,9 @@ public class ApiUtil {
     public static final String UPLOAD_POSITION = "/data/position";
     public static final String UPLOAD_POSITION_TAG = "UPLOAD_POSITION_TAG";
 
+    public static final String GET_PAY_INFO = "/pay_vip";
+    public static final String GET_PAY_INFO_TAG = "GET_PAY_INFO_TAG";
+
 
     /**
      * Case By:创建参数基础信息

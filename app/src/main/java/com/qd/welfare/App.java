@@ -129,7 +129,7 @@ public class App extends Application {
                         if (TextUtils.isEmpty(str)) {
                             return "";
                         } else {
-                            resultData = str.substring(str.indexOf(","));
+                            resultData = str.substring(str.indexOf(",") + 1);
                         }
                     }
                 }

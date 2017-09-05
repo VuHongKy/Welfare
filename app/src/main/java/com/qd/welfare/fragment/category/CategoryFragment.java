@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.CateGroyViewPagerAdapter;
@@ -21,7 +22,9 @@ import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -122,7 +125,11 @@ public class CategoryFragment extends BaseMainFragment {
                                 adapter.setOnCateGoryItemClickListener(new CateGroyViewPagerAdapter.OnCateGoryItemClickListener() {
                                     @Override
                                     public void onCateGoryItemClick(CateGroyInfo info) {
-                                        EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
+                                        if (App.userInfo.getRole() > 1) {
+                                            EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
+                                        } else {
+                                            DialogUtil.showOpenViewDialog(getContext());
+                                        }
                                     }
                                 });
                             }

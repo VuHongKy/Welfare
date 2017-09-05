@@ -47,8 +47,12 @@
         <activity
             android:name=".fragment.video.VideoDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack" />
+
+        <activity android:name=".pay.AliPayActivity" />
+
+        <activity android:name=".pay.WechatPayActivity" />
     </application>
 
 </manifest>
