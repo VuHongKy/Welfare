@@ -23,8 +23,10 @@ import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.DialogUtil;
+import com.qd.welfare.utils.GlideCacheUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.CustomeGridView;
+import com.qd.welfare.widgets.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -52,6 +54,7 @@ public class MineFragment extends BaseBackFragment {
     @BindView(R.id.userId)
     TextView userId;
 
+    private LoadingDialog loadingDialog;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -128,5 +131,14 @@ public class MineFragment extends BaseBackFragment {
         }
     }
 
+    @OnClick(R.id.clear_cache)
+    public void onClickClearCache() {
+        LoadingDialog loadingDialog = LoadingDialog.getInstance(getContext());
+        loadingDialog.showLoadingDialog("正在清理缓存...");
+        GlideCacheUtil.getInstance().cleanCacheDisk(_mActivity);
+        GlideCacheUtil.getInstance().clearCacheDiskSelf(_mActivity);
+        loadingDialog.cancelLoadingDialog();
+        ToastUtils.getInstance(_mActivity).showToast("缓存清理成功");
+    }
 
 }
