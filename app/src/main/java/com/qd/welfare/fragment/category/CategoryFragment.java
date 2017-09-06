@@ -24,7 +24,6 @@ import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
-import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 

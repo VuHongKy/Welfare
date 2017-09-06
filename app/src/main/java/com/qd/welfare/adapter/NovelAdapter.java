@@ -44,13 +44,11 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         NovelViewHolder viewHolder = (NovelViewHolder) holder;
         viewHolder.title.setText(info.getTitle());
         viewHolder.description.setText(info.getDescription());
-        viewHolder.number.setVisibility(View.GONE);
         viewHolder.actor.setText(info.getAuthor());
-        List<String> tags=info.getTags();
+        List<String> tags = info.getTags();
         tags.add(info.getStatus());
         tags.add(info.getTotal_word() + "万字");
         viewHolder.tagLayout.setTags(tags);
-        viewHolder.status.setVisibility(View.GONE);
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
     }
 
@@ -70,10 +68,6 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView actor;
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
-        @BindView(R.id.status)
-        TextView status;
-        @BindView(R.id.number)
-        TextView number;
 
         NovelViewHolder(View view) {
             super(view);

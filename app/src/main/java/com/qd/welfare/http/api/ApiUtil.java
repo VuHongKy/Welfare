@@ -70,6 +70,9 @@ public class ApiUtil {
     public static final String NOVEL_DETAIL="/novel/detail";
     public static final String NOVEL_DETAIL_TAG="NOVEL_DETAIL_TAG";
 
+    public static final String GOODS_DETAIL="/goods/detail";
+    public static final String GOODS_DETAIL_TAG="GOODS_DETAIL_TAG";
+
 
     /**
      * Case By:创建参数基础信息

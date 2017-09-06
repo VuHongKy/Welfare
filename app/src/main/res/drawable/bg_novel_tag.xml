@@ -3,5 +3,5 @@
     <stroke
         android:width="0.5dp"
         android:color="@color/tab_select" />
-    <corners android:radius="3dp" />
+    <corners android:radius="10dp" />
 </shape>
