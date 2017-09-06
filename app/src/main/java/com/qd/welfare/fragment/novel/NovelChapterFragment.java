@@ -4,32 +4,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
-import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
-import com.qd.welfare.adapter.NovelAdapter;
-import com.qd.welfare.base.BaseMainFragment;
+import com.qd.welfare.adapter.NovelChapterAdapter;
+import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.config.PageConfig;
-import com.qd.welfare.entity.NovelInfo;
-import com.qd.welfare.entity.NovelResultInfo;
-import com.qd.welfare.event.StartBrotherEvent;
+import com.qd.welfare.entity.NovelChapterInfo;
+import com.qd.welfare.entity.NovelChapterResultInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.itemDecoration.SpacesItemDecoration;
-import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +39,17 @@ import wiki.scene.loadmore.PtrFrameLayout;
 import wiki.scene.loadmore.StatusViewLayout;
 import wiki.scene.loadmore.loadmore.OnLoadMoreListener;
 import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
-import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
- * 小说首页
+ * 小说章节列表
  * Created by scene on 2017/9/4.
  */
 
-public class NovelFragment extends BaseMainFragment {
+public class NovelChapterFragment extends BaseBackFragment {
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.ptr_layout)
@@ -60,31 +59,49 @@ public class NovelFragment extends BaseMainFragment {
 
     Unbinder unbinder;
 
-    private List<NovelInfo> list = new ArrayList<>();
-    private NovelAdapter adapter;
+    private int novelId = 0;
+    private String novelName;
+
+    private List<NovelChapterInfo> list = new ArrayList<>();
+    private NovelChapterAdapter adapter;
     private int page = 1;
 
-    public static NovelFragment newInstance() {
+    public static NovelChapterFragment newInstance(int novelId, String novelName) {
         Bundle args = new Bundle();
-        NovelFragment fragment = new NovelFragment();
+        args.putInt("id", novelId);
+        args.putString("name", novelName);
+        NovelChapterFragment fragment = new NovelChapterFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            novelId = getArguments().getInt("id", 0);
+            novelName = getArguments().getString("name");
+        } else {
+            onBackPressedSupport();
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_novel, container, false);
+        View view = inflater.inflate(R.layout.fragment_novel_chapter, container, false);
         unbinder = ButterKnife.bind(this, view);
-        return view;
+        return attachToSwipeBack(view);
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        toolbarTitle.setText(novelName);
+        initToolbarNav(toolbar);
         initView();
         getData(true, 1);
-        MainActivity.upLoadPageInfo(PageConfig.NOVEL_INDEX, 0);
+        MainActivity.upLoadPageInfo(PageConfig.NOVEL_CHAPTER, novelId);
     }
 
     private void initView() {
@@ -102,23 +119,17 @@ public class NovelFragment extends BaseMainFragment {
             }
         });
 
-        adapter = new NovelAdapter(getContext(), list);
+        adapter = new NovelChapterAdapter(getContext(), list);
         RecyclerAdapterWithHF mAdapter = new RecyclerAdapterWithHF(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(PtrLocalDisplay.designedDP2px(1)));
         recyclerView.setAdapter(mAdapter);
+        mAdapter.addHeader(LayoutInflater.from(getContext()).inflate(R.layout.fragment_novel_chapter_header, null));
         ptrLayout.setLoadMoreEnable(true);
-
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                NovelInfo info = list.get(position);
-                if (App.userInfo.getRole() > 1) {
-                    EventBus.getDefault().post(new StartBrotherEvent(NovelChapterFragment.newInstance(info.getId(), info.getTitle())));
-                } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.NOVEL_INDEX, info.getId());
-                }
-
+                NovelChapterInfo info = list.get(position);
+                start(NovelDetailFragment.newInstance(info.getId(), info.getTitle()));
             }
         });
     }
@@ -130,12 +141,13 @@ public class NovelFragment extends BaseMainFragment {
             }
             HttpParams params = new HttpParams();
             params.put("page", currentPage);
-            OkGo.<LzyResponse<NovelResultInfo>>get(ApiUtil.API_PRE + ApiUtil.NOVEL)
-                    .tag(ApiUtil.NOVEL_TAG)
+            params.put("novel_id", novelId);
+            OkGo.<LzyResponse<NovelChapterResultInfo>>get(ApiUtil.API_PRE + ApiUtil.NOVEL_CHAPTER)
+                    .tag(ApiUtil.NOVEL_CHAPTER_TAG)
                     .params(params)
-                    .execute(new JsonCallback<LzyResponse<NovelResultInfo>>() {
+                    .execute(new JsonCallback<LzyResponse<NovelChapterResultInfo>>() {
                         @Override
-                        public void onSuccess(Response<LzyResponse<NovelResultInfo>> response) {
+                        public void onSuccess(Response<LzyResponse<NovelChapterResultInfo>> response) {
                             try {
                                 if (isFirst) {
                                     statusLayout.showContent();
@@ -155,7 +167,7 @@ public class NovelFragment extends BaseMainFragment {
                         }
 
                         @Override
-                        public void onError(Response<LzyResponse<NovelResultInfo>> response) {
+                        public void onError(Response<LzyResponse<NovelChapterResultInfo>> response) {
                             super.onError(response);
                             try {
                                 if (isFirst) {
@@ -194,7 +206,7 @@ public class NovelFragment extends BaseMainFragment {
 
     @Override
     public void onDestroyView() {
-        OkGo.getInstance().cancelTag(ApiUtil.NOVEL_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.NOVEL_CHAPTER_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }

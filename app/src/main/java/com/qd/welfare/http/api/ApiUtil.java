@@ -64,6 +64,12 @@ public class ApiUtil {
     public static final String NOVEL="/novel";
     public static final String NOVEL_TAG="NOVEL_TAG";
 
+    public static final String NOVEL_CHAPTER="/novel/chapter";
+    public static final String NOVEL_CHAPTER_TAG="NOVEL_CHAPTER_TAG";
+
+    public static final String NOVEL_DETAIL="/novel/detail";
+    public static final String NOVEL_DETAIL_TAG="NOVEL_DETAIL_TAG";
+
 
     /**
      * Case By:创建参数基础信息
