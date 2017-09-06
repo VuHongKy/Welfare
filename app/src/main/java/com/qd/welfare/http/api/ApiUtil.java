@@ -61,6 +61,9 @@ public class ApiUtil {
     public static final String UPDATE_VERSION = "/version/android";
     public static final String UPDATE_VERSION_TAG = "UPDATE_VERSION_TAG";
 
+    public static final String NOVEL="/novel";
+    public static final String NOVEL_TAG="NOVEL_TAG";
+
 
     /**
      * Case By:创建参数基础信息

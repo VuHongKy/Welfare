@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <com.qd.welfare.widgets.RatioImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        app:base="horizontal"
+        app:horizontal_weight="192"
+        app:vertical_weight="252" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="一万冷少惹不得"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="一万冷少惹不得一万冷少惹不得一万冷少惹不得一万冷少惹不得"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/actor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="作者名称"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+            <co.lujun.androidtagview.TagContainerLayout
+                android:id="@+id/tag_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/status"
+                android:layout_toRightOf="@+id/actor"
+                app:container_border_color="@color/white"
+                app:container_background_color="@color/white"
+                app:container_enable_drag="false"
+                app:container_max_lines="1"
+                app:horizontal_interval="3dp"
+                android:foregroundGravity="right"
+                app:tag_background_color="@color/white"
+                app:tag_border_color="@color/tab_select"
+                app:tag_clickable="false"
+                app:tag_corner_radius="3dp"
+                app:tag_text_color="@color/tab_select"
+                app:tag_text_size="10sp"
+                app:tag_theme="none"
+                app:tag_vertical_padding="3dp"
+                app:vertical_interval="5dp" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/number"
+                android:background="@drawable/bg_novel_tag"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="连载"
+                android:textColor="@color/tab_select"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_novel_tag"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="12.3万字"
+                android:textColor="@color/tab_select"
+                android:textSize="10sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

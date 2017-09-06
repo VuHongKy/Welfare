@@ -19,4 +19,9 @@ public class PageConfig {
     public static final int MINE = 12;
     public static final int OPEN_VIP = 13;
     public static final int OPEN_VIP_YOUHUI = 14;
+    public static final int NOVEL_INDEX = 15;
+    public static final int NOVEL_CHAPTER = 16;
+    public static final int NOVEL_DETAIL = 17;
+    public static final int SHOP_MALE = 18;
+    public static final int SHOP_FEMALE = 19;
 }
