@@ -166,16 +166,24 @@ public class VideoDetailActivity extends SwipeBackActivity {
                 .execute(new JsonCallback<LzyResponse<List<VideoInfo>>>() {
                     @Override
                     public void onSuccess(Response<LzyResponse<List<VideoInfo>>> response) {
-                        list.clear();
-                        list.addAll(response.body().data);
-                        adapter.notifyDataSetChanged();
-                        statusLayout.showContent();
+                        try {
+                            list.clear();
+                            list.addAll(response.body().data);
+                            adapter.notifyDataSetChanged();
+                            statusLayout.showContent();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onError(Response<LzyResponse<List<VideoInfo>>> response) {
                         super.onError(response);
-                        statusLayout.showFailed(retryListener);
+                        try {
+                            statusLayout.showFailed(retryListener);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

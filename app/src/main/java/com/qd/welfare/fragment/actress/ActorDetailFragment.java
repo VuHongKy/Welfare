@@ -194,32 +194,40 @@ public class ActorDetailFragment extends BaseBackFragment {
                     .execute(new JsonCallback<LzyResponse<ActorDetailResultInfo>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<ActorDetailResultInfo>> response) {
-                            page = curPage;
-                            if (curPage == 1) {
-                                list.clear();
+                            try {
+                                page = curPage;
+                                if (curPage == 1) {
+                                    list.clear();
+                                }
+                                list.addAll(response.body().data.getGallery().getData());
+                                detailAdapter.notifyDataSetChanged();
+                                if (isFirst) {
+                                    statusLayout.showContent();
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                }
+                                boolean hasMore = page < response.body().data.getGallery().getInfo().getPage_total();
+                                if (ptrLayout.isLoading()) {
+                                    ptrLayout.loadMoreComplete(hasMore);
+                                }
+                                bindHeaderView(response.body().data.getActor());
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            list.addAll(response.body().data.getGallery().getData());
-                            detailAdapter.notifyDataSetChanged();
-                            if (isFirst) {
-                                statusLayout.showContent();
-                            } else {
-                                ptrLayout.refreshComplete();
-                            }
-                            boolean hasMore = page < response.body().data.getGallery().getInfo().getPage_total();
-                            if (ptrLayout.isLoading()) {
-                                ptrLayout.loadMoreComplete(hasMore);
-                            }
-                            bindHeaderView(response.body().data.getActor());
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<ActorDetailResultInfo>> response) {
                             super.onError(response);
-                            if (isFirst) {
-                                statusLayout.showFailed(retryListener);
-                            } else {
-                                ptrLayout.refreshComplete();
-                                ptrLayout.loadMoreComplete(true);
+                            try {
+                                if (isFirst) {
+                                    statusLayout.showFailed(retryListener);
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                    ptrLayout.loadMoreComplete(true);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     });

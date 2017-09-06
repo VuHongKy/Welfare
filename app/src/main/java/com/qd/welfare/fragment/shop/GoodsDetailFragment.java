@@ -256,6 +256,7 @@ public class GoodsDetailFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
+        OkGo.getInstance().cancelTag(ApiUtil.GOODS_DETAIL_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }

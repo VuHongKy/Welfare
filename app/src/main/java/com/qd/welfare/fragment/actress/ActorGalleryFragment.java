@@ -162,15 +162,24 @@ public class ActorGalleryFragment extends BaseBackFragment {
                     .execute(new JsonCallback<LzyResponse<List<GalleryInfo>>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<List<GalleryInfo>>> response) {
-                            statusLayout.showContent();
-                            list.addAll(response.body().data);
-                            initViewPager();
+                            try{
+                                statusLayout.showContent();
+                                list.addAll(response.body().data);
+                                initViewPager();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<List<GalleryInfo>>> response) {
                             super.onError(response);
-                            statusLayout.showFailed(retryListener);
+                            try{
+                                statusLayout.showFailed(retryListener);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     });
 

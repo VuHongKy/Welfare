@@ -95,8 +95,12 @@ public class MineFragment extends BaseBackFragment {
                 .execute(new JsonCallback<LzyResponse<List<VideoInfo>>>() {
                     @Override
                     public void onSuccess(Response<LzyResponse<List<VideoInfo>>> response) {
-                        RecommendAdapter adapter = new RecommendAdapter(getContext(), response.body().data);
-                        gridView.setAdapter(adapter);
+                        try {
+                            RecommendAdapter adapter = new RecommendAdapter(getContext(), response.body().data);
+                            gridView.setAdapter(adapter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

@@ -165,34 +165,44 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                     .execute(new JsonCallback<LzyResponse<VideoResultInfo>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<VideoResultInfo>> response) {
-                            if (isFirst) {
-                                statusLayout.showContent();
-                            } else {
-                                ptrLayout.refreshComplete();
+                            try {
+                                if (isFirst) {
+                                    statusLayout.showContent();
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                }
+                                list.clear();
+                                list.addAll(response.body().data.getTry_other());
+                                if (App.userInfo.getRole() > 1) {
+                                    footerView.setVisibility(View.GONE);
+                                    footerView.setPadding(0, -footerView.getHeight(), 0, 0);
+                                    list.addAll(response.body().data.getVip_other());
+                                } else {
+                                    footerView.setVisibility(View.VISIBLE);
+                                    footerView.setPadding(0, 0, 0, 0);
+                                }
+                                adapter.notifyDataSetChanged();
+                                bindBanner(response.body().data.getTry_banner().getVideo());
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            list.clear();
-                            list.addAll(response.body().data.getTry_other());
-                            if (App.userInfo.getRole() > 1) {
-                                footerView.setVisibility(View.GONE);
-                                footerView.setPadding(0, -footerView.getHeight(), 0, 0);
-                                list.addAll(response.body().data.getVip_other());
-                            } else {
-                                footerView.setVisibility(View.VISIBLE);
-                                footerView.setPadding(0, 0, 0, 0);
-                            }
-                            adapter.notifyDataSetChanged();
-                            bindBanner(response.body().data.getTry_banner().getVideo());
+
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<VideoResultInfo>> response) {
                             super.onError(response);
-                            if (isFirst) {
-                                statusLayout.showFailed(retryListener);
-                            } else {
-                                ptrLayout.refreshComplete();
-                                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                            try {
+                                if (isFirst) {
+                                    statusLayout.showFailed(retryListener);
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                    ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+
                         }
                     });
         } else {

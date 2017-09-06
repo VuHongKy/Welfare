@@ -205,38 +205,44 @@ public class ActressFragment extends BaseMainFragment {
                     .execute(new JsonCallback<LzyResponse<List<ActressInfo>>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<List<ActressInfo>>> response) {
-                            if (isFirst) {
-                                statusLayout.showContent();
-                            } else {
-                                ptrLayout.refreshComplete();
-                            }
-                            if (response.body().data == null || response.body().data.size() == 0) {
-                                statusLayout.showNone(retryListener);
-                            } else {
-                                list.clear();
-                                List<ActressInfo> headerList = new ArrayList<ActressInfo>();
-                                for (int i = 0; i < response.body().data.size(); i++) {
-                                    if (i < 3) {
-                                        headerList.add(response.body().data.get(i));
-                                    } else {
-                                        list.add(response.body().data.get(i));
-                                    }
+                            try{
+                                if (isFirst) {
+                                    statusLayout.showContent();
+                                } else {
+                                    ptrLayout.refreshComplete();
                                 }
-                                bindHeaderView(headerList);
-                                adapter.notifyDataSetChanged();
+                                if (response.body().data == null || response.body().data.size() == 0) {
+                                    statusLayout.showNone(retryListener);
+                                } else {
+                                    list.clear();
+                                    List<ActressInfo> headerList = new ArrayList<ActressInfo>();
+                                    for (int i = 0; i < response.body().data.size(); i++) {
+                                        if (i < 3) {
+                                            headerList.add(response.body().data.get(i));
+                                        } else {
+                                            list.add(response.body().data.get(i));
+                                        }
+                                    }
+                                    bindHeaderView(headerList);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
-
-
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<List<ActressInfo>>> response) {
                             super.onError(response);
-                            if (isFirst) {
-                                statusLayout.showNetError(retryListener);
-                            } else {
-                                ptrLayout.refreshComplete();
-                                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                            try{
+                                if (isFirst) {
+                                    statusLayout.showNetError(retryListener);
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                    ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
                         }
                     });

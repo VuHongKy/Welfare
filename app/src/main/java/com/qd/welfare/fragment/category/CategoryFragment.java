@@ -114,30 +114,39 @@ public class CategoryFragment extends BaseMainFragment {
                     .execute(new JsonCallback<LzyResponse<List<CateGroyInfo>>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<List<CateGroyInfo>>> response) {
-                            if (response.body().data == null || response.body().data.size() == 0) {
-                                statusLayout.showNone();
-                            } else {
-                                statusLayout.showContent();
-                                CateGroyViewPagerAdapter adapter = new CateGroyViewPagerAdapter(getContext(), response.body().data);
-                                viewPager.setAdapter(adapter);
-                                tab.setupWithViewPager(viewPager);
-                                adapter.setOnCateGoryItemClickListener(new CateGroyViewPagerAdapter.OnCateGoryItemClickListener() {
-                                    @Override
-                                    public void onCateGoryItemClick(CateGroyInfo info) {
-                                        if (App.userInfo.getRole() > 1) {
-                                            EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
-                                        } else {
-                                            DialogUtil.showOpenViewDialog(getContext(), PageConfig.CATEGORY, info.getId());
+                            try {
+                                if (response.body().data == null || response.body().data.size() == 0) {
+                                    statusLayout.showNone();
+                                } else {
+                                    statusLayout.showContent();
+                                    CateGroyViewPagerAdapter adapter = new CateGroyViewPagerAdapter(getContext(), response.body().data);
+                                    viewPager.setAdapter(adapter);
+                                    tab.setupWithViewPager(viewPager);
+                                    adapter.setOnCateGoryItemClickListener(new CateGroyViewPagerAdapter.OnCateGoryItemClickListener() {
+                                        @Override
+                                        public void onCateGoryItemClick(CateGroyInfo info) {
+                                            if (App.userInfo.getRole() > 1) {
+                                                EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
+                                            } else {
+                                                DialogUtil.showOpenViewDialog(getContext(), PageConfig.CATEGORY, info.getId());
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<List<CateGroyInfo>>> response) {
                             super.onError(response);
-                            statusLayout.showFailed(retryListener);
+                            try {
+                                statusLayout.showFailed(retryListener);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
         } else {

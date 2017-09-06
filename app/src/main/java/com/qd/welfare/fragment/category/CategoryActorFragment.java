@@ -160,28 +160,36 @@ public class CategoryActorFragment extends BaseBackFragment {
                     .execute(new JsonCallback<LzyResponse<CateGroyActorResultInfo>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<CateGroyActorResultInfo>> response) {
-                            if (isFirst) {
-                                statusLayout.showContent();
-                            } else {
-                                ptrLayout.refreshComplete();
+                            try {
+                                if (isFirst) {
+                                    statusLayout.showContent();
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                }
+                                ptrLayout.loadMoreComplete(currentPage < response.body().data.getInfo().getPage_total());
+                                if (currentPage == 1) {
+                                    list.clear();
+                                }
+                                page = currentPage;
+                                list.addAll(response.body().data.getData());
+                                adapter.notifyDataSetChanged();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            ptrLayout.loadMoreComplete(currentPage < response.body().data.getInfo().getPage_total());
-                            if (currentPage == 1) {
-                                list.clear();
-                            }
-                            page = currentPage;
-                            list.addAll(response.body().data.getData());
-                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<CateGroyActorResultInfo>> response) {
                             super.onError(response);
-                            if (isFirst) {
-                                statusLayout.showFailed(retryListener);
-                            } else {
-                                ptrLayout.refreshComplete();
-                                ptrLayout.loadMoreComplete(true);
+                            try {
+                                if (isFirst) {
+                                    statusLayout.showFailed(retryListener);
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                    ptrLayout.loadMoreComplete(true);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     });
