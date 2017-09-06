@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.NovelAdapter;
@@ -106,6 +107,8 @@ public class NovelFragment extends BaseMainFragment {
             if (isFirst) {
                 statusLayout.showLoading();
             }
+            HttpParams params = new HttpParams();
+            params.put("page", currentPage);
             OkGo.<LzyResponse<NovelResultInfo>>get(ApiUtil.API_PRE + ApiUtil.NOVEL)
                     .tag(ApiUtil.NOVEL_TAG)
                     .execute(new JsonCallback<LzyResponse<NovelResultInfo>>() {
