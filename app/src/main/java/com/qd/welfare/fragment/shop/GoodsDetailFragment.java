@@ -13,8 +13,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
+import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.base.BaseFragment;
+import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.GoodsDetailInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -157,6 +159,7 @@ public class GoodsDetailFragment extends BaseFragment {
                             try {
                                 if (isFirst) {
                                     statusLayout.showContent();
+                                    MainActivity.upLoadPageInfo(PageConfig.SHOP, response.body().data.getId());
                                 } else {
                                     ptrLayout.refreshComplete();
                                 }
