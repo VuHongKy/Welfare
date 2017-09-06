@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qd.welfare.App;
@@ -63,14 +64,24 @@ public class CateGroyViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(View container, final int position) {
         if (mDrawableResIdList != null && position < mDrawableResIdList.size()) {
-            String filePath = mDrawableResIdList.get(position).getThumb();
+            CateGroyInfo info = mDrawableResIdList.get(position);
+            String filePath = info.getThumb();
             if (filePath != null) {
                 View itemView = LayoutInflater.from(mContext).inflate(R.layout.fragment_categroy_item, null);
                 RatioImageView imageView = itemView.findViewById(R.id.image);
                 ImageView backImage = itemView.findViewById(R.id.backImage);
+                TextView click_number = itemView.findViewById(R.id.click_number);
+                TextView update_number = itemView.findViewById(R.id.update_number);
+                TextView name = itemView.findViewById(R.id.name);
+
+                click_number.setText(info.getView_times() + "人点击");
+                name.setText(info.getTitle());
+                update_number.setText("更新至" + info.getUpdate_to() + "部");
+
                 Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).centerCrop().into(imageView);
                 Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).bitmapTransform(new BlurTransformation(mContext)).into(backImage);
                 itemView.setTag(filePath);
+
                 ((ViewPager) container).addView(itemView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

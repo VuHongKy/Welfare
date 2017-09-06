@@ -18,6 +18,9 @@ public class CateGroyInfo implements Serializable {
     private int id;
     private String title;
     private String thumb;
+    private int view_times;
+    private int update_to;
+
 
     public int getId() {
         return id;
@@ -41,5 +44,21 @@ public class CateGroyInfo implements Serializable {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public int getView_times() {
+        return view_times;
+    }
+
+    public void setView_times(int view_times) {
+        this.view_times = view_times;
+    }
+
+    public int getUpdate_to() {
+        return update_to;
+    }
+
+    public void setUpdate_to(int update_to) {
+        this.update_to = update_to;
     }
 }
