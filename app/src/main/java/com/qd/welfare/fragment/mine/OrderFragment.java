@@ -101,7 +101,7 @@ public class OrderFragment extends BaseBackFragment {
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-
+                start(OrderDetailFragment.newInstance(list.get(position).getId()));
             }
         });
     }
@@ -140,6 +140,7 @@ public class OrderFragment extends BaseBackFragment {
                                 if (isFirst) {
                                     statusLayout.showFailed(retryListener);
                                 } else {
+                                    ptrLayout.refreshComplete();
                                     if (response.getException() != null && !TextUtils.isEmpty(response.getException().getMessage())) {
                                         ToastUtils.getInstance(_mActivity).showToast(response.getException().getMessage());
                                     } else {
@@ -155,6 +156,7 @@ public class OrderFragment extends BaseBackFragment {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
+                ptrLayout.refreshComplete();
                 ToastUtils.getInstance(_mActivity).showToast("请检查网络连接");
             }
         }
@@ -169,6 +171,7 @@ public class OrderFragment extends BaseBackFragment {
 
     @Override
     public void onDestroyView() {
+        OkGo.getInstance().cancelTag(ApiUtil.ORDER_LIST_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }

@@ -82,6 +82,13 @@ public class ApiUtil {
     public static final String ORDER_LIST = "/order/lists";
     public static final String ORDER_LIST_TAG = "ORDER_LIST_TAG";
 
+    public static final String ORDER_DETAIL="/order/detail";
+    public static final String ORDER_DETAIL_TAG="ORDER_DETAIL_TAG";
+
+    //获取物流信息
+    public static final String GET_LOGISTICS = "http://www.kuaidi100.com/query";
+    public static final String GET_LOGISTICS_TAG = "GET_LOGISTICS_TAG";
+
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19

@@ -87,4 +87,6 @@ dependencies {
     compile 'com.bm.photoview:library:1.4.1'
     //tagView
     compile 'co.lujun:androidtagview:1.1.4'
+    //json解析
+    compile 'com.alibaba:fastjson:1.2.31'
 }

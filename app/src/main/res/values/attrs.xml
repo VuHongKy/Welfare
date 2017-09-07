@@ -43,4 +43,17 @@
             <flag name="end" value="0x00800005" />
         </attr>
     </declare-styleable>
+    <!--时间轴-->
+    <declare-styleable name="timeline_style">
+        <attr name="marker" format="color|reference" />
+        <attr name="line" format="color|reference" />
+        <attr name="markerSize" format="dimension" />
+        <attr name="lineSize" format="dimension" />
+        <attr name="lineOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="linePadding" format="dimension" />
+        <attr name="markerInCenter" format="boolean" />
+    </declare-styleable>
 </resources>
