@@ -29,8 +29,10 @@ import android.widget.Toast;
 
 import com.qd.welfare.App;
 import com.qd.welfare.R;
-import com.qd.welfare.config.PageConfig;
-import com.qd.welfare.utils.DialogUtil;
+import com.qd.welfare.event.VideoOpenVipEvent;
+import com.zhl.cbdialog.CBDialogBuilder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -479,10 +481,33 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
             onStatePause();
-//            if (!TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
-//                JCUtils.clearSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
-//            }
-            DialogUtil.showOpenViewDialog(getContext(), PageConfig.VIDEO_DETAIL_TRY, 0);
+            CBDialogBuilder builder = new CBDialogBuilder(getContext());
+            TextView titleView = builder.getView(R.id.dialog_title);
+            titleView.setSingleLine(false);
+            builder.setTouchOutSideCancelable(false)
+                    .showCancelButton(true)
+                    .setTitle("非会员只能试看体验")
+                    .setMessage("")
+                    .setCustomIcon(0)
+                    .setConfirmButtonText("确定")
+                    .setCancelButtonText("取消")
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                        @Override
+                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                            switch (whichBtn) {
+                                case BUTTON_CONFIRM:
+                                case BUTTON_CANCEL:
+                                    backPress();
+                                    dialog.cancel();
+                                    EventBus.getDefault().post(new VideoOpenVipEvent());
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    })
+                    .create().show();
         }
         currentTime = position;
     }

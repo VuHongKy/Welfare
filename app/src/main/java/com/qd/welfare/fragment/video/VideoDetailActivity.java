@@ -22,6 +22,7 @@ import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.VideoDetailInfo;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.event.OpenVipSuccessEvent;
+import com.qd.welfare.event.VideoOpenVipEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -34,6 +35,7 @@ import com.qd.welfare.widgets.LoadingDialog;
 import com.qd.welfare.widgets.RatioImageView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_video_detail);
+        EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this);
         videoId = getIntent().getIntExtra("id", 0);
         initToolbar();
@@ -197,6 +200,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.VIDEO_DETAIL_TAG);
         super.onDestroy();
@@ -285,5 +289,12 @@ public class VideoDetailActivity extends SwipeBackActivity {
                         }
                     }
                 });
+    }
+
+    @Subscribe
+    public void onOpenVip(VideoOpenVipEvent event) {
+        if (App.userInfo.getRole() <= 1) {
+            DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
+        }
     }
 }
