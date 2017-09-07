@@ -45,6 +45,9 @@ public class App extends Application {
     public static boolean isNeedCheckOrder = false;
     public static int orderIdInt = 0;
 
+    public static boolean isNeedCheckGoodsOrder = false;
+    public static int goodsOrderId = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();

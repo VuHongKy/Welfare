@@ -90,6 +90,73 @@ public class PayUtil {
                         }
                     }
                 });
+    }
 
+
+    /**
+     * 商品支付
+     */
+    public static void createOrder(final Context context, HttpParams params) {
+        final LoadingDialog loadingDialog = LoadingDialog.getInstance(context);
+        loadingDialog.showLoadingDialog("正在创建订单...");
+        OkGo.<LzyResponse<PayInfo>>post(ApiUtil.API_PRE + ApiUtil.CREATE_ORDER)
+                .tag(ApiUtil.CREATE_ORDER_TAG)
+                .params(params)
+                .execute(new JsonCallback<LzyResponse<PayInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<PayInfo>> response) {
+                        try {
+                            PayInfo payInfo = response.body().data;
+                            if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_SCAN) {
+                                //扫码
+                                WxQRCodePayDialog.Builder builder = new WxQRCodePayDialog.Builder(context, payInfo.getQr_url());
+                                WxQRCodePayDialog wxQRCodePayDialog = builder.create();
+                                wxQRCodePayDialog.show();
+                            } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_SCAN) {
+                                //公众号扫码
+                                WxQRCodePayDialog.Builder builder = new WxQRCodePayDialog.Builder(context, payInfo.getQr_url());
+                                WxQRCodePayDialog wxQRCodePayDialog = builder.create();
+                                wxQRCodePayDialog.show();
+                            } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_CHANGE) {
+                                //公众号跳转
+                                Intent intent = new Intent(context, WechatPayActivity.class);
+                                intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
+                                context.startActivity(intent);
+                            } else if (payInfo.getApi_type() == AppConfig.API_TYPE_ALIPAY_SCAN) {
+                                Intent intent = new Intent(context, AliPayActivity.class);
+                                intent.putExtra(AliPayActivity.ALIPAY_URL, payInfo.getUrl());
+                                context.startActivity(intent);
+                            }
+                            App.isNeedCheckGoodsOrder = true;
+                            App.goodsOrderId = payInfo.getOrder_id();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<LzyResponse<PayInfo>> response) {
+                        super.onError(response);
+                        try {
+                            if (response.getException() != null && !TextUtils.isEmpty(response.getException().getMessage())) {
+                                ToastUtils.getInstance(context).showToast(response.getException().getMessage());
+                            } else {
+                                ToastUtils.getInstance(context).showToast("支付信息获取失败请重试，或更换支付方式");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        try {
+                            loadingDialog.cancelLoadingDialog();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

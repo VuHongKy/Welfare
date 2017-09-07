@@ -64,6 +64,14 @@ public class MainActivity extends SupportActivity {
                 App.isNeedCheckOrder = false;
                 App.orderIdInt = 0;
             }
+
+            if (App.isNeedCheckGoodsOrder && App.goodsOrderId != 0) {
+                checkGoodsOrder();
+            } else {
+                App.isNeedCheckGoodsOrder = false;
+                App.goodsOrderId = 0;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,6 +199,10 @@ public class MainActivity extends SupportActivity {
                         }
                     }
                 });
+    }
+
+    private void checkGoodsOrder() {
+
     }
 
     public void getUpdateVersion(final boolean isMine) {

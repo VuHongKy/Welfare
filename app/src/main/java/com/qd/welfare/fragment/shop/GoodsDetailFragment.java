@@ -2,6 +2,7 @@ package com.qd.welfare.fragment.shop;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,20 @@ import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.base.BaseFragment;
 import com.qd.welfare.config.PageConfig;
+import com.qd.welfare.entity.CreateOrderInfo;
 import com.qd.welfare.entity.GoodsDetailInfo;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.pay.PayUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.PriceUtil;
+import com.qd.welfare.utils.SharedPreferencesUtil;
+import com.qd.welfare.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import wiki.scene.loadmore.PtrClassicFrameLayout;
 import wiki.scene.loadmore.PtrDefaultHandler;
@@ -254,9 +260,45 @@ public class GoodsDetailFragment extends BaseFragment {
         }
     };
 
+    private ConfirmOrderPopupWindow popupWindow;
+
+    @OnClick(R.id.buy_now)
+    public void onClickBuyNow() {
+        if (popupWindow == null) {
+            popupWindow = new ConfirmOrderPopupWindow(getContext(), info);
+            popupWindow.setOnClickConfirmPayListener(new ConfirmOrderPopupWindow.OnClickConfirmPayListener() {
+                @Override
+                public void onClickConfirmPay(CreateOrderInfo createOrderInfo) {
+                    try {
+
+                        HttpParams params = new HttpParams();
+                        params.put("goods_id", createOrderInfo.getGoods_id());
+                        params.put("user_id", createOrderInfo.getUser_id());
+                        params.put("pay_type", createOrderInfo.getPay_type());
+                        params.put("number", createOrderInfo.getNumber());
+                        params.put("address", createOrderInfo.getAddress());
+                        params.put("username", createOrderInfo.getUsername());
+                        params.put("phone", createOrderInfo.getPhone());
+                        PayUtil.createOrder(getContext(), params);
+                        SharedPreferencesUtil.putString(_mActivity, "address", createOrderInfo.getAddress());
+                        SharedPreferencesUtil.putString(_mActivity, "username", createOrderInfo.getUsername());
+                        SharedPreferencesUtil.putString(_mActivity, "phone", createOrderInfo.getPhone());
+                        popupWindow.dismiss();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ToastUtils.getInstance(getContext()).showToast("订单创建失败，请稍后再试");
+                    }
+
+                }
+            });
+        }
+        popupWindow.showAtLocation(buyNow, Gravity.BOTTOM, 0, 0);
+    }
+
     @Override
     public void onDestroyView() {
         OkGo.getInstance().cancelTag(ApiUtil.GOODS_DETAIL_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.CREATE_ORDER_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }
