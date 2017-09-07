@@ -79,6 +79,9 @@ public class ApiUtil {
     public static final String CHECK_GOODS_ORDER = "/order/is_success";
     public static final String CHECK_GOODS_ORDER_TAG = "CHECK_GOODS_ORDER_TAG";
 
+    public static final String ORDER_LIST = "/order/lists";
+    public static final String ORDER_LIST_TAG = "ORDER_LIST_TAG";
+
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19

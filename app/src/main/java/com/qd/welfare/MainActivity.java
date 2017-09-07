@@ -240,8 +240,8 @@ public class MainActivity extends SupportActivity {
                         super.onFinish();
                         try {
                             loadingDialog.cancelLoadingDialog();
-                            App.isNeedCheckOrder = false;
-                            App.orderIdInt = 0;
+                            App.isNeedCheckGoodsOrder = false;
+                            App.goodsOrderId = 0;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

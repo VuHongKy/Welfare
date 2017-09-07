@@ -54,8 +54,6 @@ public class MineFragment extends BaseBackFragment {
     @BindView(R.id.userId)
     TextView userId;
 
-    private LoadingDialog loadingDialog;
-
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
         MineFragment fragment = new MineFragment();
@@ -112,6 +110,11 @@ public class MineFragment extends BaseBackFragment {
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.my_order)
+    public void onClickMyOrder() {
+        EventBus.getDefault().post(new StartBrotherEvent(OrderFragment.newInstance()));
     }
 
     @OnClick(R.id.openVip)
