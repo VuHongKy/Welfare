@@ -27,7 +27,6 @@ import com.qd.welfare.utils.GlideCacheUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.CustomeGridView;
 import com.qd.welfare.widgets.LoadingDialog;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -165,6 +164,11 @@ public class MineFragment extends BaseBackFragment {
         GlideCacheUtil.getInstance().clearCacheDiskSelf(_mActivity);
         loadingDialog.cancelLoadingDialog();
         ToastUtils.getInstance(_mActivity).showToast("缓存清理成功");
+    }
+
+    @OnClick(R.id.service_center)
+    public void onClickServiceCenter() {
+        EventBus.getDefault().post(new StartBrotherEvent(ServiceCenterFragment.newInstance()));
     }
 
 }
