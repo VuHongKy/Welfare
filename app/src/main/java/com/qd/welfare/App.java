@@ -17,6 +17,7 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.qd.welfare.entity.CommonInfo;
 import com.qd.welfare.entity.UserInfo;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -55,6 +56,7 @@ public class App extends Application {
         CHANNEL_ID = getChannelName();
         RESOURCE_ID = getResouyceName();
         initOKhttp();
+        CrashReport.initCrashReport(getApplicationContext(), "f4e4d1e5e4", false);
     }
 
     /**

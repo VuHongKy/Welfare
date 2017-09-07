@@ -27,6 +27,7 @@ import com.qd.welfare.utils.GlideCacheUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.CustomeGridView;
 import com.qd.welfare.widgets.LoadingDialog;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 

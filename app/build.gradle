@@ -89,4 +89,6 @@ dependencies {
     compile 'co.lujun:androidtagview:1.1.4'
     //json解析
     compile 'com.alibaba:fastjson:1.2.31'
+    //bugly
+    compile 'com.tencent.bugly:crashreport:2.6.5'
 }
