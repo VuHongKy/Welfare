@@ -50,10 +50,14 @@ public class MineFragment extends BaseBackFragment {
     TextView toolbarTitle;
     @BindView(R.id.gridView)
     CustomeGridView gridView;
-
-    Unbinder unbinder;
+    @BindView(R.id.vip_type)
+    TextView vipType;
+    @BindView(R.id.openVip)
+    TextView openVip;
     @BindView(R.id.userId)
     TextView userId;
+
+    Unbinder unbinder;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -80,6 +84,20 @@ public class MineFragment extends BaseBackFragment {
                 _mActivity.onBackPressed();
             }
         });
+        if (App.userInfo.getRole() > 1) {
+            openVip.setVisibility(View.GONE);
+            vipType.setVisibility(View.VISIBLE);
+            if (App.userInfo.getRole() == 2) {
+                //包月
+                vipType.setText("包月会员");
+            } else if (App.userInfo.getRole() == 3) {
+                //包年
+                vipType.setText("包年会员");
+            }
+        } else {
+            openVip.setVisibility(View.VISIBLE);
+            vipType.setVisibility(View.GONE);
+        }
         userId.setText(String.valueOf(App.userInfo.getId()));
         MainActivity.upLoadPageInfo(PageConfig.MINE, 0);
         getData();

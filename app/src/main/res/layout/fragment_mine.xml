@@ -37,42 +37,61 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#2F2B4C"
-                android:padding="10dp"
-                android:src="@drawable/ic_default_avater" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#2F2B4C"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:paddingBottom="14dp"
-                android:paddingTop="4dp">
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#2F2B4C"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_default_avater" />
 
                 <TextView
+                    android:id="@+id/vip_type"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/ic_vip"
                     android:gravity="center_horizontal"
-                    android:text="用户ID:"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textColor="#333333"
+                    android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/userId"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#2F2B4C"
                     android:gravity="center_horizontal"
-                    android:text="123456"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="用户ID:"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/userId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="123456"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/openVip"
