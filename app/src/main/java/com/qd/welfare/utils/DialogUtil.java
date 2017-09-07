@@ -76,4 +76,19 @@ public class DialogUtil {
             dialog.cancel();
         }
     }
+
+    public static void showDialog(Context context, String message) {
+        cancelDialog();
+        CBDialogBuilder builder = new CBDialogBuilder(context);
+        TextView titleView = builder.getView(R.id.dialog_title);
+        titleView.setSingleLine(false);
+        builder.setTouchOutSideCancelable(false)
+                .showCancelButton(false)
+                .setTitle(message)
+                .setMessage("")
+                .setConfirmButtonText("确定")
+                .setCancelButtonText("取消")
+                .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                .create().show();
+    }
 }

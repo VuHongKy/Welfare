@@ -202,7 +202,51 @@ public class MainActivity extends SupportActivity {
     }
 
     private void checkGoodsOrder() {
+        loadingDialog = LoadingDialog.getInstance(MainActivity.this);
+        loadingDialog.showLoadingDialog("正在获取支付结果...");
+        HttpParams params = new HttpParams();
+        params.put("order_id", App.goodsOrderId);
+        params.put("user_id", App.userInfo.getId());
+        OkGo.<LzyResponse<PayResultInfo>>get(ApiUtil.API_PRE + ApiUtil.CHECK_GOODS_ORDER)
+                .tag(ApiUtil.CHECK_GOODS_ORDER_TAG)
+                .params(params)
+                .execute(new JsonCallback<LzyResponse<PayResultInfo>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<PayResultInfo>> response) {
+                        try {
+                            if (response.body().data.isPay_success()) {
+                                DialogUtil.showDialog(MainActivity.this, "恭喜您成功购买商品");
+                            } else {
+                                ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                        }
+                    }
 
+                    @Override
+                    public void onError(Response<LzyResponse<PayResultInfo>> response) {
+                        super.onError(response);
+                        try {
+                            ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        try {
+                            loadingDialog.cancelLoadingDialog();
+                            App.isNeedCheckOrder = false;
+                            App.orderIdInt = 0;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     public void getUpdateVersion(final boolean isMine) {

@@ -61,20 +61,24 @@ public class ApiUtil {
     public static final String UPDATE_VERSION = "/version/android";
     public static final String UPDATE_VERSION_TAG = "UPDATE_VERSION_TAG";
 
-    public static final String NOVEL="/novel";
-    public static final String NOVEL_TAG="NOVEL_TAG";
+    public static final String NOVEL = "/novel";
+    public static final String NOVEL_TAG = "NOVEL_TAG";
 
-    public static final String NOVEL_CHAPTER="/novel/chapter";
-    public static final String NOVEL_CHAPTER_TAG="NOVEL_CHAPTER_TAG";
+    public static final String NOVEL_CHAPTER = "/novel/chapter";
+    public static final String NOVEL_CHAPTER_TAG = "NOVEL_CHAPTER_TAG";
 
-    public static final String NOVEL_DETAIL="/novel/detail";
-    public static final String NOVEL_DETAIL_TAG="NOVEL_DETAIL_TAG";
+    public static final String NOVEL_DETAIL = "/novel/detail";
+    public static final String NOVEL_DETAIL_TAG = "NOVEL_DETAIL_TAG";
 
-    public static final String GOODS_DETAIL="/goods/detail";
-    public static final String GOODS_DETAIL_TAG="GOODS_DETAIL_TAG";
+    public static final String GOODS_DETAIL = "/goods/detail";
+    public static final String GOODS_DETAIL_TAG = "GOODS_DETAIL_TAG";
 
-    public static final String CREATE_ORDER="/order";
-    public static final String CREATE_ORDER_TAG="CREATE_ORDER_TAG";
+    public static final String CREATE_ORDER = "/order";
+    public static final String CREATE_ORDER_TAG = "CREATE_ORDER_TAG";
+
+    public static final String CHECK_GOODS_ORDER = "/order/is_success";
+    public static final String CHECK_GOODS_ORDER_TAG = "CHECK_GOODS_ORDER_TAG";
+
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19
