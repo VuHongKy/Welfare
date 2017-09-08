@@ -205,6 +205,7 @@ public class NovelListFragment extends BaseBackFragment {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
+                ptrLayout.refreshComplete();
                 ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
             }
         }
