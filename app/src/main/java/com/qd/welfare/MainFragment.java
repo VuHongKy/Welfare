@@ -14,7 +14,7 @@ import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
 import com.qd.welfare.fragment.category.CategoryFragment;
 import com.qd.welfare.fragment.mine.MineFragment;
-import com.qd.welfare.fragment.novel.NovelFragment;
+import com.qd.welfare.fragment.novel.NovelIndexFragment;
 import com.qd.welfare.fragment.shop.ShopFragment;
 import com.qd.welfare.fragment.video.VideoFragment;
 import com.qd.welfare.view.BottomBar;
@@ -86,7 +86,7 @@ public class MainFragment extends BaseFragment {
             mFragments[FIRST] = VideoFragment.newInstance();
             mFragments[SECOND] = CategoryFragment.newInstance();
             mFragments[THIRD] = ActressFragment.newInstance();
-            mFragments[FOUR] = NovelFragment.newInstance();
+            mFragments[FOUR] = NovelIndexFragment.newInstance();
             mFragments[FIVE] = ShopFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
@@ -100,7 +100,7 @@ public class MainFragment extends BaseFragment {
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findChildFragment(CategoryFragment.class);
             mFragments[THIRD] = findChildFragment(ActressFragment.class);
-            mFragments[FOUR] = findChildFragment(NovelFragment.class);
+            mFragments[FOUR] = findChildFragment(NovelIndexFragment.class);
             mFragments[FIVE] = findChildFragment(ShopFragment.class);
         }
         try {

@@ -2,7 +2,7 @@ package com.qd.welfare.fragment.novel;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,22 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
-import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
-import com.qd.welfare.adapter.NovelAdapter;
+import com.qd.welfare.adapter.NovelIndexAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.config.PageConfig;
-import com.qd.welfare.entity.NovelInfo;
-import com.qd.welfare.entity.NovelResultInfo;
+import com.qd.welfare.entity.NovelCateGoryInfo;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.itemDecoration.SpacesItemDecoration;
-import com.qd.welfare.utils.DialogUtil;
+import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
 
@@ -41,16 +37,16 @@ import wiki.scene.loadmore.PtrClassicFrameLayout;
 import wiki.scene.loadmore.PtrDefaultHandler;
 import wiki.scene.loadmore.PtrFrameLayout;
 import wiki.scene.loadmore.StatusViewLayout;
-import wiki.scene.loadmore.loadmore.OnLoadMoreListener;
 import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
- * 小说首页
- * Created by scene on 2017/9/4.
+ * 分类首页
+ * Created by scene on 2017/9/8.
  */
 
-public class NovelFragment extends BaseMainFragment {
+public class NovelIndexFragment extends BaseMainFragment {
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.ptr_layout)
@@ -60,13 +56,13 @@ public class NovelFragment extends BaseMainFragment {
 
     Unbinder unbinder;
 
-    private List<NovelInfo> list = new ArrayList<>();
-    private NovelAdapter adapter;
-    private int page = 1;
+    private List<NovelCateGoryInfo> list = new ArrayList<>();
+    private NovelIndexAdapter adapter;
 
-    public static NovelFragment newInstance() {
+
+    public static NovelIndexFragment newInstance() {
         Bundle args = new Bundle();
-        NovelFragment fragment = new NovelFragment();
+        NovelIndexFragment fragment = new NovelIndexFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +70,7 @@ public class NovelFragment extends BaseMainFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_novel, container, false);
+        View view = inflater.inflate(R.layout.fragment_novel_index, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -82,9 +78,9 @@ public class NovelFragment extends BaseMainFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        MainActivity.upLoadPageInfo(PageConfig.NOVEL_CATEGORY, 0);
         initView();
-        getData(true, 1);
-        MainActivity.upLoadPageInfo(PageConfig.NOVEL_INDEX, 0);
+        getData(true);
     }
 
     private void initView() {
@@ -92,62 +88,41 @@ public class NovelFragment extends BaseMainFragment {
         ptrLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getData(false, 1);
+                getData(false);
             }
         });
-        ptrLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void loadMore() {
-                getData(false, page + 1);
-            }
-        });
-
-        adapter = new NovelAdapter(getContext(), list);
+        adapter = new NovelIndexAdapter(getContext(), list);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(10), true));
         RecyclerAdapterWithHF mAdapter = new RecyclerAdapterWithHF(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(PtrLocalDisplay.designedDP2px(1)));
         recyclerView.setAdapter(mAdapter);
-        ptrLayout.setLoadMoreEnable(true);
-
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                NovelInfo info = list.get(position);
-                if (App.userInfo.getRole() > 1) {
-                    EventBus.getDefault().post(new StartBrotherEvent(NovelChapterFragment.newInstance(info.getId(), info.getTitle())));
-                } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.NOVEL_INDEX, info.getId());
-                }
-
+                EventBus.getDefault().post(new StartBrotherEvent(NovelListFragment.newInstance(list.get(position).getId(), list.get(position).getTitle())));
             }
         });
     }
 
-    private void getData(final boolean isFirst, final int currentPage) {
+    private void getData(final boolean isFirst) {
         if (NetWorkUtils.isNetworkConnected(getContext())) {
             if (isFirst) {
                 statusLayout.showLoading();
             }
-            HttpParams params = new HttpParams();
-            params.put("page", currentPage);
-            OkGo.<LzyResponse<NovelResultInfo>>get(ApiUtil.API_PRE + ApiUtil.NOVEL)
-                    .tag(ApiUtil.NOVEL_TAG)
-                    .params(params)
-                    .execute(new JsonCallback<LzyResponse<NovelResultInfo>>() {
+            OkGo.<LzyResponse<List<NovelCateGoryInfo>>>get(ApiUtil.API_PRE + ApiUtil.NOVEL_CATEGORY)
+                    .tag(ApiUtil.NOVEL_CATEGORY_TAG)
+                    .execute(new JsonCallback<LzyResponse<List<NovelCateGoryInfo>>>() {
                         @Override
-                        public void onSuccess(Response<LzyResponse<NovelResultInfo>> response) {
+                        public void onSuccess(Response<LzyResponse<List<NovelCateGoryInfo>>> response) {
                             try {
                                 if (isFirst) {
                                     statusLayout.showContent();
                                 } else {
                                     ptrLayout.refreshComplete();
                                 }
-                                ptrLayout.loadMoreComplete(response.body().data.getInfo().getPage_total() > currentPage);
-                                page = currentPage;
-                                if (currentPage == 1) {
-                                    list.clear();
-                                }
-                                list.addAll(response.body().data.getData());
+                                list.clear();
+                                list.addAll(response.body().data);
                                 adapter.notifyDataSetChanged();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -155,24 +130,22 @@ public class NovelFragment extends BaseMainFragment {
                         }
 
                         @Override
-                        public void onError(Response<LzyResponse<NovelResultInfo>> response) {
+                        public void onError(Response<LzyResponse<List<NovelCateGoryInfo>>> response) {
                             super.onError(response);
                             try {
                                 if (isFirst) {
                                     statusLayout.showFailed(retryListener);
                                 } else {
-                                    if (response.getException() != null && !TextUtils.isEmpty(response.getException().getMessage())) {
-                                        ToastUtils.getInstance(getContext()).showToast(response.getException().getMessage());
-                                    } else {
-                                        ToastUtils.getInstance(getContext()).showToast(response.message());
-                                    }
                                     ptrLayout.refreshComplete();
-                                    ptrLayout.loadMoreComplete(currentPage > 1 ? true : false);
+                                    if (response.getException() != null && !TextUtils.isEmpty(response.getException().getMessage())) {
+                                        ToastUtils.getInstance(_mActivity).showToast(response.getException().getMessage());
+                                    } else {
+                                        ToastUtils.getInstance(_mActivity).showToast(response.message());
+                                    }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
                         }
                     });
 
@@ -180,7 +153,8 @@ public class NovelFragment extends BaseMainFragment {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
-                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                ptrLayout.refreshComplete();
+                ToastUtils.getInstance(_mActivity).showToast("请检查网络连接");
             }
         }
     }
@@ -188,13 +162,13 @@ public class NovelFragment extends BaseMainFragment {
     private View.OnClickListener retryListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            getData(true, 1);
+            getData(true);
         }
     };
 
     @Override
     public void onDestroyView() {
-        OkGo.getInstance().cancelTag(ApiUtil.NOVEL_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.NOVEL_CATEGORY_TAG);
         super.onDestroyView();
         unbinder.unbind();
     }

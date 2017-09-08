@@ -35,7 +35,7 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new NovelViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_novel_item, parent, false));
+        return new NovelViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_novel_list_item, parent, false));
     }
 
     @Override
