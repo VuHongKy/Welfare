@@ -7,6 +7,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -24,6 +28,8 @@ import com.yanzhenjie.permission.RationaleListener;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -32,15 +38,28 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 
 public class LauncherActivity extends SupportActivity {
+    @BindView(R.id.loading)
+    ImageView loading;
     private long beginTime = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        ButterKnife.bind(this);
+        showLoading();
         applyPermission();
     }
 
+    private void showLoading() {
+        loading = (ImageView) findViewById(R.id.loading);
+        Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
+        LinearInterpolator lin = new LinearInterpolator();
+        operatingAnim.setInterpolator(lin);
+        if (operatingAnim != null) {
+            loading.startAnimation(operatingAnim);
+        }
+    }
 
     @Override
     public void onBackPressedSupport() {
