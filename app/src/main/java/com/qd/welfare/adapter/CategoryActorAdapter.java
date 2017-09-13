@@ -2,7 +2,6 @@ package com.qd.welfare.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.CateGroyActorResultInfo;
+import com.qd.welfare.utils.GlideUtils;
 
 import java.util.List;
 
@@ -43,7 +43,8 @@ public class CategoryActorAdapter extends RecyclerView.Adapter<RecyclerView.View
         CateGroyActorResultInfo.CateGroyActorInfo info = list.get(position);
         CategoryActorViewHolder viewHolder = (CategoryActorViewHolder) holder;
         viewHolder.title.setText(info.getName());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).into(viewHolder.image);
+        //Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).into(viewHolder.image);
+        GlideUtils.loadIntoUseFitWidth(context, App.commonInfo.getFile_domain() + info.getThumb(), viewHolder.image);
     }
 
     @Override

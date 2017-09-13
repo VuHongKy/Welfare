@@ -19,6 +19,8 @@ import com.qd.welfare.widgets.RatioImageView;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 public class CateGroyViewPagerAdapter extends PagerAdapter {
 
@@ -78,7 +80,7 @@ public class CateGroyViewPagerAdapter extends PagerAdapter {
                 name.setText(info.getTitle());
                 update_number.setText("更新至" + info.getUpdate_to() + "部");
 
-                Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).centerCrop().into(imageView);
+                Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).bitmapTransform(new RoundedCornersTransformation(mContext, PtrLocalDisplay.dp2px(10),0)).into(imageView);
                 Glide.with(mContext).load(App.commonInfo.getFile_domain() + filePath).bitmapTransform(new BlurTransformation(mContext)).into(backImage);
                 itemView.setTag(filePath);
 

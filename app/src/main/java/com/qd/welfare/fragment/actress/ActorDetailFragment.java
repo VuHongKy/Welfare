@@ -128,7 +128,7 @@ public class ActorDetailFragment extends BaseBackFragment {
         ptrLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                getData(false, page);
+                getData(false, page + 1);
             }
         });
         detailAdapter = new ActressDetailAdapter(getContext(), list);
