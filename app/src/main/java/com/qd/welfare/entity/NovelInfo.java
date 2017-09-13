@@ -29,6 +29,7 @@ public class NovelInfo implements Serializable {
     private String description;
     private String author;
     private String status;
+    private int chapters_id;
 
     public int getId() {
         return id;
@@ -92,5 +93,13 @@ public class NovelInfo implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getChapters_id() {
+        return chapters_id;
+    }
+
+    public void setChapters_id(int chapters_id) {
+        this.chapters_id = chapters_id;
     }
 }

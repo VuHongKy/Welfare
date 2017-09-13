@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.NovelIndexAdapter;
@@ -22,6 +23,7 @@ import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
+import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
 
@@ -100,7 +102,11 @@ public class NovelIndexFragment extends BaseMainFragment {
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                EventBus.getDefault().post(new StartBrotherEvent(NovelListFragment.newInstance(list.get(position).getId(), list.get(position).getTitle())));
+                if (App.userInfo.getRole() > 1) {
+                    EventBus.getDefault().post(new StartBrotherEvent(NovelListFragment.newInstance(list.get(position).getId(), list.get(position).getTitle())));
+                } else {
+                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.NOVEL_CATEGORY, 0);
+                }
             }
         });
     }

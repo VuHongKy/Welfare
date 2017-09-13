@@ -165,9 +165,9 @@ public class ActressFragment extends BaseMainFragment {
             public void onClick(View view) {
                 if (App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
-                            .newInstance(list.get(0).getId(), list.get(0).getName())));
+                            .newInstance(headerList.get(0).getId(), headerList.get(0).getName())));
                 } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, list.get(0).getId());
+                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, headerList.get(0).getId());
                 }
             }
         });
@@ -176,9 +176,9 @@ public class ActressFragment extends BaseMainFragment {
             public void onClick(View view) {
                 if (App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
-                            .newInstance(list.get(1).getId(), list.get(1).getName())));
+                            .newInstance(headerList.get(1).getId(), headerList.get(1).getName())));
                 } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, list.get(1).getId());
+                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, headerList.get(1).getId());
                 }
             }
         });
@@ -187,9 +187,9 @@ public class ActressFragment extends BaseMainFragment {
             public void onClick(View view) {
                 if (App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
-                            .newInstance(list.get(2).getId(), list.get(2).getName())));
+                            .newInstance(headerList.get(2).getId(), headerList.get(2).getName())));
                 } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, list.get(2).getId());
+                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, headerList.get(2).getId());
                 }
             }
         });

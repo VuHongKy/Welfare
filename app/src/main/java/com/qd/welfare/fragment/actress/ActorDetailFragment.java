@@ -207,9 +207,7 @@ public class ActorDetailFragment extends BaseBackFragment {
                                     ptrLayout.refreshComplete();
                                 }
                                 boolean hasMore = page < response.body().data.getGallery().getInfo().getPage_total();
-                                if (ptrLayout.isLoading()) {
-                                    ptrLayout.loadMoreComplete(hasMore);
-                                }
+                                ptrLayout.loadMoreComplete(hasMore);
                                 bindHeaderView(response.body().data.getActor());
                             } catch (Exception e) {
                                 e.printStackTrace();

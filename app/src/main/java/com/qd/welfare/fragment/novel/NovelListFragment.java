@@ -22,7 +22,6 @@ import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.NovelInfo;
 import com.qd.welfare.entity.NovelResultInfo;
-import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -30,8 +29,6 @@ import com.qd.welfare.itemDecoration.SpacesItemDecoration;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +135,11 @@ public class NovelListFragment extends BaseBackFragment {
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
                 NovelInfo info = list.get(position);
                 if (App.userInfo.getRole() > 1) {
-                    EventBus.getDefault().post(new StartBrotherEvent(NovelChapterFragment.newInstance(info.getId(), info.getTitle())));
+                    if (info.getChapters_id() == 0) {
+                        start(NovelChapterFragment.newInstance(info.getId(), info.getTitle()));
+                    } else {
+                        start(NovelDetailFragment.newInstance(info.getChapters_id(), info.getTitle()));
+                    }
                 } else {
                     DialogUtil.showOpenViewDialog(getContext(), PageConfig.NOVEL_INDEX, info.getId());
                 }
