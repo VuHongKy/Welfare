@@ -7,13 +7,28 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <com.qd.welfare.widgets.RatioImageView
-        android:id="@+id/image"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        app:base="horizontal"
-        app:horizontal_weight="192"
-        app:vertical_weight="252" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.qd.welfare.widgets.RatioImageView
+            android:id="@+id/image"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            app:base="horizontal"
+            app:horizontal_weight="192"
+            app:vertical_weight="252" />
+
+        <TextView
+            android:id="@+id/image_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="人妻少妇"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

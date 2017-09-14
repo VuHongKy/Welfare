@@ -123,7 +123,7 @@ public class NovelListFragment extends BaseBackFragment {
             }
         });
 
-        adapter = new NovelAdapter(getContext(), list);
+        adapter = new NovelAdapter(getContext(), list, novelCateName);
         RecyclerAdapterWithHF mAdapter = new RecyclerAdapterWithHF(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new SpacesItemDecoration(PtrLocalDisplay.designedDP2px(1)));

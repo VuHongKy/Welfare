@@ -118,7 +118,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
         });
     }
 
-    private void bindHeaderView(VideoDetailInfo info) {
+    private void bindHeaderView(final VideoDetailInfo info) {
         Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(image);
         if (App.userInfo.getRole() > 1) {
             openVip.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
             @Override
             public void onClick(View view) {
                 JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
+                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, App.commonInfo.getFile_domain() + info.getUrl(), info.getTitle());
             }
         });
     }

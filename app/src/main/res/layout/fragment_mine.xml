@@ -54,7 +54,6 @@
 
                 <TextView
                     android:id="@+id/vip_type"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -62,7 +61,8 @@
                     android:background="@drawable/ic_vip"
                     android:gravity="center_horizontal"
                     android:textColor="#333333"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -245,13 +245,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:horizontalSpacing="10dp"
+                android:horizontalSpacing="5dp"
                 android:numColumns="3"
                 android:paddingBottom="10dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingTop="10dp"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:id="@+id/user_agreement"

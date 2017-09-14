@@ -27,10 +27,12 @@ import co.lujun.androidtagview.TagContainerLayout;
 public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<NovelInfo> list;
+    private String novelCategory;
 
-    public NovelAdapter(Context context, List<NovelInfo> list) {
+    public NovelAdapter(Context context, List<NovelInfo> list, String novelCategory) {
         this.context = context;
         this.list = list;
+        this.novelCategory = novelCategory;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.title.setText(info.getTitle());
         viewHolder.description.setText(info.getDescription());
         viewHolder.actor.setText(info.getAuthor());
+        viewHolder.imageTag.setText(novelCategory);
         List<String> tags = info.getTags();
         tags.add(info.getStatus());
         tags.add(info.getTotal_word() + "万字");
@@ -68,6 +71,8 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView actor;
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
+        @BindView(R.id.image_tag)
+        TextView imageTag;
 
         NovelViewHolder(View view) {
             super(view);

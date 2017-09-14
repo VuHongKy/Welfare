@@ -1,11 +1,13 @@
 package com.qd.welfare.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -19,6 +21,7 @@ import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.event.StartBrotherEvent;
+import com.qd.welfare.fragment.video.VideoDetailActivity;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -110,10 +113,22 @@ public class MineFragment extends BaseBackFragment {
                 .params(params)
                 .execute(new JsonCallback<LzyResponse<List<VideoInfo>>>() {
                     @Override
-                    public void onSuccess(Response<LzyResponse<List<VideoInfo>>> response) {
+                    public void onSuccess(final Response<LzyResponse<List<VideoInfo>>> response) {
                         try {
                             RecommendAdapter adapter = new RecommendAdapter(getContext(), response.body().data);
                             gridView.setAdapter(adapter);
+                            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    if (App.userInfo.getRole() > 1) {
+                                        Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+                                        intent.putExtra("id", response.body().data.get(i).getId());
+                                        startActivity(intent);
+                                    } else {
+                                        DialogUtil.showOpenViewDialog(getContext(), PageConfig.MINE, response.body().data.get(i).getId());
+                                    }
+                                }
+                            });
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
