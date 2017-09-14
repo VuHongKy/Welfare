@@ -93,17 +93,27 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/openVip"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="开通会员"
-                android:textColor="@color/tab_select"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/openVip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/ic_mine_open_vip"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/tab_select"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"

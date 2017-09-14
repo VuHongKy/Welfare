@@ -1,7 +1,8 @@
 package com.qd.welfare.base;
 
-import com.qd.welfare.R;
-import com.qd.welfare.utils.ToastUtils;
+import com.qd.welfare.App;
+import com.qd.welfare.config.PageConfig;
+import com.qd.welfare.utils.DialogUtil;
 
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -23,11 +24,14 @@ public abstract class BaseMainFragment extends SupportFragment {
      */
     @Override
     public boolean onBackPressedSupport() {
-        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
-            _mActivity.finish();
-        } else {
-            TOUCH_TIME = System.currentTimeMillis();
-            ToastUtils.getInstance(_mActivity).showToast(getString(R.string.press_again_exit));
+//        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+//            _mActivity.finish();
+//        } else {
+//            TOUCH_TIME = System.currentTimeMillis();
+//            ToastUtils.getInstance(_mActivity).showToast(getString(R.string.press_again_exit));
+//        }
+        if (App.userInfo.getRole() == 1) {
+            DialogUtil.showYouhuiVipDialog(_mActivity, PageConfig.OPEN_VIP_YOUHUI, 0);
         }
         return true;
     }

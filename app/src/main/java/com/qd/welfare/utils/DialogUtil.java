@@ -2,14 +2,13 @@ package com.qd.welfare.utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.provider.Settings;
 import android.widget.TextView;
 
-import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.pay.OpenVipDialog;
+import com.qd.welfare.pay.YouhuiOpenVipDialog;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 /**
@@ -91,6 +90,7 @@ public class DialogUtil {
     }
 
     private static OpenVipDialog dialog;
+    private static YouhuiOpenVipDialog youhuiDialog;
 
     public static void showVipDialog(Context context, int positionId, int dataId) {
         MainActivity.upLoadPageInfo(PageConfig.OPEN_VIP, dataId);
@@ -99,9 +99,19 @@ public class DialogUtil {
         dialog.show();
     }
 
+    public static void showYouhuiVipDialog(Context context, int positionId, int dataId) {
+        MainActivity.upLoadPageInfo(PageConfig.OPEN_VIP_YOUHUI, dataId);
+        YouhuiOpenVipDialog.Builder builder = new YouhuiOpenVipDialog.Builder(context, positionId, dataId);
+        youhuiDialog = builder.create();
+        youhuiDialog.show();
+    }
+
     public static void cancelDialog() {
         if (dialog != null) {
             dialog.cancel();
+        }
+        if (youhuiDialog != null) {
+            youhuiDialog.cancel();
         }
     }
 

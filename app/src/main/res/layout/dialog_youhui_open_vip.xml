@@ -5,19 +5,38 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.qd.welfare.widgets.RatioImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_dialog_top"
-        app:base="horizontal"
-        app:horizontal_weight="975"
-        app:vertical_weight="576" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/image"
+            android:layout_alignTop="@+id/image"
+            android:layout_marginTop="40dp"
+            android:background="@color/white"
+            android:layout_marginLeft="1px"
+            android:layout_marginRight="1px" />
+
+        <com.qd.welfare.widgets.RatioImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_you_open_vip"
+            app:base="horizontal"
+            app:horizontal_weight="975"
+            app:vertical_weight="685" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_bottom_corner"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="1px"
+        android:layout_marginRight="1px">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -54,7 +73,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/layout_year"
+                android:id="@+id/layout_month"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -70,13 +89,13 @@
                     app:slantedTextSize="10sp" />
 
                 <TextView
-                    android:id="@+id/text1"
+                    android:id="@+id/text2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:text="12个月"
-                    android:textColor="#333333"
+                    android:text="包月"
+                    android:textColor="#FF0000"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -85,14 +104,14 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/text1"
+                    android:layout_toRightOf="@+id/text2"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥168"
-                        android:textColor="#333333"
+                        android:text="￥24"
+                        android:textColor="#FF0000"
                         android:textSize="16sp" />
 
                     <TextView
@@ -100,11 +119,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="0.47元/天" />
+                        android:text="原价￥30" />
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/rd_year"
+                    android:id="@+id/rd_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -120,19 +139,19 @@
                 android:background="@color/line_color" />
 
             <RelativeLayout
-                android:id="@+id/layout_month"
+                android:id="@+id/layout_year"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/text2"
+                    android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:text="1个月"
-                    android:textColor="#333333"
+                    android:text="包年"
+                    android:textColor="#FF0000"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -141,14 +160,14 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/text2"
+                    android:layout_toRightOf="@+id/text1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥30"
-                        android:textColor="#333333"
+                        android:text="￥128"
+                        android:textColor="#FF0000"
                         android:textSize="16sp" />
 
                     <TextView
@@ -156,11 +175,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:text="1元/天" />
+                        android:text="原价￥168" />
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/rd_month"
+                    android:id="@+id/rd_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -169,6 +188,7 @@
                     android:background="@drawable/ic_rd_d"
                     android:padding="3dp" />
             </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -228,6 +248,15 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="限时特惠，活动结束后将不在出现"
+            android:textColor="#FF0000"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/pay"
