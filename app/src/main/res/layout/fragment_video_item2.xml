@@ -20,7 +20,7 @@
         android:id="@+id/itemGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="2dp"
+        android:horizontalSpacing="5dp"
         android:numColumns="2"
         android:layout_margin="10dp"
         android:verticalSpacing="2dp" />
