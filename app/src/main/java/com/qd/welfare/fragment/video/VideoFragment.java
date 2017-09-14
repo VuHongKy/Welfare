@@ -66,9 +66,6 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
     private List<VideoResultInfo.VideoIndexInfo> list = new ArrayList<>();
     private VideoAdapter adapter;
 
-
-    private View footerView;
-
     public static VideoFragment newInstance() {
         Bundle args = new Bundle();
         VideoFragment fragment = new VideoFragment();
@@ -107,21 +104,9 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
             }
         });
         adapter = new VideoAdapter(getContext(), list);
-        footerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_video_footer, null);
-        if (App.userInfo.getRole() == 1) {
-            listView.addFooterView(footerView);
-        }
         initBanner();
         listView.setAdapter(adapter);
         adapter.setOnVideoItemClickListener(this);
-        footerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (App.userInfo.getRole() == 1) {
-                    DialogUtil.showVipDialog(getContext(), PageConfig.VIDEO_TRY, 0);
-                }
-            }
-        });
     }
 
     private void initBanner() {
@@ -148,9 +133,14 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(getContext(), VideoDetailActivity.class);
-                intent.putExtra("id", bannerList.get(position).getId());
-                startActivity(intent);
+                if (bannerList.get(position).getType() == 2 && App.userInfo.getRole() <= 1) {
+                    DialogUtil.showOpenViewDialog(getContext(), "该视频为会员专享，请先开通会员", PageConfig.VIDEO_TRY, bannerList.get(position).getId());
+                } else {
+                    Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+                    intent.putExtra("id", bannerList.get(position).getId());
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -173,14 +163,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                                 }
                                 list.clear();
                                 list.addAll(response.body().data.getTry_other());
-                                if (App.userInfo.getRole() > 1) {
-                                    footerView.setVisibility(View.GONE);
-                                    footerView.setPadding(0, -footerView.getHeight(), 0, 0);
-                                    list.addAll(response.body().data.getVip_other());
-                                } else {
-                                    footerView.setVisibility(View.VISIBLE);
-                                    footerView.setPadding(0, 0, 0, 0);
-                                }
+                                list.addAll(response.body().data.getVip_other());
                                 adapter.notifyDataSetChanged();
                                 bindBanner(response.body().data.getTry_banner().getVideo());
                             } catch (Exception e) {
@@ -232,9 +215,16 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     @Override
     public void onVideoItemClick(VideoInfo info) {
-        Intent intent = new Intent(getContext(), VideoDetailActivity.class);
-        intent.putExtra("id", info.getId());
-        startActivity(intent);
+
+        if (App.userInfo.getRole() <= 1 && info.getType() == 2) {
+            DialogUtil.showOpenViewDialog(getContext(), "该视频为会员专享，请先开通会员", PageConfig.VIDEO_TRY, info.getId());
+        } else {
+            Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+            intent.putExtra("id", info.getId());
+            startActivity(intent);
+        }
+
+
     }
 
     @Subscribe

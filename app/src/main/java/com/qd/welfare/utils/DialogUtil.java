@@ -47,6 +47,34 @@ public class DialogUtil {
                 .create().show();
     }
 
+    public static void showOpenViewDialog(Context context, String message, final int positionId, final int dataId) {
+        CBDialogBuilder builder = new CBDialogBuilder(context);
+        TextView titleView = builder.getView(R.id.dialog_title);
+        titleView.setSingleLine(false);
+        builder.setTouchOutSideCancelable(false)
+                .showCancelButton(true)
+                .setTitle(message)
+                .setMessage("")
+                .setCustomIcon(0)
+                .setConfirmButtonText("确定")
+                .setCancelButtonText("取消")
+                .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                    @Override
+                    public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                        switch (whichBtn) {
+                            case BUTTON_CONFIRM:
+                                DialogUtil.showVipDialog(context, positionId, dataId);
+                                dialog.cancel();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })
+                .create().show();
+    }
+
     public static void showOpenVipSuccess(Context context) {
         cancelDialog();
         CBDialogBuilder builder = new CBDialogBuilder(context);
