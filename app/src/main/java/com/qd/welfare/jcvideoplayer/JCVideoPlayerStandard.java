@@ -468,7 +468,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.setProgressAndText(progress, position, duration);
         if (progress != 0) {
             bottomProgressBar.setProgress(progress);
-            Log.e("当前播放的时长：", "---------->" + position + "");
             onCurrentPositionListener(position);
         }
     }
@@ -477,7 +476,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected void onCurrentPositionListener(int position) {
 
-        if (App.userInfo.getRole() <= 1 && position > 10000 && position > currentTime + 10) {
+        if (App.userInfo.getRole() <= 1 && position > 30 * 1000 && position > currentTime + 10) {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
             onStatePause();
