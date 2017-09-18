@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -113,7 +114,7 @@ public class LauncherActivity extends SupportActivity {
         String uuid;
         TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
         uuid = tm.getDeviceId();
-        if (uuid.isEmpty()) {
+        if (TextUtils.isEmpty(uuid)) {
             uuid = SharedPreferencesUtil.getString(this, App.UUID_KEY, "");
             if (uuid.isEmpty()) {
                 String imei = createRandomUUID(false, 64);

@@ -16,7 +16,7 @@
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <com.qd.welfare.widgets.CustomeGridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/itemGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

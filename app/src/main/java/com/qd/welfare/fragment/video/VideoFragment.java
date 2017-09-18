@@ -3,10 +3,11 @@ package com.qd.welfare.fragment.video;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
@@ -23,6 +24,7 @@ import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.itemDecoration.SpacesItemDecoration;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.GlideImageLoader;
 import com.qd.welfare.utils.NetWorkUtils;
@@ -46,6 +48,7 @@ import wiki.scene.loadmore.PtrClassicFrameLayout;
 import wiki.scene.loadmore.PtrDefaultHandler;
 import wiki.scene.loadmore.PtrFrameLayout;
 import wiki.scene.loadmore.StatusViewLayout;
+import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
@@ -55,7 +58,7 @@ import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVideoItemClickListener {
     @BindView(R.id.listView)
-    ListView listView;
+    RecyclerView listView;
     @BindView(R.id.ptr_layout)
     PtrClassicFrameLayout ptrLayout;
     @BindView(R.id.status_layout)
@@ -67,6 +70,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     private List<VideoResultInfo.VideoIndexInfo> list = new ArrayList<>();
     private VideoAdapter adapter;
+    private RecyclerAdapterWithHF mAdapter;
 
     public static VideoFragment newInstance() {
         Bundle args = new Bundle();
@@ -106,14 +110,17 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
             }
         });
         adapter = new VideoAdapter(getContext(), list);
-        initBanner();
-        listView.setAdapter(adapter);
+        mAdapter = new RecyclerAdapterWithHF(adapter);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        listView.addItemDecoration(new SpacesItemDecoration(PtrLocalDisplay.dp2px(1)));
+        listView.setAdapter(mAdapter);
         adapter.setOnVideoItemClickListener(this);
+        initBanner();
     }
 
     private void initBanner() {
         View headerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_video_header, null);
-        listView.addHeaderView(headerView);
+        mAdapter.addHeader(headerView);
         banner = headerView.findViewById(R.id.banner);
         //设置banner高度
         ViewUtils.setViewHeightByViewGroup(banner, (int) (PtrLocalDisplay.SCREEN_WIDTH_PIXELS * 7f / 15f));

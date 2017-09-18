@@ -1,12 +1,11 @@
 package com.qd.welfare.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +14,7 @@ import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
-import com.qd.welfare.widgets.CustomeGridView;
+import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
 import com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar;
 
 import java.util.List;
@@ -23,13 +22,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.lujun.androidtagview.TagContainerLayout;
+import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
  * 视频
  * Created by scene on 2017/9/1.
  */
 
-public class VideoAdapter extends BaseAdapter {
+public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_IMAGE_1 = 0;
     private static final int TYPE_IMAGE_2 = 1;
 
@@ -50,47 +50,31 @@ public class VideoAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return list.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return list.get(i);
-    }
-
-    @Override
     public long getItemId(int i) {
         return i;
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder1 holder1 = null;
-        ViewHolder2 holder2 = null;
-        int type = getItemViewType(position);
+    public int getItemCount() {
+        return list.size();
+    }
 
-        if (view == null) {
-            if (type == TYPE_IMAGE_1) {
-                view = inflater.inflate(R.layout.fragment_video_item1, viewGroup, false);
-                holder1 = new ViewHolder1(view);
-                view.setTag(holder1);
-            } else {
-                view = inflater.inflate(R.layout.fragment_video_item2, viewGroup, false);
-                holder2 = new ViewHolder2(view);
-                view.setTag(holder2);
-            }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_IMAGE_1) {
+            return new ViewHolder1(inflater.inflate(R.layout.fragment_video_item1, parent, false));
         } else {
-            if (type == TYPE_IMAGE_1) {
-                holder1 = (ViewHolder1) view.getTag();
-            } else {
-                holder2 = (ViewHolder2) view.getTag();
-            }
+            return new ViewHolder2(inflater.inflate(R.layout.fragment_video_item2, parent, false));
         }
+    }
 
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final VideoResultInfo.VideoIndexInfo info = list.get(position);
 
-        if (type == TYPE_IMAGE_1) {
+        if (holder instanceof ViewHolder1) {
+            ViewHolder1 holder1 = (ViewHolder1) holder;
             holder1.title.setText(info.getTitle());
             if (info.getVideo().size() > 0) {
                 holder1.videoName.setText(info.getVideo().get(0).getTitle());
@@ -110,24 +94,21 @@ public class VideoAdapter extends BaseAdapter {
                 });
             }
         } else {
+            ViewHolder2 holder2 = (ViewHolder2) holder;
             holder2.title.setText(info.getTitle());
             VideoItemAdapter adapter = new VideoItemAdapter(context, info.getVideo());
+            holder2.itemGridView.setLayoutManager(new GridLayoutManager(context, 2));
+            holder2.itemGridView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(2), false));
             holder2.itemGridView.setAdapter(adapter);
-            holder2.itemGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            adapter.setOnChildItemClickListener(new VideoItemAdapter.OnChildItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onChildItemClick(int position) {
                     if (onVideoItemClickListener != null) {
-                        onVideoItemClickListener.onVideoItemClick(info.getVideo().get(i));
+                        onVideoItemClickListener.onVideoItemClick(info.getVideo().get(position));
                     }
                 }
             });
         }
-        return view;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2;
     }
 
     @Override
@@ -135,9 +116,7 @@ public class VideoAdapter extends BaseAdapter {
         return list.get(position).getShow_type() == 1 ? TYPE_IMAGE_1 : TYPE_IMAGE_2;
     }
 
-    static class ViewHolder1 {
-        @BindView(R.id.itemView)
-        LinearLayout itemView;
+    class ViewHolder1 extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
         TextView title;
         @BindView(R.id.videoName)
@@ -152,17 +131,19 @@ public class VideoAdapter extends BaseAdapter {
         TagContainerLayout tagLayout;
 
         ViewHolder1(View view) {
+            super(view);
             ButterKnife.bind(this, view);
         }
     }
 
-    static class ViewHolder2 {
+    class ViewHolder2 extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
         TextView title;
         @BindView(R.id.itemGridView)
-        CustomeGridView itemGridView;
+        RecyclerView itemGridView;
 
         ViewHolder2(View view) {
+            super(view);
             ButterKnife.bind(this, view);
         }
     }

@@ -1,10 +1,10 @@
 package com.qd.welfare.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,18 +18,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.lujun.androidtagview.TagContainerLayout;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
  * 视屏横图
  * Created by scene on 2017/9/1.
  */
 
-public class VideoItemAdapter extends BaseAdapter {
+public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<VideoInfo> list;
     private LayoutInflater inflater;
+
+    private OnChildItemClickListener onChildItemClickListener;
 
     public VideoItemAdapter(Context context, List<VideoInfo> list) {
         this.context = context;
@@ -37,41 +37,40 @@ public class VideoItemAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
     }
 
+    public void setOnChildItemClickListener(OnChildItemClickListener onChildItemClickListener) {
+        this.onChildItemClickListener = onChildItemClickListener;
+    }
+
     @Override
-    public int getCount() {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.fragment_video_item_item, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ViewHolder viewHolder = (ViewHolder) holder;
+        VideoInfo info = list.get(position);
+        viewHolder.videoName.setText(info.getTitle());
+        viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
+        viewHolder.tagLayout.setTags(info.getTags());
+        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb())
+                .centerCrop().into(viewHolder.image);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onChildItemClickListener != null) {
+                    onChildItemClickListener.onChildItemClick(position);
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
         return list.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return list.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_video_item_item, viewGroup, false);
-            holder = new ViewHolder(view);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
-        }
-        VideoInfo info = list.get(position);
-        holder.videoName.setText(info.getTitle());
-        holder.videoPlayCount.setText("播放：" + info.getPlay_times());
-        holder.tagLayout.setTags(info.getTags());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb())
-                .centerCrop().into(holder.image);
-        return view;
-    }
-
-    static class ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image)
         SelectableRoundedImageView image;
         @BindView(R.id.videoName)
@@ -82,7 +81,12 @@ public class VideoItemAdapter extends BaseAdapter {
         TagContainerLayout tagLayout;
 
         ViewHolder(View view) {
+            super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnChildItemClickListener {
+        void onChildItemClick(int position);
     }
 }
