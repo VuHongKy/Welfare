@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSON;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
@@ -25,6 +26,7 @@ import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.GlideImageLoader;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.qd.welfare.utils.SharedPreferencesUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.utils.ViewUtils;
 import com.youth.banner.Banner;
@@ -166,6 +168,10 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                                 list.addAll(response.body().data.getVip_other());
                                 adapter.notifyDataSetChanged();
                                 bindBanner(response.body().data.getTry_banner().getVideo());
+                                if (list.size() > 0) {
+                                    SharedPreferencesUtil.putString(_mActivity, "NOTIFY_DATA", JSON.toJSONString(list.get(0)));
+                                }
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

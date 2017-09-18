@@ -37,7 +37,7 @@ public class VideoResultInfo implements Serializable {
         this.vip_other = vip_other;
     }
 
-    public class VideoIndexInfo implements Serializable {
+    public static class VideoIndexInfo implements Serializable {
         private String title;
         private int show_type;
         private List<VideoInfo> video;

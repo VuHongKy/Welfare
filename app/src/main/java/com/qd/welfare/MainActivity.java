@@ -1,5 +1,6 @@
 package com.qd.welfare;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.service.ChatHeadService;
 import com.qd.welfare.utils.AppUtils;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.ToastUtils;
@@ -30,6 +32,7 @@ import com.zhl.cbdialog.CBDialogBuilder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -48,6 +51,7 @@ public class MainActivity extends SupportActivity {
         }
         startUpLoad();
         getUpdateVersion(false);
+        startService(new Intent(MainActivity.this, ChatHeadService.class));
     }
 
     @Override
@@ -352,5 +356,16 @@ public class MainActivity extends SupportActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.parse("file://" + fileName), "application/vnd.android.package-archive");
         mContext.startActivity(intent);
+    }
+
+    public static boolean isApplicationBroughtToBackground(Context context) {
+        ActivityManager am = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (tasks != null && !tasks.isEmpty()) {
+            String topActivity = tasks.get(0).baseActivity.getPackageName();
+            return !topActivity.equals(context.getPackageName());
+        }
+        return false;
     }
 }
