@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -12,16 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <wiki.scene.loadmore.PtrClassicFrameLayout
-            android:id="@+id/ptr_layout"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:srlEnableLoadmore="true">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#D6D6D6" />
-        </wiki.scene.loadmore.PtrClassicFrameLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </wiki.scene.loadmore.StatusViewLayout>
 </LinearLayout>

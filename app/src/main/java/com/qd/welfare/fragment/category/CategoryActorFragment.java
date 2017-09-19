@@ -1,5 +1,6 @@
 package com.qd.welfare.fragment.category;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -24,9 +25,13 @@ import com.qd.welfare.fragment.actress.ActorGalleryFragment;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.itemDecoration.DividerItemDecoration;
 import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,8 @@ import wiki.scene.loadmore.loadmore.OnLoadMoreListener;
 import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+
 /**
  * 分类进入的界面
  * Created by scene on 17-8-29.
@@ -54,8 +61,8 @@ public class CategoryActorFragment extends BaseBackFragment {
     TextView toolbarTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.ptr_layout)
-    PtrClassicFrameLayout ptrLayout;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.status_layout)
     StatusViewLayout statusLayout;
     Unbinder unbinder;
@@ -106,17 +113,15 @@ public class CategoryActorFragment extends BaseBackFragment {
 
     private void initView() {
         toastUtils = ToastUtils.getInstance(_mActivity);
-        ptrLayout.setLastUpdateTimeRelateObject(this);
-        ptrLayout.setPtrHandler(new PtrDefaultHandler() {
+        refreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                getData(false, 1);
-            }
-        });
-        ptrLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void loadMore() {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 getData(false, page + 1);
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getData(false, 1);
             }
         });
 
@@ -131,11 +136,9 @@ public class CategoryActorFragment extends BaseBackFragment {
                 layoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
             }
         });
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(10), true));
         RecyclerAdapterWithHF mAdapter = new RecyclerAdapterWithHF(adapter);
         mAdapter.setManagerType(RecyclerAdapterWithHF.TYPE_MANAGER_GRID);
         recyclerView.setAdapter(mAdapter);
-        ptrLayout.setLoadMoreEnable(true);
         getData(true, 1);
 
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
@@ -164,9 +167,10 @@ public class CategoryActorFragment extends BaseBackFragment {
                                 if (isFirst) {
                                     statusLayout.showContent();
                                 } else {
-                                    ptrLayout.refreshComplete();
+                                    refreshLayout.finishRefresh();
+                                    refreshLayout.finishLoadmore();
                                 }
-                                ptrLayout.loadMoreComplete(currentPage < response.body().data.getInfo().getPage_total());
+                                refreshLayout.setEnableLoadmore(currentPage < response.body().data.getInfo().getPage_total());
                                 if (currentPage == 1) {
                                     list.clear();
                                 }
@@ -185,8 +189,8 @@ public class CategoryActorFragment extends BaseBackFragment {
                                 if (isFirst) {
                                     statusLayout.showFailed(retryListener);
                                 } else {
-                                    ptrLayout.refreshComplete();
-                                    ptrLayout.loadMoreComplete(true);
+                                    refreshLayout.finishRefresh(false);
+                                    refreshLayout.finishLoadmore(false);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -198,7 +202,8 @@ public class CategoryActorFragment extends BaseBackFragment {
             if (isFirst) {
                 statusLayout.showNetError(retryListener);
             } else {
-                ptrLayout.refreshComplete();
+                refreshLayout.finishRefresh(false);
+                refreshLayout.finishLoadmore(false);
                 ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
             }
         }
