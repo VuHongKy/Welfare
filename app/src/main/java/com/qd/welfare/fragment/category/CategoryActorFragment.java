@@ -1,6 +1,5 @@
 package com.qd.welfare.fragment.category;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +24,6 @@ import com.qd.welfare.fragment.actress.ActorGalleryFragment;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.itemDecoration.DividerItemDecoration;
-import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,15 +36,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import wiki.scene.loadmore.PtrClassicFrameLayout;
-import wiki.scene.loadmore.PtrDefaultHandler;
-import wiki.scene.loadmore.PtrFrameLayout;
 import wiki.scene.loadmore.StatusViewLayout;
-import wiki.scene.loadmore.loadmore.OnLoadMoreListener;
 import wiki.scene.loadmore.recyclerview.RecyclerAdapterWithHF;
-import wiki.scene.loadmore.utils.PtrLocalDisplay;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * 分类进入的界面
@@ -70,7 +60,6 @@ public class CategoryActorFragment extends BaseBackFragment {
     private CateGroyInfo info;
 
     private ToastUtils toastUtils;
-
 
     private List<CateGroyActorResultInfo.CateGroyActorInfo> list = new ArrayList<>();
     private int page = 1;
@@ -204,7 +193,7 @@ public class CategoryActorFragment extends BaseBackFragment {
             } else {
                 refreshLayout.finishRefresh(false);
                 refreshLayout.finishLoadmore(false);
-                ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
+                toastUtils.showToast("请检查网络连接");
             }
         }
 
