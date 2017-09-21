@@ -40,6 +40,7 @@ public class VideoResultInfo implements Serializable {
     public static class VideoIndexInfo implements Serializable {
         private String title;
         private int show_type;
+        private int show;
         private List<VideoInfo> video;
 
         public String getTitle() {
@@ -56,6 +57,14 @@ public class VideoResultInfo implements Serializable {
 
         public void setShow_type(int show_type) {
             this.show_type = show_type;
+        }
+
+        public int getShow() {
+            return show;
+        }
+
+        public void setShow(int show) {
+            this.show = show;
         }
 
         public List<VideoInfo> getVideo() {

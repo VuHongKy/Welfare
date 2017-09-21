@@ -42,7 +42,7 @@ public class NovelIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         NovelCateGoryInfo info = list.get(position);
         NovelIndexViewHolder viewHolde = (NovelIndexViewHolder) holder;
         viewHolde.name.setText(info.getTitle());
-        viewHolde.number.setText("共" + info.getTotal() + "本作品");
+        viewHolde.number.setText(+info.getView_times() + "次点击");
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getIcon()).centerCrop().into(viewHolde.image);
     }
 

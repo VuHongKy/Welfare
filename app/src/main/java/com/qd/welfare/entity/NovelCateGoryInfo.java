@@ -25,6 +25,7 @@ public class NovelCateGoryInfo implements Serializable {
     private String description;
     private String icon;
     private int total;
+    private int view_times;
 
     public int getId() {
         return id;
@@ -80,5 +81,13 @@ public class NovelCateGoryInfo implements Serializable {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public int getView_times() {
+        return view_times;
+    }
+
+    public void setView_times(int view_times) {
+        this.view_times = view_times;
     }
 }

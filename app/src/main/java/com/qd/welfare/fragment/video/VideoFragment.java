@@ -72,6 +72,8 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
     private VideoAdapter adapter;
     private RecyclerAdapterWithHF mAdapter;
 
+    private View footerView;
+
     public static VideoFragment newInstance() {
         Bundle args = new Bundle();
         VideoFragment fragment = new VideoFragment();
@@ -116,6 +118,10 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         listView.setAdapter(mAdapter);
         adapter.setOnVideoItemClickListener(this);
         initBanner();
+        if (App.userInfo.getRole() <= 1) {
+            footerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_video_footer, null);
+            mAdapter.addFooter(footerView);
+        }
     }
 
     private void initBanner() {
@@ -173,6 +179,22 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                                 list.clear();
                                 list.addAll(response.body().data.getTry_other());
                                 list.addAll(response.body().data.getVip_other());
+                                if (App.userInfo.getRole() <= 1) {
+                                    for (VideoResultInfo.VideoIndexInfo info : list) {
+                                        if (info.getShow() == 2) {
+                                            list.remove(info);
+                                        }
+                                    }
+                                    if (mAdapter.getFootSize() == 0) {
+                                        mAdapter.addFooter(footerView);
+                                    }
+                                } else {
+                                    try {
+                                        mAdapter.removeFooter(footerView);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 adapter.notifyDataSetChanged();
                                 bindBanner(response.body().data.getTry_banner().getVideo());
                                 if (list.size() > 0) {
