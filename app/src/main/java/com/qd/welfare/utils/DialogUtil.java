@@ -27,8 +27,8 @@ public class DialogUtil {
                 .setTitle(context.getString(R.string.open_vip_notice))
                 .setMessage("")
                 .setCustomIcon(0)
-                .setConfirmButtonText("确定")
-                .setCancelButtonText("取消")
+                .setConfirmButtonText("立即开通")
+                .setCancelButtonText("再看看")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
                 .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
                     @Override
@@ -55,8 +55,8 @@ public class DialogUtil {
                 .setTitle(message)
                 .setMessage("")
                 .setCustomIcon(0)
-                .setConfirmButtonText("确定")
-                .setCancelButtonText("取消")
+                .setConfirmButtonText("立即开通")
+                .setCancelButtonText("再看看")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
                 .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
                     @Override

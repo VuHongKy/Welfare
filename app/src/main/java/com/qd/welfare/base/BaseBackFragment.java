@@ -23,7 +23,7 @@ public class BaseBackFragment extends SwipeBackFragment {
     }
 
     protected void initToolbarNav(Toolbar toolbar) {
-        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

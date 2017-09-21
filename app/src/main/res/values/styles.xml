@@ -27,7 +27,7 @@
 
     <style name="Toolbar_TextAppearance_White">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#333333</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="Toolbar_TextAppearance_Expanded">

@@ -17,8 +17,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             app:base="horizontal"
-            app:horizontal_weight="1014"
-            app:vertical_weight="504" />
+            app:horizontal_weight="142"
+            app:vertical_weight="180" />
 
         <com.joooonho.SelectableRoundedImageView
             android:id="@+id/image"
@@ -41,23 +41,31 @@
             android:padding="5dp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/videoName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:text="视频名称"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/videoPlayCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="播放：5666"
-        android:textColor="#DFDFDF" />
+        <TextView
+            android:id="@+id/videoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="视频名称"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/videoPlayCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放：5666"
+            android:textColor="#DFDFDF" />
+    </LinearLayout>
+
 
     <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/tag_layout"

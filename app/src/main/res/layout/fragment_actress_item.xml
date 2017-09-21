@@ -21,10 +21,9 @@
 
         <com.haozhang.lib.SlantedTextView
             android:id="@+id/rank"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:gravity="center"
-            android:visibility="gone"
             app:slantedBackgroundColor="#E60012"
             app:slantedLength="20dp"
             app:slantedMode="left"

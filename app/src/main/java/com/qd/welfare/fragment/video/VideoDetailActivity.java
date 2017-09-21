@@ -1,10 +1,12 @@
 package com.qd.welfare.fragment.video;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -85,8 +87,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
     }
 
     private void initToolbar() {
-        toolbarTitle.setText("详情");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +101,19 @@ public class VideoDetailActivity extends SwipeBackActivity {
         initHeaderView();
         listView.setAdapter(adapter);
         getVideoData();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                i = i - 1;
+                if (App.userInfo.getRole() <= 1 && list.get(i).getType() == 0) {
+                    DialogUtil.showOpenViewDialog(VideoDetailActivity.this, "非VIP只能试看体验，请开通VIP继续观看", PageConfig.VIDEO_TRY, list.get(i).getId());
+                } else {
+                    Intent intent = new Intent(VideoDetailActivity.this, VideoDetailActivity.class);
+                    intent.putExtra("id", list.get(i).getId());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void initHeaderView() {
@@ -128,6 +142,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
         playVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                upLoadVideoPlayCount(videoId);
                 JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
                 MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, App.commonInfo.getFile_domain() + info.getUrl(), info.getTitle());
             }
@@ -145,14 +160,24 @@ public class VideoDetailActivity extends SwipeBackActivity {
                     .execute(new JsonCallback<LzyResponse<VideoDetailInfo>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<VideoDetailInfo>> response) {
-                            bindHeaderView(response.body().data);
-                            getRecommendData();
+                            try {
+                                toolbarTitle.setText(response.body().data.getTitle());
+                                bindHeaderView(response.body().data);
+                                getRecommendData();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         @Override
                         public void onError(Response<LzyResponse<VideoDetailInfo>> response) {
                             super.onError(response);
-                            statusLayout.showFailed(retryListener);
+                            try {
+                                statusLayout.showFailed(retryListener);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     });
         } else {
@@ -202,6 +227,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.PLAY_COUNT_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.VIDEO_DETAIL_TAG);
         super.onDestroy();
         unbinder.unbind();
@@ -296,5 +322,19 @@ public class VideoDetailActivity extends SwipeBackActivity {
         if (App.userInfo.getRole() <= 1) {
             DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
         }
+    }
+
+    /**
+     * 上传使用页面信息
+     */
+    private void upLoadVideoPlayCount(int videoId) {
+        HttpParams params = new HttpParams();
+        params.put("video_id", videoId);
+        OkGo.<LzyResponse<String>>get(ApiUtil.API_PRE + ApiUtil.PLAY_COUNT).tag(ApiUtil.PLAY_COUNT_TAG).params(params).execute(new JsonCallback<LzyResponse<String>>() {
+            @Override
+            public void onSuccess(Response<LzyResponse<String>> response) {
+
+            }
+        });
     }
 }

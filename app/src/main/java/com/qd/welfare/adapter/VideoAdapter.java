@@ -98,7 +98,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder2.title.setText(info.getTitle());
             VideoItemAdapter adapter = new VideoItemAdapter(context, info.getVideo());
             holder2.itemGridView.setLayoutManager(new GridLayoutManager(context, 2));
-            holder2.itemGridView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(2), false));
+            holder2.itemGridView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(5), false));
             holder2.itemGridView.setAdapter(adapter);
             adapter.setOnChildItemClickListener(new VideoItemAdapter.OnChildItemClickListener() {
                 @Override

@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 女优百科
+ * 热门推荐
  * Created by scene on 17-8-29.
  */
 
@@ -61,7 +61,7 @@ public class RecommendAdapter extends BaseAdapter {
         }
         VideoInfo info = list.get(position);
         viewHolder.title.setText(info.getTitle());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu()).centerCrop().into(viewHolder.image);
         return view;
     }
 

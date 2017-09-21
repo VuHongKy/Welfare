@@ -12,7 +12,7 @@
     <string name="tab_name_novel">小说</string>
     <string name="tab_name_shop">成人商城</string>
 
-    <string name="open_vip_notice">该版块为会员专享，请先开通会员</string>
+    <string name="open_vip_notice">该板块为会员专享，开通会员即可观看</string>
 
     <string name="tips_not_wifi">您当前正在使用移动网络，继续播放将消耗流量</string>
     <string name="tips_not_wifi_confirm">继续播放</string>

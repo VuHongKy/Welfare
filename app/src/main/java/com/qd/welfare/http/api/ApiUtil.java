@@ -61,8 +61,8 @@ public class ApiUtil {
     public static final String UPDATE_VERSION = "/version/android";
     public static final String UPDATE_VERSION_TAG = "UPDATE_VERSION_TAG";
 
-    public static final String NOVEL_CATEGORY="/novel/category";
-    public static final String NOVEL_CATEGORY_TAG="NOVEL_CATEGORY_TAG";
+    public static final String NOVEL_CATEGORY = "/novel/category";
+    public static final String NOVEL_CATEGORY_TAG = "NOVEL_CATEGORY_TAG";
 
     public static final String NOVEL = "/novel";
     public static final String NOVEL_TAG = "NOVEL_TAG";
@@ -85,12 +85,15 @@ public class ApiUtil {
     public static final String ORDER_LIST = "/order/lists";
     public static final String ORDER_LIST_TAG = "ORDER_LIST_TAG";
 
-    public static final String ORDER_DETAIL="/order/detail";
-    public static final String ORDER_DETAIL_TAG="ORDER_DETAIL_TAG";
+    public static final String ORDER_DETAIL = "/order/detail";
+    public static final String ORDER_DETAIL_TAG = "ORDER_DETAIL_TAG";
 
     //获取物流信息
     public static final String GET_LOGISTICS = "http://www.kuaidi100.com/query";
     public static final String GET_LOGISTICS_TAG = "GET_LOGISTICS_TAG";
+    //统计播放次数
+    public static final String PLAY_COUNT = "/video/play_count";
+    public static final String PLAY_COUNT_TAG = "PLAY_COUNT_TAG";
 
     /**
      * Case By:创建参数基础信息

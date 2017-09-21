@@ -53,7 +53,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.videoName.setText(info.getTitle());
         viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
         viewHolder.tagLayout.setTags(info.getTags());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb())
+        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu())
                 .centerCrop().into(viewHolder.image);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

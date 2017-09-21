@@ -110,7 +110,8 @@
                     android:background="@drawable/ic_mine_open_vip"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textColor="@color/tab_select"
+                    android:text="立即开通会员"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>
 
