@@ -105,12 +105,14 @@ public class VideoDetailActivity extends SwipeBackActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 i = i - 1;
-                if (App.userInfo.getRole() <= 1 && list.get(i).getType() == 0) {
-                    DialogUtil.showOpenViewDialog(VideoDetailActivity.this, "非VIP只能试看体验，请开通VIP继续观看", PageConfig.VIDEO_TRY, list.get(i).getId());
-                } else {
-                    Intent intent = new Intent(VideoDetailActivity.this, VideoDetailActivity.class);
-                    intent.putExtra("id", list.get(i).getId());
-                    startActivity(intent);
+                if (i >= 0) {
+                    if (App.userInfo.getRole() <= 1 && list.get(i).getType() == 0) {
+                        DialogUtil.showOpenViewDialog(VideoDetailActivity.this, "非VIP只能试看体验，请开通VIP继续观看", PageConfig.VIDEO_TRY, list.get(i).getId());
+                    } else {
+                        Intent intent = new Intent(VideoDetailActivity.this, VideoDetailActivity.class);
+                        intent.putExtra("id", list.get(i).getId());
+                        startActivity(intent);
+                    }
                 }
             }
         });

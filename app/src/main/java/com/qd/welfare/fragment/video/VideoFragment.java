@@ -67,6 +67,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     private Banner banner;
     private List<String> bannerImageUrls = new ArrayList<>();
+    List<String> bannerTitles = new ArrayList<>();
 
     private List<VideoResultInfo.VideoIndexInfo> list = new ArrayList<>();
     private VideoAdapter adapter;
@@ -121,6 +122,12 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         if (App.userInfo.getRole() <= 1) {
             footerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_video_footer, null);
             mAdapter.addFooter(footerView);
+            footerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DialogUtil.showVipDialog(getContext(), PageConfig.VIDEO_TRY, 0);
+                }
+            });
         }
     }
 
@@ -131,19 +138,22 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         //设置banner高度
         ViewUtils.setViewHeightByViewGroup(banner, (int) (PtrLocalDisplay.SCREEN_WIDTH_PIXELS * 7f / 15f));
         banner.setImageLoader(new GlideImageLoader());
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        banner.setIndicatorGravity(BannerConfig.RIGHT);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         banner.setDelayTime(2000);
+        banner.setBannerTitles(bannerTitles);
         banner.setImages(bannerImageUrls);
         banner.start();
     }
 
     private void bindBanner(final List<VideoInfo> bannerList) {
         bannerImageUrls.clear();
+        bannerTitles.clear();
         for (VideoInfo info : bannerList) {
             bannerImageUrls.add(App.commonInfo.getFile_domain() + info.getThumb());
+            bannerTitles.add(info.getTitle());
         }
         banner.setImages(bannerImageUrls);
+        banner.setBannerTitles(bannerTitles);
         banner.start();
         banner.setOnBannerListener(new OnBannerListener() {
             @Override

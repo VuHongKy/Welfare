@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <com.qd.welfare.widgets.RatioImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:base="horizontal"
+        app:horizontal_weight="1080"
+        app:vertical_weight="504" />
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/image"
+        android:layout_alignLeft="@+id/image"
+        android:layout_alignRight="@+id/image"
+        android:layout_alignTop="@+id/image"
+        android:background="#000000"
         app:indicator_drawable_selected="@drawable/banner_indicator_s"
-        app:indicator_drawable_unselected="@drawable/banner_indicator_d"
-        android:background="#000000" />
-</LinearLayout>
+        app:indicator_drawable_unselected="@drawable/banner_indicator_d" />
+
+    <com.haozhang.lib.SlantedTextView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="#E60012"
+        app:slantedLength="30dp"
+        app:slantedMode="left"
+        app:slantedText="免费试看"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="13sp" />
+</RelativeLayout>
