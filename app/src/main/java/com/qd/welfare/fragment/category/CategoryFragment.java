@@ -1,8 +1,8 @@
 package com.qd.welfare.fragment.category;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +11,23 @@ import android.widget.ImageView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
-import com.qd.welfare.adapter.CateGroyViewPagerAdapter;
+import com.qd.welfare.adapter.CateGroyPageAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.CateGroyInfo;
-import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
+import com.shizhefei.view.indicator.IndicatorViewPager;
+import com.shizhefei.view.indicator.ScrollIndicatorView;
+import com.shizhefei.view.indicator.slidebar.DrawableBar;
+import com.shizhefei.view.indicator.slidebar.ScrollBar;
+import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 
-import org.greenrobot.eventbus.EventBus;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import wiki.scene.loadmore.StatusViewLayout;
+import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
  * 正妹分类
@@ -42,7 +44,7 @@ import wiki.scene.loadmore.StatusViewLayout;
 
 public class CategoryFragment extends BaseMainFragment {
     @BindView(R.id.tab)
-    TabLayout tab;
+    ScrollIndicatorView tab;
     @BindView(R.id.pre_step)
     ImageView preStep;
     @BindView(R.id.next_step)
@@ -52,6 +54,8 @@ public class CategoryFragment extends BaseMainFragment {
     @BindView(R.id.status_layout)
     StatusViewLayout statusLayout;
     Unbinder unbinder;
+    private IndicatorViewPager indicatorViewPager;
+    private List<CateGroyInfo> list = new ArrayList<>();
 
     public static CategoryFragment newInstance() {
         Bundle args = new Bundle();
@@ -74,8 +78,29 @@ public class CategoryFragment extends BaseMainFragment {
         initView();
     }
 
+    private void initTabLayout() {
+        tab.setBackgroundColor(Color.BLACK);
+        tab.setScrollBar(new DrawableBar(getContext(), R.drawable.round_border_white_selector, ScrollBar.Gravity.CENTENT_BACKGROUND) {
+            @Override
+            public int getHeight(int tabHeight) {
+                return tabHeight - PtrLocalDisplay.dp2px(12);
+            }
+
+            @Override
+            public int getWidth(int tabWidth) {
+                return tabWidth - PtrLocalDisplay.dp2px(12);
+            }
+        });
+        // 设置滚动监听
+        tab.setOnTransitionListener(new OnTransitionTextListener().setColor(Color.parseColor("#F85788"), Color.WHITE));
+        viewPager.setOffscreenPageLimit(2);
+        indicatorViewPager = new IndicatorViewPager(tab, viewPager);
+        indicatorViewPager.setAdapter(new CateGroyPageAdapter(getChildFragmentManager(), getContext(), list));
+    }
+
     private void initView() {
         MainActivity.upLoadPageInfo(PageConfig.CATEGORY, 0);
+        initTabLayout();
         getData();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -119,19 +144,9 @@ public class CategoryFragment extends BaseMainFragment {
                                     statusLayout.showNone();
                                 } else {
                                     statusLayout.showContent();
-                                    CateGroyViewPagerAdapter adapter = new CateGroyViewPagerAdapter(getContext(), response.body().data);
-                                    viewPager.setAdapter(adapter);
-                                    tab.setupWithViewPager(viewPager);
-                                    adapter.setOnCateGoryItemClickListener(new CateGroyViewPagerAdapter.OnCateGoryItemClickListener() {
-                                        @Override
-                                        public void onCateGoryItemClick(CateGroyInfo info) {
-                                            if (App.userInfo.getRole() > 1) {
-                                                EventBus.getDefault().post(new StartBrotherEvent(CategoryActorFragment.newInstance(info)));
-                                            } else {
-                                                DialogUtil.showOpenViewDialog(getContext(), PageConfig.CATEGORY, info.getId());
-                                            }
-                                        }
-                                    });
+                                    list.clear();
+                                    list.addAll(response.body().data);
+                                    indicatorViewPager.getAdapter().notifyDataSetChanged();
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -62,6 +63,23 @@ public class ActressItemAdapter extends BaseAdapter {
         ActressInfo.WorksBean info = list.get(position);
         viewHolder.title.setText(info.getTitle());
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        switch (position) {
+            case 0:
+                viewHolder.star1.setVisibility(View.VISIBLE);
+                viewHolder.star2.setVisibility(View.VISIBLE);
+                viewHolder.star3.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                viewHolder.star1.setVisibility(View.VISIBLE);
+                viewHolder.star2.setVisibility(View.VISIBLE);
+                viewHolder.star3.setVisibility(View.GONE);
+                break;
+            case 2:
+                viewHolder.star1.setVisibility(View.VISIBLE);
+                viewHolder.star2.setVisibility(View.VISIBLE);
+                viewHolder.star3.setVisibility(View.GONE);
+                break;
+        }
         return view;
     }
 
@@ -70,6 +88,12 @@ public class ActressItemAdapter extends BaseAdapter {
         RatioImageView image;
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.star1)
+        ImageView star1;
+        @BindView(R.id.star2)
+        ImageView star2;
+        @BindView(R.id.star3)
+        ImageView star3;
 
         ActressItemViewHolder(View view) {
             ButterKnife.bind(this, view);

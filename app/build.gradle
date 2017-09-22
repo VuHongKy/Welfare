@@ -99,4 +99,6 @@ dependencies {
     compile 'me.leolin:ShortcutBadger:1.1.16@aar'
     //下拉上拉
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //tablayout代替方式
+    compile 'com.shizhefei:ViewPagerIndicator:1.1.6'
 }
