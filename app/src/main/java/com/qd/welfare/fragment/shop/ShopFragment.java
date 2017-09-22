@@ -1,18 +1,21 @@
 package com.qd.welfare.fragment.shop;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.qd.welfare.R;
-import com.qd.welfare.adapter.ShopPagerFragmentAdapter;
+import com.qd.welfare.adapter.ShopPageAdapter;
 import com.qd.welfare.base.BaseMainFragment;
+import com.shizhefei.view.indicator.IndicatorViewPager;
+import com.shizhefei.view.indicator.ScrollIndicatorView;
+import com.shizhefei.view.indicator.slidebar.DrawableBar;
+import com.shizhefei.view.indicator.slidebar.ScrollBar;
+import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
  * 商城
@@ -28,7 +32,7 @@ import butterknife.Unbinder;
 
 public class ShopFragment extends BaseMainFragment {
     @BindView(R.id.tab)
-    TabLayout tab;
+    ScrollIndicatorView tab;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     Unbinder unbinder;
@@ -51,43 +55,27 @@ public class ShopFragment extends BaseMainFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        String tabTitle[] = {"男性", "女性"};
-        List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(GoodsDetailFragment.newInstance(1));
-        fragmentList.add(GoodsDetailFragment.newInstance(2));
-        tab.addTab(tab.newTab().setText(tabTitle[0]));
-        tab.addTab(tab.newTab().setText(tabTitle[1]));
-        ShopPagerFragmentAdapter adapter = new ShopPagerFragmentAdapter(getChildFragmentManager(), tabTitle, fragmentList);
-        viewPager.setAdapter(adapter);
-        tab.setupWithViewPager(viewPager);
-//        for (int i = 0; i < adapter.getCount(); i++) {
-//            TabLayout.Tab tabItem = tab.getTabAt(i);//获得每一个tab
-//            tabItem.setCustomView(R.layout.layout_custom_tab);//给每一个tab设置view
-//            if (i == 0) {
-//                // 设置第一个tab的TextView是被选择的样式
-//                tabItem.getCustomView().findViewById(R.id.tab_text).setSelected(true);//第一个tab被选中
-//            }
-//            TextView textView = (TextView) tabItem.getCustomView().findViewById(R.id.tab_text);
-//            textView.setText(tabTitle[i]);//设置tab上的文字
-//        }
-//        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                tab.getCustomView().findViewById(R.id.tab_text).setSelected(true);
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//                tab.getCustomView().findViewById(R.id.tab_text).setSelected(false);
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
+        List<String> list = new ArrayList<>();
+        list.add("男性");
+        list.add("女性");
+        tab.setScrollBar(new DrawableBar(getContext(), R.drawable.round_border_white_selector, ScrollBar.Gravity.CENTENT_BACKGROUND) {
+            @Override
+            public int getHeight(int tabHeight) {
+                return tabHeight - PtrLocalDisplay.dp2px(12);
+            }
+
+            @Override
+            public int getWidth(int tabWidth) {
+                return tabWidth - PtrLocalDisplay.dp2px(12);
+            }
+        });
+        // 设置滚动监听
+        tab.setOnTransitionListener(new OnTransitionTextListener().setColor(Color.parseColor("#F85788"), Color.WHITE));
+        viewPager.setOffscreenPageLimit(2);
+        IndicatorViewPager indicatorViewPager = new IndicatorViewPager(tab, viewPager);
+        indicatorViewPager.setAdapter(new ShopPageAdapter(getChildFragmentManager(), getContext(), list));
     }
+
 
     @Override
     public void onDestroyView() {

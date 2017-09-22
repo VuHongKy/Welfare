@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F4F4"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+    <com.shizhefei.view.indicator.ScrollIndicatorView
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#000000"
-        app:tabIndicatorColor="@color/tab_select"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/tab_select"
-        app:tabTextAppearance="@style/tab_appearance"
-        app:tabTextColor="@color/white" />
+        android:fillViewport="false" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab" />
+        android:layout_below="@+id/tab"
+        android:layout_marginTop="1dp" />
 
 </RelativeLayout>

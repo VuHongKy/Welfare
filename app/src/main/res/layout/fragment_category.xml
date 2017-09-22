@@ -11,16 +11,6 @@
         android:background="#F8F4F4"
         android:orientation="vertical">
 
-        <!--<android.support.design.widget.TabLayout-->
-        <!--android:id="@+id/tab"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="45dp"-->
-        <!--android:background="@color/white"-->
-        <!--app:tabIndicatorColor="@color/tab_select"-->
-        <!--app:tabMode="scrollable"-->
-        <!--app:tabSelectedTextColor="@color/tab_select"-->
-        <!--app:tabTextAppearance="@style/tab_appearance"-->
-        <!--app:tabTextColor="#999999" />-->
         <com.shizhefei.view.indicator.ScrollIndicatorView
             android:id="@+id/tab"
             android:layout_width="match_parent"
