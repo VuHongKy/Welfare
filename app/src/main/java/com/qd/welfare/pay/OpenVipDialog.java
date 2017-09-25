@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qd.welfare.R;
@@ -52,8 +52,8 @@ public class OpenVipDialog extends Dialog {
     public static class Builder {
         private Context context;
 
-        private RelativeLayout layoutYear;
-        private RelativeLayout layoutMonth;
+        private LinearLayout layoutYear;
+        private LinearLayout layoutMonth;
         private ImageView rdYear;
         private ImageView rdMonth;
         private RadioGroup rg;
@@ -64,7 +64,7 @@ public class OpenVipDialog extends Dialog {
         private int positionId;
 
         private int payWayType = AppConfig.DEFAULT_PAY_WAY;
-        private int vipType = AppConfig.VIP_YEAR;
+        private int vipType = AppConfig.VIP_MONTH;
 
         public Builder(Context context, int positionId, int dataId) {
             this.context = context;
