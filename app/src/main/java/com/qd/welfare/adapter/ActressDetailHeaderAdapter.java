@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -63,6 +64,7 @@ public class ActressDetailHeaderAdapter extends BaseAdapter {
         ActorDetailResultInfo.ActorBean.WorksBean info = list.get(position);
         viewHolder.title.setText(info.getTitle());
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        viewHolder.star1.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
         return view;
     }
 
@@ -71,6 +73,8 @@ public class ActressDetailHeaderAdapter extends BaseAdapter {
         RatioImageView image;
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.star1)
+        ImageView star1;
 
         ActressItemViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ public class ActressDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         ActressItemViewHolder viewHolder = (ActressItemViewHolder) holder;
         ActorDetailResultInfo.GalleryBean.DataBean info = list.get(position);
         viewHolder.title.setVisibility(View.GONE);
+        viewHolder.starLayout.setVisibility(View.INVISIBLE);
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
     }
 
@@ -63,6 +65,8 @@ public class ActressDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         RatioImageView image;
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.star_layout)
+        LinearLayout starLayout;
 
         ActressItemViewHolder(View view) {
             super(view);
