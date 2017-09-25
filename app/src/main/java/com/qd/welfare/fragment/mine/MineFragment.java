@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -54,10 +55,10 @@ public class MineFragment extends BaseBackFragment {
     CustomeGridView gridView;
     @BindView(R.id.vip_type)
     TextView vipType;
-    @BindView(R.id.openVip)
-    TextView openVip;
     @BindView(R.id.userId)
     TextView userId;
+    @BindView(R.id.openVip_layout)
+    LinearLayout openVipLayout;
 
     Unbinder unbinder;
 
@@ -87,7 +88,7 @@ public class MineFragment extends BaseBackFragment {
             }
         });
         if (App.userInfo.getRole() > 1) {
-            openVip.setVisibility(View.GONE);
+            openVipLayout.setVisibility(View.GONE);
             vipType.setVisibility(View.VISIBLE);
             if (App.userInfo.getRole() == 2) {
                 //包月
@@ -97,7 +98,7 @@ public class MineFragment extends BaseBackFragment {
                 vipType.setText("包年会员");
             }
         } else {
-            openVip.setVisibility(View.VISIBLE);
+            openVipLayout.setVisibility(View.VISIBLE);
             vipType.setVisibility(View.GONE);
         }
         userId.setText(String.valueOf(App.userInfo.getId()));
