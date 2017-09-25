@@ -5,38 +5,135 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.qd.welfare.widgets.RatioImageView
+        android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image"
-            android:layout_alignTop="@+id/image"
-            android:layout_marginTop="40dp"
-            android:background="@color/white"
-            android:layout_marginLeft="1px"
-            android:layout_marginRight="1px" />
-
-        <com.qd.welfare.widgets.RatioImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bg_you_open_vip"
-            app:base="horizontal"
-            app:horizontal_weight="975"
-            app:vertical_weight="685" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_you_open_vip"
+        app:base="horizontal"
+        app:horizontal_weight="975"
+        app:vertical_weight="495" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_corner"
-        android:orientation="vertical"
         android:layout_marginLeft="1px"
-        android:layout_marginRight="1px">
+        android:layout_marginRight="1px"
+        android:background="@drawable/bg_bottom_corner_red"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_vip_type"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:id="@+id/rd_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_rd_s"
+                android:padding="3dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="包月"
+                android:textColor="#F19149"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="大礼包"
+                android:textColor="#333333"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="￥20"
+                android:textColor="#FF0000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/old_price_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(原价￥30)"
+                android:textColor="#999999"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_vip_type"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:id="@+id/rd_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_rd_d"
+                android:padding="3dp" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="包年"
+                android:textColor="#FF0000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="大礼包"
+                android:textColor="#333333"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥128"
+                android:textColor="#FF0000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/old_price_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(原价￥168)"
+                android:textColor="#999999"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,212 +148,59 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="郑重声明："
-                android:textColor="#FF0000"
+                android:textColor="#FFD000"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="未成年人禁止购买观看，引起不适，概不负责"
-                android:textColor="#666666"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_color" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/layout_month"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1">
-
-                <com.haozhang.lib.SlantedTextView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:slantedBackgroundColor="#F85788"
-                    app:slantedLength="20dp"
-                    app:slantedMode="left_triangle"
-                    app:slantedText="推荐"
-                    app:slantedTextColor="@color/white"
-                    app:slantedTextSize="10sp" />
-
-                <TextView
-                    android:id="@+id/text2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="包月"
-                    android:textColor="#FF0000"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/text2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="￥24"
-                        android:textColor="#FF0000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="bottom"
-                        android:text="原价￥30" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/rd_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_rd_s"
-                    android:padding="3dp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/line_color" />
-
-            <RelativeLayout
-                android:id="@+id/layout_year"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/text1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="包年"
-                    android:textColor="#FF0000"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/text1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="￥128"
-                        android:textColor="#FF0000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="bottom"
-                        android:text="原价￥168" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/rd_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_rd_d"
-                    android:padding="3dp" />
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_color" />
 
         <RadioGroup
             android:id="@+id/rg"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rd_pay_wechat"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_round_bg_white_corner"
+                android:button="@drawable/ic_rd_selector"
                 android:checked="true"
                 android:drawableLeft="@drawable/ic_wechat"
-                android:drawableRight="@drawable/ic_rd_selector"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
                 android:text="微信支付"
                 android:textColor="#69B324"
                 android:textSize="16sp" />
 
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/line_color" />
-
             <RadioButton
                 android:id="@+id/rd_pay_alipay"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_round_bg_white_corner"
+                android:button="@drawable/ic_rd_selector"
                 android:drawableLeft="@drawable/ic_alipay"
-                android:drawableRight="@drawable/ic_rd_selector"
+                android:drawablePadding="10dp"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
                 android:text="支付宝支付"
                 android:textColor="#25BAEA"
                 android:textSize="16sp" />
         </RadioGroup>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_color" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="限时特惠，活动结束后将不在出现"
-            android:textColor="#FF0000"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/pay"
@@ -275,7 +219,7 @@
             android:layout_gravity="center"
             android:padding="10dp"
             android:text="温馨提示：如遇微信支付不能使用 请使用支付宝继续支付"
-            android:textColor="#999999"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>
 

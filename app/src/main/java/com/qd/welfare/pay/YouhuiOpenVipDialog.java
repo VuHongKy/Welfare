@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qd.welfare.R;
 import com.qd.welfare.config.AppConfig;
+import com.qd.welfare.utils.PriceUtil;
 import com.qd.welfare.utils.ViewUtils;
 
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
@@ -52,12 +53,14 @@ public class YouhuiOpenVipDialog extends Dialog {
     public static class Builder {
         private Context context;
 
-        private RelativeLayout layoutYear;
-        private RelativeLayout layoutMonth;
+        private LinearLayout layoutYear;
+        private LinearLayout layoutMonth;
         private ImageView rdYear;
         private ImageView rdMonth;
         private RadioGroup rg;
         private TextView pay;
+        private TextView oldPriceMonth;
+        private TextView oldPriceYear;
 
 
         private int dataId;
@@ -84,6 +87,11 @@ public class YouhuiOpenVipDialog extends Dialog {
             rdMonth = view.findViewById(R.id.rd_month);
             rg = view.findViewById(R.id.rg);
             pay = view.findViewById(R.id.pay);
+            oldPriceMonth = view.findViewById(R.id.old_price_month);
+            oldPriceYear = view.findViewById(R.id.old_price_year);
+
+            PriceUtil.showOldPrice(oldPriceMonth);
+            PriceUtil.showOldPrice(oldPriceYear);
 
             if (payWayType == AppConfig.PAY_TYPE_WECHAT) {
                 rg.check(R.id.rd_pay_wechat);
