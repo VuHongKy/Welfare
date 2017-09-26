@@ -259,7 +259,6 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     @Override
     public void onVideoItemClick(VideoInfo info) {
-
         if (App.userInfo.getRole() <= 1 && info.getType() == 2) {
             DialogUtil.showOpenViewDialog(getContext(), "该视频为会员专享，请先开通会员", PageConfig.VIDEO_TRY, info.getId());
         } else {
@@ -267,8 +266,6 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
             intent.putExtra("id", info.getId());
             startActivity(intent);
         }
-
-
     }
 
     @Subscribe

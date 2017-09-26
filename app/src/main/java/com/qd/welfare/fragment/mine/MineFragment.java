@@ -121,12 +121,12 @@ public class MineFragment extends BaseBackFragment {
                             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    if (App.userInfo.getRole() > 1) {
+                                    if (App.userInfo.getRole() <= 1 && response.body().data.get(i).getType() == 2) {
+                                        DialogUtil.showOpenViewDialog(getContext(), "该视频为会员专享，请先开通会员", PageConfig.VIDEO_TRY, response.body().data.get(i).getId());
+                                    } else {
                                         Intent intent = new Intent(getContext(), VideoDetailActivity.class);
                                         intent.putExtra("id", response.body().data.get(i).getId());
                                         startActivity(intent);
-                                    } else {
-                                        DialogUtil.showOpenViewDialog(getContext(), PageConfig.MINE, response.body().data.get(i).getId());
                                     }
                                 }
                             });
