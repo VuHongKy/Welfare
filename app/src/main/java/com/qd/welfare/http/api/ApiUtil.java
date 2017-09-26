@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ApiUtil {
     private static final String SIGN_KEY = "045448f765b0c0592563123a2652fb63";
-    public static final String API_PRE = "http://api.tsacw.com";
+    public static final String API_PRE = "https://apis.tsacw.com";
 
     public static final String USER = "/user";
     public static final String USER_TAG = "USER_TAG";

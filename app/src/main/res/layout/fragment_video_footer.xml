@@ -11,7 +11,8 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="开通会员，加载更多"
-        android:textColor="@color/tab_select"
+        android:background="@drawable/bg_buy_now"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
 </LinearLayout>
