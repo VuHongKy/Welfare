@@ -38,6 +38,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private LayoutInflater inflater;
 
     private OnVideoItemClickListener onVideoItemClickListener;
+    private GridSpacingItemDecoration itemDecoration=new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(5), false);
 
     public VideoAdapter(Context context, List<VideoResultInfo.VideoIndexInfo> list) {
         this.context = context;
@@ -97,8 +98,13 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ViewHolder2 holder2 = (ViewHolder2) holder;
             holder2.title.setText(info.getTitle());
             VideoItemAdapter adapter = new VideoItemAdapter(context, info.getVideo());
+            try{
+                holder2.itemGridView.removeItemDecoration(itemDecoration);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             holder2.itemGridView.setLayoutManager(new GridLayoutManager(context, 2));
-            holder2.itemGridView.addItemDecoration(new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(5), false));
+            holder2.itemGridView.addItemDecoration(itemDecoration);
             holder2.itemGridView.setAdapter(adapter);
             adapter.setOnChildItemClickListener(new VideoItemAdapter.OnChildItemClickListener() {
                 @Override
