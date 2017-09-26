@@ -9,12 +9,14 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="今日精选"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:gravity="center"
+        android:background="@drawable/ic_video_title"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/itemGridView"
