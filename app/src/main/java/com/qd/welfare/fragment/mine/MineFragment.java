@@ -187,4 +187,8 @@ public class MineFragment extends BaseBackFragment {
         EventBus.getDefault().post(new StartBrotherEvent(ServiceCenterFragment.newInstance()));
     }
 
+    @OnClick(R.id.ic_back)
+    public void onClickTopBack() {
+        _mActivity.onBackPressed();
+    }
 }

@@ -7,7 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#2F2B4C">
+        android:background="#2F2B4C"
+        android:visibility="gone">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -40,34 +41,75 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#2F2B4C"
+                android:background="@drawable/bg_mine_top"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/image"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="#2F2B4C"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_default_avater" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_default_avater" />
+
+                    <TextView
+                        android:id="@+id/ic_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_back_white"
+                        android:drawablePadding="5dp"
+                        android:padding="10dp"
+                        android:text="返回"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/vip_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
                     android:background="@drawable/ic_vip"
                     android:gravity="center_horizontal"
                     android:textColor="#333333"
-                    android:textSize="10sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#2F2B4C"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="用户ID:"
+                        android:textColor="#FFFF00"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/userId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="123456"
+                        android:textColor="#FFFF00"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="14dp"
@@ -77,20 +119,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="用户ID:"
-                        android:textColor="@color/white"
+                        android:text="账号:"
+                        android:textColor="#FFFF00"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/userId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="aswps4186"
+                        android:textColor="#FFFF00"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="密码:"
+                        android:textColor="#FFFF00"
+                        android:textSize="14sp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="123456"
-                        android:textColor="@color/white"
+                        android:textColor="#FFFF00"
                         android:textSize="14sp" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
