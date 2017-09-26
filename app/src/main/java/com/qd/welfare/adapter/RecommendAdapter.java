@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -62,6 +63,8 @@ public class RecommendAdapter extends BaseAdapter {
         VideoInfo info = list.get(position);
         viewHolder.title.setText(info.getTitle());
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu()).centerCrop().into(viewHolder.image);
+        viewHolder.starLayout.setVisibility(View.GONE);
+        viewHolder.title.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -70,6 +73,8 @@ public class RecommendAdapter extends BaseAdapter {
         RatioImageView image;
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.star_layout)
+        LinearLayout starLayout;
 
         ActressItemViewHolder(View view) {
             ButterKnife.bind(this, view);
