@@ -193,7 +193,7 @@ public class NovelListFragment extends BaseBackFragment {
                                         ToastUtils.getInstance(getContext()).showToast(response.message());
                                     }
                                     ptrLayout.refreshComplete();
-                                    ptrLayout.loadMoreComplete(currentPage > 1 ? true : false);
+                                    ptrLayout.loadMoreComplete(currentPage > 1);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
