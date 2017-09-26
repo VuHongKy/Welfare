@@ -103,6 +103,8 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }catch (Exception e){
                 e.printStackTrace();
             }
+            holder2.itemGridView.setFocusableInTouchMode(false); //设置不需要焦点
+            holder2.itemGridView.requestFocus(); //设置焦点不需要
             holder2.itemGridView.setLayoutManager(new GridLayoutManager(context, 2));
             holder2.itemGridView.addItemDecoration(itemDecoration);
             holder2.itemGridView.setAdapter(adapter);
