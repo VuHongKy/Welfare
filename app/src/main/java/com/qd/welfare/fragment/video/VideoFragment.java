@@ -115,6 +115,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         adapter = new VideoAdapter(getContext(), list);
         mAdapter = new RecyclerAdapterWithHF(adapter);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //listView.addItemDecoration(new SpacesItemDecoration(PtrLocalDisplay.dp2px(1)));
         listView.setAdapter(mAdapter);
         adapter.setOnVideoItemClickListener(this);
         initBanner();
