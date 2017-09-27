@@ -63,9 +63,9 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/discount_month_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:text="￥20"
                 android:textColor="#FF0000"
                 android:textSize="16sp" />
@@ -120,6 +120,7 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/discount_year_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥128"

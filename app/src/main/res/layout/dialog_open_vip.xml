@@ -65,6 +65,7 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/month_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥30"
@@ -72,6 +73,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/month_cost_for_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(1.00元/天)"
@@ -124,6 +126,7 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/year_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥168"
@@ -131,6 +134,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/year_cost_for_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(0.47元/天)"
@@ -176,15 +180,15 @@
                 android:id="@+id/rd_pay_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:button="@drawable/ic_rd_selector"
                 android:checked="true"
                 android:drawableLeft="@drawable/ic_wechat"
                 android:drawablePadding="10dp"
                 android:gravity="center"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="10dp"
                 android:text="微信支付"
                 android:textColor="#69B324"
                 android:textSize="16sp" />
@@ -194,13 +198,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:button="@drawable/ic_rd_selector"
                 android:drawableLeft="@drawable/ic_alipay"
                 android:drawablePadding="10dp"
                 android:gravity="center"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="10dp"
                 android:text="支付宝支付"
                 android:textColor="#25BAEA"
                 android:textSize="16sp" />

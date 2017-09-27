@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.config.AppConfig;
+import com.qd.welfare.utils.PriceUtil;
 import com.qd.welfare.utils.ViewUtils;
 
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
@@ -58,6 +60,10 @@ public class OpenVipDialog extends Dialog {
         private ImageView rdMonth;
         private RadioGroup rg;
         private TextView pay;
+        private TextView monthCost;
+        private TextView monthCostForDay;
+        private TextView yearCost;
+        private TextView yearCostForDay;
 
 
         private int dataId;
@@ -84,6 +90,17 @@ public class OpenVipDialog extends Dialog {
             rdMonth = view.findViewById(R.id.rd_month);
             rg = view.findViewById(R.id.rg);
             pay = view.findViewById(R.id.pay);
+            monthCost = view.findViewById(R.id.month_cost);
+            monthCostForDay = view.findViewById(R.id.month_cost_for_day);
+            yearCost = view.findViewById(R.id.year_cost);
+            yearCostForDay = view.findViewById(R.id.year_cost_for_day);
+
+            monthCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getVip_month_cost()));
+            yearCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getVip_year_cost()));
+            double monthDayPrice = App.commonInfo.getVip_month_cost() / 30;
+            double yearDayPrice = App.commonInfo.getVip_year_cost() / 365;
+            monthCostForDay.setText("(" + PriceUtil.getPrice(monthDayPrice) + "元/天)");
+            yearCostForDay.setText("(" + PriceUtil.getPrice(yearDayPrice) + "元/天)");
 
             if (payWayType == AppConfig.PAY_TYPE_WECHAT) {
                 rg.check(R.id.rd_pay_wechat);

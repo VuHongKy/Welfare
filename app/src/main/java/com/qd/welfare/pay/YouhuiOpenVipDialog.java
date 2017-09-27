@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.config.AppConfig;
 import com.qd.welfare.utils.PriceUtil;
@@ -61,6 +62,8 @@ public class YouhuiOpenVipDialog extends Dialog {
         private TextView pay;
         private TextView oldPriceMonth;
         private TextView oldPriceYear;
+        private TextView discountMonthCost;
+        private TextView discountYearCost;
 
 
         private int dataId;
@@ -89,6 +92,13 @@ public class YouhuiOpenVipDialog extends Dialog {
             pay = view.findViewById(R.id.pay);
             oldPriceMonth = view.findViewById(R.id.old_price_month);
             oldPriceYear = view.findViewById(R.id.old_price_year);
+            discountMonthCost = view.findViewById(R.id.discount_month_cost);
+            discountYearCost = view.findViewById(R.id.discount_year_cost);
+
+            discountMonthCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getDiscount_vip_month_cost()));
+            discountYearCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getDiscount_vip_year_cost()));
+            oldPriceMonth.setText("(原价￥" + PriceUtil.getPrice(App.commonInfo.getVip_month_cost()) + ")");
+            oldPriceYear.setText("(原价￥" + PriceUtil.getPrice(App.commonInfo.getVip_year_cost()) + ")");
 
             PriceUtil.showOldPrice(oldPriceMonth);
             PriceUtil.showOldPrice(oldPriceYear);
