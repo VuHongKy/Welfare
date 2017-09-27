@@ -11,20 +11,9 @@ android {
         versionName "1.0"
     }
     productFlavors {
-
         NNY_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1001,1001"]
         }
-        NNY_1002 {
-            manifestPlaceholders = [CHANNEL_ID: "1001,1002"]
-        }
-        NNY_1003 {
-            manifestPlaceholders = [CHANNEL_ID: "1001,1003"]
-        }
-        NNY_1004 {
-            manifestPlaceholders = [CHANNEL_ID: "1001,1004"]
-        }
-
     }
     signingConfigs {
         release {

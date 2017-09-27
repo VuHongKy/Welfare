@@ -106,7 +106,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 i = i - 1;
                 if (i >= 0) {
-                    if (App.userInfo.getRole() <= 1 && list.get(i).getType() == 0) {
+                    if (App.userInfo.getRole() <= 1 && list.get(i).getType() == 2) {
                         DialogUtil.showOpenViewDialog(VideoDetailActivity.this, "非VIP只能试看体验，请开通VIP继续观看", PageConfig.VIDEO_TRY, list.get(i).getId());
                     } else {
                         Intent intent = new Intent(VideoDetailActivity.this, VideoDetailActivity.class);
