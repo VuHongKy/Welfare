@@ -467,7 +467,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.setProgressAndText(progress, position, duration);
         if (progress != 0) {
             bottomProgressBar.setProgress(progress);
-            onCurrentPositionListener(position);
+            //onCurrentPositionListener(position);
         }
     }
 

@@ -40,6 +40,7 @@ public class VideoDetailInfo implements Serializable {
     private int status;
     private long create_time;
     private long duration;
+    private String short_video_url;
 
     public int getId() {
         return id;
@@ -151,5 +152,13 @@ public class VideoDetailInfo implements Serializable {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getShort_video_url() {
+        return short_video_url;
+    }
+
+    public void setShort_video_url(String short_video_url) {
+        this.short_video_url = short_video_url;
     }
 }
