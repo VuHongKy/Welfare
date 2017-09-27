@@ -129,6 +129,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
 
+        totalTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
+        currentTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
     }
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
