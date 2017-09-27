@@ -24,7 +24,6 @@ import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
-import com.qd.welfare.itemDecoration.SpacesItemDecoration;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.GlideImageLoader;
 import com.qd.welfare.utils.NetWorkUtils;
@@ -187,14 +186,24 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                                     ptrLayout.refreshComplete();
                                 }
                                 list.clear();
-                                list.addAll(response.body().data.getTry_other());
-                                list.addAll(response.body().data.getVip_other());
+                                List<VideoResultInfo.VideoIndexInfo> tempList = new ArrayList<>();
                                 if (App.userInfo.getRole() <= 1) {
-                                    for (VideoResultInfo.VideoIndexInfo info : list) {
-                                        if (info.getShow() == 2) {
-                                            list.remove(info);
+                                    for (int i = 0; i < response.body().data.getTry_other().size(); i++) {
+                                        if (response.body().data.getTry_other().get(i).getShow() != 2) {
+                                            tempList.add(response.body().data.getTry_other().get(i));
                                         }
                                     }
+                                    for (int i = 0; i < response.body().data.getVip_other().size(); i++) {
+                                        if (response.body().data.getVip_other().get(i).getShow() != 2) {
+                                            tempList.add(response.body().data.getVip_other().get(i));
+                                        }
+                                    }
+                                } else {
+                                    tempList.addAll(response.body().data.getTry_other());
+                                    tempList.addAll(response.body().data.getVip_other());
+                                }
+                                list.addAll(tempList);
+                                if (App.userInfo.getRole() <= 1) {
                                     if (mAdapter.getFootSize() == 0) {
                                         mAdapter.addFooter(footerView);
                                     }

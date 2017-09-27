@@ -146,7 +146,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
             public void onClick(View view) {
                 upLoadVideoPlayCount(videoId);
                 JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, App.commonInfo.getFile_domain() + info.getUrl(), info.getTitle());
+                MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, info.getUrl(), info.getTitle());
             }
         });
     }

@@ -17,6 +17,7 @@ public class CommonInfo implements Serializable {
      * vip_year_cost : 3
      * discount_vip_month_cost : 4
      * discount_vip_year_cost : 5
+     * try_time:1000
      */
 
     private String user_agreement;
@@ -25,6 +26,7 @@ public class CommonInfo implements Serializable {
     private int vip_year_cost;
     private int discount_vip_month_cost;
     private int discount_vip_year_cost;
+    private int try_time;
 
     public String getUser_agreement() {
         return user_agreement;
@@ -72,5 +74,13 @@ public class CommonInfo implements Serializable {
 
     public void setDiscount_vip_year_cost(int discount_vip_year_cost) {
         this.discount_vip_year_cost = discount_vip_year_cost;
+    }
+
+    public int getTry_time() {
+        return try_time;
+    }
+
+    public void setTry_time(int try_time) {
+        this.try_time = try_time;
     }
 }

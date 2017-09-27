@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -476,7 +475,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected void onCurrentPositionListener(int position) {
 
-        if (App.userInfo.getRole() <= 1 && position > 30 * 1000 && position > currentTime + 10) {
+        if (App.userInfo.getRole() <= 1 && position > App.commonInfo.getTry_time() && position > currentTime + 10) {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
             onStatePause();
