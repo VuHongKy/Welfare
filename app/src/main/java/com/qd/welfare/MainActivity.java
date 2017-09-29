@@ -334,8 +334,19 @@ public class MainActivity extends SupportActivity {
             public void onSuccess(Response<File> response) {
                 try {
                     installAPK(MainActivity.this, response.body().getAbsolutePath());
+                    if (downLoadDialog != null) {
+                        downLoadDialog.dismiss();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Response<File> response) {
+                super.onError(response);
+                if (downLoadDialog != null) {
+                    downLoadDialog.dismiss();
                 }
             }
         });
