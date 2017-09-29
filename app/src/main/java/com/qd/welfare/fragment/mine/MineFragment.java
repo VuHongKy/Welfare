@@ -162,7 +162,9 @@ public class MineFragment extends BaseBackFragment {
 
     @OnClick(R.id.user_agreement)
     public void onClickUserAgreement() {
-        EventBus.getDefault().post(new StartBrotherEvent(UserAgreementFragment.newInstance()));
+        //EventBus.getDefault().post(new StartBrotherEvent(UserAgreementActivity.newInstance()));
+        Intent intent = new Intent(_mActivity, UserAgreementActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.update_version)

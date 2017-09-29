@@ -32,6 +32,7 @@
             android:value="GlideModule" />
         <!--配置弹窗的service-->
         <service android:name=".service.ChatHeadService" />
+
         <activity
             android:name=".LauncherActivity"
             android:screenOrientation="portrait"
@@ -47,6 +48,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragment.video.VideoDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack" />
+        <activity
+            android:name=".fragment.mine.UserAgreementActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack" />

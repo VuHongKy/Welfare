@@ -2,6 +2,7 @@ package com.qd.welfare.pay;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.config.AppConfig;
+import com.qd.welfare.fragment.mine.UserAgreementActivity;
 import com.qd.welfare.utils.PriceUtil;
 import com.qd.welfare.utils.ViewUtils;
 
@@ -64,7 +66,7 @@ public class YouhuiOpenVipDialog extends Dialog {
         private TextView oldPriceYear;
         private TextView discountMonthCost;
         private TextView discountYearCost;
-
+        private TextView userAgreement;
 
         private int dataId;
         private int positionId;
@@ -94,6 +96,7 @@ public class YouhuiOpenVipDialog extends Dialog {
             oldPriceYear = view.findViewById(R.id.old_price_year);
             discountMonthCost = view.findViewById(R.id.discount_month_cost);
             discountYearCost = view.findViewById(R.id.discount_year_cost);
+            userAgreement = view.findViewById(R.id.user_agreement);
 
             discountMonthCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getDiscount_vip_month_cost()));
             discountYearCost.setText("￥" + PriceUtil.getPrice(App.commonInfo.getDiscount_vip_year_cost()));
@@ -102,6 +105,18 @@ public class YouhuiOpenVipDialog extends Dialog {
 
             PriceUtil.showOldPrice(oldPriceMonth);
             PriceUtil.showOldPrice(oldPriceYear);
+
+            userAgreement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        Intent intent = new Intent(context, UserAgreementActivity.class);
+                        context.startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             if (payWayType == AppConfig.PAY_TYPE_WECHAT) {
                 rg.check(R.id.rd_pay_wechat);
