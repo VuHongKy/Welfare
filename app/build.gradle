@@ -11,6 +11,9 @@ android {
         versionName "1.0.0"
     }
     productFlavors {
+        NNY_1004_1001 {
+            manifestPlaceholders = [CHANNEL_ID: "1004,1001"]
+        }
         NNY_1001_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1001,1001"]
         }
@@ -19,9 +22,6 @@ android {
         }
 		NNY_1003_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1003,1001"]
-        }
-        NNY_1004_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1004,1001"]
         }
         NNY_1005_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1005,1001"]
