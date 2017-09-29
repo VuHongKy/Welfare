@@ -57,9 +57,7 @@ public class LauncherActivity extends SupportActivity {
         Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
-        if (operatingAnim != null) {
-            loading.startAnimation(operatingAnim);
-        }
+        loading.startAnimation(operatingAnim);
     }
 
     @Override
