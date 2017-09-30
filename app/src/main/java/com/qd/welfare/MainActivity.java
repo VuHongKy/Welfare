@@ -69,7 +69,7 @@ public class MainActivity extends SupportActivity {
         startService(new Intent(MainActivity.this, ChatHeadService.class));
 
         Timer mTimer = new Timer();
-        mTimer.schedule(timerTask, 10 * 1000, 10 * 1000);
+        mTimer.schedule(timerTask, 30 * 1000, 30 * 1000);
     }
 
     @Override
