@@ -163,18 +163,19 @@ public class NovelListFragment extends BaseBackFragment {
                         @Override
                         public void onSuccess(Response<LzyResponse<NovelResultInfo>> response) {
                             try {
-                                if (isFirst) {
-                                    statusLayout.showContent();
-                                } else {
-                                    ptrLayout.refreshComplete();
-                                }
-                                ptrLayout.loadMoreComplete(response.body().data.getInfo().getPage_total() > currentPage);
                                 page = currentPage;
                                 if (currentPage == 1) {
                                     list.clear();
                                 }
                                 list.addAll(response.body().data.getData());
                                 adapter.notifyDataSetChanged();
+                                if (isFirst) {
+                                    statusLayout.showContent();
+                                } else {
+                                    ptrLayout.refreshComplete();
+                                }
+                                boolean hasMore = page < response.body().data.getInfo().getPage_total();
+                                ptrLayout.loadMoreComplete(hasMore);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * @FileName:com.scene.baseframe.util.ToastUtils.java
- * @功能描述：防止Toast重复显示
- * @author: scene
- * @date: 2016-07-19 17:05
+ * FileName:com.scene.baseframe.util.ToastUtils.java
+ * 功能描述：防止Toast重复显示
+ * author: scene
+ * date: 2016-07-19 17:05
  */
 public class ToastUtils {
 
@@ -46,6 +46,22 @@ public class ToastUtils {
         }
 
     }
+
+    public void showLongToast(String text) {
+        try {
+            if (mToast == null) {
+                mToast = Toast.makeText(mContext, text, Toast.LENGTH_LONG);
+            } else {
+                mToast.setText(text);
+                mToast.setDuration(Toast.LENGTH_LONG);
+            }
+            mToast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void showToast(int resId) {
         try {
             if (mToast == null) {
@@ -58,7 +74,6 @@ public class ToastUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void cancelToast() {

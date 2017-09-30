@@ -46,10 +46,10 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     @Override
     public void init(Context context) {
         super.init(context);
-        getDanmuData();
         SAVE_PROGRESS = false;
         if (App.userInfo.getRole() == 1) {
-            ToastUtils.getInstance(context).showToast("您当前非会员只能体验视频片段");
+            getDanmuData();
+            ToastUtils.getInstance(context).showLongToast("您当前非会员只能体验视频片段");
         }
     }
 
