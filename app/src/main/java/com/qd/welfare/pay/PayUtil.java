@@ -1,7 +1,11 @@
 package com.qd.welfare.pay;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.lzy.okgo.OkGo;
@@ -15,6 +19,8 @@ import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.LoadingDialog;
+
+import java.util.List;
 
 /**
  * 支付
@@ -51,9 +57,23 @@ public class PayUtil {
                                 wxQRCodePayDialog.show();
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_CHANGE) {
                                 //公众号跳转
-                                Intent intent = new Intent(context, WechatPayActivity.class);
-                                intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
-                                context.startActivity(intent);
+                                if (isWeixinAvilible(context)) {
+                                    //打开微信
+                                    Intent intent1 = new Intent();
+                                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                                    intent1.setAction(Intent.ACTION_MAIN);
+                                    intent1.addCategory(Intent.CATEGORY_LAUNCHER);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent1.setComponent(cmp);
+                                    context.startActivity(intent1);
+                                    SystemClock.sleep(6000);
+                                    //跳转支付
+                                    Intent intent = new Intent(context, WechatPayActivity.class);
+                                    intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
+                                    context.startActivity(intent);
+                                } else {
+                                    ToastUtils.getInstance(context).showToast("请先安装微信");
+                                }
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_ALIPAY_SCAN) {
                                 Intent intent = new Intent(context, AliPayActivity.class);
                                 intent.putExtra(AliPayActivity.ALIPAY_URL, payInfo.getUrl());
@@ -119,9 +139,23 @@ public class PayUtil {
                                 wxQRCodePayDialog.show();
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_CHANGE) {
                                 //公众号跳转
-                                Intent intent = new Intent(context, WechatPayActivity.class);
-                                intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
-                                context.startActivity(intent);
+                                if(isWeixinAvilible(context)){
+                                    //打开微信
+                                    Intent intent1 = new Intent();
+                                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                                    intent1.setAction(Intent.ACTION_MAIN);
+                                    intent1.addCategory(Intent.CATEGORY_LAUNCHER);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent1.setComponent(cmp);
+                                    context.startActivity(intent1);
+                                    SystemClock.sleep(6000);
+                                    Intent intent = new Intent(context, WechatPayActivity.class);
+                                    intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
+                                    context.startActivity(intent);
+                                }else{
+                                    ToastUtils.getInstance(context).showToast("请先安装微信");
+                                }
+
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_ALIPAY_SCAN) {
                                 Intent intent = new Intent(context, AliPayActivity.class);
                                 intent.putExtra(AliPayActivity.ALIPAY_URL, payInfo.getUrl());
@@ -159,4 +193,19 @@ public class PayUtil {
                     }
                 });
     }
+
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
