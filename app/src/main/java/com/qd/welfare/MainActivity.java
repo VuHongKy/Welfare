@@ -415,13 +415,13 @@ public class MainActivity extends SupportActivity {
         public void handleMessage(Message msg) {
             if (!isApplicationBroughtToBackground(MainActivity.this)) {
                 if (System.currentTimeMillis() - showNoticeTime >= 28 * 1000) {
+                    showNoticeTime = System.currentTimeMillis();
                     OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
                             .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
                             .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
                                 @Override
                                 public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
                                     try {
-                                        showNoticeTime = System.currentTimeMillis();
                                         OpenVipInfo openVipInfo = response.body().data;
                                         showNoticeToast("恭喜用户" + openVipInfo.getUser_id() +
                                                 "成功开通" + (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员");
