@@ -11,77 +11,77 @@ android {
         versionName "1.0.0"
     }
     productFlavors {
-        NNY_1004_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1004,1001"]
+        NNY_1004_1004 {
+            manifestPlaceholders = [CHANNEL_ID: "1004,1004"]
         }
         NNY_1001_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1001,1001"]
         }
-		NNY_1002_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1002,1001"]
+		NNY_1002_1002 {
+            manifestPlaceholders = [CHANNEL_ID: "1002,1002"]
         }
-		NNY_1003_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1003,1001"]
+		NNY_1003_1003 {
+            manifestPlaceholders = [CHANNEL_ID: "1003,1003"]
         }
-        NNY_1005_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1005,1001"]
+        NNY_1005_1005 {
+            manifestPlaceholders = [CHANNEL_ID: "1005,1005"]
         }
-        NNY_1006_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1006,1001"]
+        NNY_1006_1006 {
+            manifestPlaceholders = [CHANNEL_ID: "1006,1006"]
         }
-        NNY_1007_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1007,1001"]
+        NNY_1007_1007 {
+            manifestPlaceholders = [CHANNEL_ID: "1007,1007"]
         }
-        NNY_1008_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1008,1001"]
+        NNY_1008_1008 {
+            manifestPlaceholders = [CHANNEL_ID: "1008,1008"]
         }
-        NNY_1009_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1009,1001"]
+        NNY_1009_1009 {
+            manifestPlaceholders = [CHANNEL_ID: "1009,1009"]
         }
-        NNY_1010_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1010,1001"]
+        NNY_1010_1010 {
+            manifestPlaceholders = [CHANNEL_ID: "1010,1010"]
         }
-        NNY_1011_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1011,1001"]
+        NNY_1011_1011 {
+            manifestPlaceholders = [CHANNEL_ID: "1011,1011"]
         }
-        NNY_1012_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1012,1001"]
+        NNY_1012_1012 {
+            manifestPlaceholders = [CHANNEL_ID: "1012,1012"]
         }
-        NNY_1013_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1013,1001"]
+        NNY_1013_1013 {
+            manifestPlaceholders = [CHANNEL_ID: "1013,1013"]
         }
-        NNY_1014_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1014,1001"]
+        NNY_1014_1014 {
+            manifestPlaceholders = [CHANNEL_ID: "1014,1014"]
         }
-        NNY_1015_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1015,1001"]
+        NNY_1015_1015 {
+            manifestPlaceholders = [CHANNEL_ID: "1015,1015"]
         }
-        NNY_1016_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1016,1001"]
+        NNY_1016_1016 {
+            manifestPlaceholders = [CHANNEL_ID: "1016,1016"]
         }
-        NNY_1017_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1017,1001"]
+        NNY_1017_1017 {
+            manifestPlaceholders = [CHANNEL_ID: "1017,1017"]
         }
-        NNY_1018_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1018,1001"]
+        NNY_1018_1018 {
+            manifestPlaceholders = [CHANNEL_ID: "1018,1018"]
         }
-        NNY_1019_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1019,1001"]
+        NNY_1019_1019 {
+            manifestPlaceholders = [CHANNEL_ID: "1019,1019"]
         }
-        NNY_1020_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1020,1001"]
+        NNY_1020_1020 {
+            manifestPlaceholders = [CHANNEL_ID: "1020,1020"]
         }
-        NNY_1021_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1021,1001"]
+        NNY_1021_1021 {
+            manifestPlaceholders = [CHANNEL_ID: "1021,1021"]
         }
-        NNY_1022_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1022,1001"]
+        NNY_1022_1022 {
+            manifestPlaceholders = [CHANNEL_ID: "1022,1022"]
         }
-		NNY_1023_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1023,1001"]
+		NNY_1023_1023 {
+            manifestPlaceholders = [CHANNEL_ID: "1023,1023"]
         }
-		NNY_1024_1001 {
-            manifestPlaceholders = [CHANNEL_ID: "1024,1001"]
+		NNY_1024_1024 {
+            manifestPlaceholders = [CHANNEL_ID: "1024,1024"]
         }
     }
     signingConfigs {

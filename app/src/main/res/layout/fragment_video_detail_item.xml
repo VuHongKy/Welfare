@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#000000"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -37,6 +38,16 @@
             android:layout_centerInParent="true"
             android:background="@drawable/ic_play_big"
             android:padding="5dp" />
+        <TextView
+            android:id="@+id/tag_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/image"
+            android:layout_alignTop="@+id/image"
+            android:background="@drawable/ic_video_tab"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <TextView
@@ -48,7 +59,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="视频名称"
-        android:textColor="#333333"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -67,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="播放：5666"
-            android:textColor="#999999" />
+            android:textColor="@color/white" />
 
         <com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar
             android:id="@+id/ratingBar"
@@ -92,7 +103,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:container_background_color="@color/white"
+        app:container_background_color="#000000"
         app:container_enable_drag="false"
         app:container_max_lines="1"
         app:horizontal_interval="3dp"

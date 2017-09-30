@@ -15,7 +15,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="#000000"
             android:divider="#00000000"
             android:dividerHeight="10dp" />
     </wiki.scene.loadmore.StatusViewLayout>

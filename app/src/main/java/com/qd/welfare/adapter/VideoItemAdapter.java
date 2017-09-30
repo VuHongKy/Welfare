@@ -55,6 +55,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.tagLayout.setTags(info.getTags());
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu())
                 .centerCrop().into(viewHolder.image);
+        viewHolder.tagText.setText(info.getType() == 1 ? "免费试看" : "会员尊享");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +80,8 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView videoPlayCount;
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
+        @BindView(R.id.tag_text)
+        TextView tagText;
 
         ViewHolder(View view) {
             super(view);

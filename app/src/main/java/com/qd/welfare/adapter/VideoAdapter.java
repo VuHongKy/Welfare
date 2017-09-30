@@ -38,7 +38,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private LayoutInflater inflater;
 
     private OnVideoItemClickListener onVideoItemClickListener;
-    private GridSpacingItemDecoration itemDecoration=new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(5), false);
+    private GridSpacingItemDecoration itemDecoration = new GridSpacingItemDecoration(2, PtrLocalDisplay.dp2px(5), false);
 
     public VideoAdapter(Context context, List<VideoResultInfo.VideoIndexInfo> list) {
         this.context = context;
@@ -82,6 +82,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 holder1.videoPlayCount.setText("播放：" + info.getVideo().get(0).getPlay_times());
                 holder1.ratingBar.setMax(5);
                 holder1.ratingBar.setRating((int) info.getVideo().get(0).getStar());
+                holder1.tagText.setText(info.getVideo().get(0).getType() == 1 ? "免费试看" : "会员尊享");
                 Glide.with(context).load(App.commonInfo.getFile_domain() + info.getVideo().get(0).getThumb())
                         .centerCrop().into(holder1.image);
                 holder1.tagLayout.setTags(info.getVideo().get(0).getTags());
@@ -98,9 +99,9 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ViewHolder2 holder2 = (ViewHolder2) holder;
             holder2.title.setText(info.getTitle());
             VideoItemAdapter adapter = new VideoItemAdapter(context, info.getVideo());
-            try{
+            try {
                 holder2.itemGridView.removeItemDecoration(itemDecoration);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             holder2.itemGridView.setFocusableInTouchMode(false); //设置不需要焦点
@@ -137,6 +138,8 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         SelectableRoundedImageView image;
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
+        @BindView(R.id.tag_text)
+        TextView tagText;
 
         ViewHolder1(View view) {
             super(view);

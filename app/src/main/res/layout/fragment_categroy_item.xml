@@ -35,7 +35,6 @@
         android:gravity="center"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
-        android:text="分类1"
         android:textColor="@color/tab_select"
         android:textSize="18sp" />
 
