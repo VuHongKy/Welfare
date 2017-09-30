@@ -94,6 +94,9 @@ public class ApiUtil {
     //统计播放次数
     public static final String PLAY_COUNT = "/video/play_count";
     public static final String PLAY_COUNT_TAG = "PLAY_COUNT_TAG";
+    //获取开通成功的用户数据
+    public static final String GET_PAY_SUCCESS_INFO = "";
+    public static final String GET_PAY_SUCCESS_INFO_TAG = "GET_PAY_SUCCESS_INFO_TAG";
 
     /**
      * Case By:创建参数基础信息

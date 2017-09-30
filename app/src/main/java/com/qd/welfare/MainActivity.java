@@ -1,5 +1,6 @@
 package com.qd.welfare;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
@@ -7,7 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
@@ -32,14 +39,21 @@ import com.zhl.cbdialog.CBDialogBuilder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 public class MainActivity extends SupportActivity {
+    private final Handler mHandler = new MyHandler(this);
+    private Toast toast;
+    private TextView toastContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,9 @@ public class MainActivity extends SupportActivity {
         startUpLoad();
         getUpdateVersion(false);
         startService(new Intent(MainActivity.this, ChatHeadService.class));
+
+        Timer mTimer = new Timer();
+        mTimer.schedule(timerTask, 30 * 1000, 30 * 1000);
     }
 
     @Override
@@ -380,4 +397,47 @@ public class MainActivity extends SupportActivity {
         return false;
     }
 
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            mHandler.sendEmptyMessage(10);
+        }
+    };
+
+    class MyHandler extends Handler {
+        WeakReference<Activity> mActivityReference;
+
+        MyHandler(Activity activity) {
+            mActivityReference = new WeakReference<Activity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (!isApplicationBroughtToBackground(MainActivity.this)) {
+                showNoticeToast("xxxxxxxx");
+                OkGo.<String>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
+                        .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
+                        .execute(new JsonCallback<String>() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                showNoticeToast("xxxxxxxx");
+                            }
+                        });
+            }
+        }
+    }
+
+    private void showNoticeToast(String message) {
+        if (toast == null) {
+            View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_toast, null);
+            toastContent = (TextView) v.findViewById(R.id.content);
+            toast = new Toast(MainActivity.this);
+            toast.setView(v);
+            toast.setGravity(Gravity.TOP, 0, PtrLocalDisplay.dp2px(80));
+            toast.setDuration(3000);
+        }
+        toastContent.setText(message);
+        toast.show();
+    }
 }

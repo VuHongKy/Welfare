@@ -1,6 +1,11 @@
 package com.qd.welfare;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -8,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.qd.welfare.base.BaseFragment;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.event.TabSelectedEvent;
@@ -23,7 +29,9 @@ import com.qd.welfare.view.BottomBarTab;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
+import okhttp3.Call;
 import wiki.scene.loadmore.utils.SceneLogUtil;
 
 /**
