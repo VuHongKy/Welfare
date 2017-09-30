@@ -1,11 +1,9 @@
 package com.qd.welfare.pay;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.lzy.okgo.OkGo;
@@ -59,14 +57,8 @@ public class PayUtil {
                                 //公众号跳转
                                 if (isWeixinAvilible(context)) {
                                     //打开微信
-                                    Intent intent1 = new Intent();
-                                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-                                    intent1.setAction(Intent.ACTION_MAIN);
-                                    intent1.addCategory(Intent.CATEGORY_LAUNCHER);
-                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent1.setComponent(cmp);
-                                    context.startActivity(intent1);
-                                    SystemClock.sleep(6000);
+                                    Intent intent2 = context.getPackageManager().getLaunchIntentForPackage("com.tencent.mm");
+                                    context.startActivity(intent2);
                                     //跳转支付
                                     Intent intent = new Intent(context, WechatPayActivity.class);
                                     intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
@@ -139,20 +131,15 @@ public class PayUtil {
                                 wxQRCodePayDialog.show();
                             } else if (payInfo.getApi_type() == AppConfig.API_TYPE_WX_GZH_CHANGE) {
                                 //公众号跳转
-                                if(isWeixinAvilible(context)){
+                                if (isWeixinAvilible(context)) {
                                     //打开微信
-                                    Intent intent1 = new Intent();
-                                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-                                    intent1.setAction(Intent.ACTION_MAIN);
-                                    intent1.addCategory(Intent.CATEGORY_LAUNCHER);
-                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent1.setComponent(cmp);
-                                    context.startActivity(intent1);
-                                    SystemClock.sleep(6000);
+                                    Intent intent2 = context.getPackageManager().getLaunchIntentForPackage("com.tencent.mm");
+                                    context.startActivity(intent2);
+
                                     Intent intent = new Intent(context, WechatPayActivity.class);
                                     intent.putExtra(WechatPayActivity.WECHAT_PAY_URL, payInfo.getUrl());
                                     context.startActivity(intent);
-                                }else{
+                                } else {
                                     ToastUtils.getInstance(context).showToast("请先安装微信");
                                 }
 
