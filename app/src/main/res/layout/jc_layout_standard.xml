@@ -12,6 +12,11 @@
 
     </FrameLayout>
 
+    <com.anbetter.danmuku.DanMuView
+        android:id="@+id/danmuView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
     <ImageView
         android:id="@+id/thumb"
         android:layout_width="match_parent"
@@ -41,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:text="00:00"
-            android:visibility="gone"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:visibility="gone" />
 
         <SeekBar
             android:id="@+id/bottom_seek_progress"
@@ -66,8 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00"
-            android:visibility="gone"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/clarity"

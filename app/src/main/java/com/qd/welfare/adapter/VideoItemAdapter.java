@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.haozhang.lib.SlantedTextView;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
@@ -81,7 +82,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
         @BindView(R.id.tag_text)
-        TextView tagText;
+        SlantedTextView tagText;
 
         ViewHolder(View view) {
             super(view);

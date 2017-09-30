@@ -168,4 +168,6 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     //tablayout代替方式
     compile 'com.shizhefei:ViewPagerIndicator:1.1.6'
+    //弹幕
+    compile 'com.anbetter:danmukulight:1.0.1'
 }

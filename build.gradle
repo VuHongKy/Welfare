@@ -15,6 +15,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral() // 切记要添加这个
+
+        maven {
+            url 'https://dl.bintray.com/hpdx/maven/'
+        }
         maven { url 'https://jitpack.io' }
     }
 }

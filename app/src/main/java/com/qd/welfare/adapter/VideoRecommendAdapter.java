@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.haozhang.lib.SlantedTextView;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
@@ -66,7 +67,7 @@ public class VideoRecommendAdapter extends BaseAdapter {
         viewHolder.ratingBar.setRating((int) info.getStar());
         viewHolder.tagLayout.setTags(info.getTags());
         viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
-        viewHolder.tagText.setText(info.getType()==1?"免费试看":"会员尊享");
+        viewHolder.tagText.setText(info.getType() == 1 ? "免费试看" : "会员尊享");
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
         return view;
     }
@@ -83,7 +84,7 @@ public class VideoRecommendAdapter extends BaseAdapter {
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
         @BindView(R.id.tag_text)
-        TextView tagText;
+        SlantedTextView tagText;
 
         VideoDetailViewHolder(View view) {
             ButterKnife.bind(this, view);
