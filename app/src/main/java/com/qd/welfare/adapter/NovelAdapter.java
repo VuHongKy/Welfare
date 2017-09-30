@@ -13,6 +13,7 @@ import com.qd.welfare.R;
 import com.qd.welfare.entity.NovelInfo;
 import com.qd.welfare.widgets.RatioImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,9 +49,9 @@ public class NovelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.description.setText(info.getDescription());
         viewHolder.actor.setText(info.getAuthor());
         viewHolder.imageTag.setText(novelCategory);
-        List<String> tags = info.getTags();
+        List<String> tags = new ArrayList<>();
+        tags.addAll(info.getTags());
         tags.add(info.getStatus());
-        tags.add(info.getTotal_word() + "万字");
         viewHolder.tagLayout.setTags(tags);
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
     }
