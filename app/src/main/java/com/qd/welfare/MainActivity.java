@@ -22,6 +22,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.qd.welfare.config.AppConfig;
 import com.qd.welfare.entity.DefaultPayTypeInfo;
+import com.qd.welfare.entity.OpenVipInfo;
 import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.UpdateVersionInfo;
 import com.qd.welfare.event.OpenVipSuccessEvent;
@@ -68,7 +69,7 @@ public class MainActivity extends SupportActivity {
         startService(new Intent(MainActivity.this, ChatHeadService.class));
 
         Timer mTimer = new Timer();
-        mTimer.schedule(timerTask, 30 * 1000, 30 * 1000);
+        mTimer.schedule(timerTask, 10 * 1000, 10 * 1000);
     }
 
     @Override
@@ -109,6 +110,7 @@ public class MainActivity extends SupportActivity {
         OkGo.getInstance().cancelTag(ApiUtil.UPLOAD_USER_INFO_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.ChECK_ORDER_GOODS_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.UPDATE_VERSION_TAG);
+        OkGo.getInstance().cancelTag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG);
         super.onDestroy();
     }
 
@@ -415,13 +417,18 @@ public class MainActivity extends SupportActivity {
         @Override
         public void handleMessage(Message msg) {
             if (!isApplicationBroughtToBackground(MainActivity.this)) {
-                showNoticeToast("xxxxxxxx");
-                OkGo.<String>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
+                OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
                         .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
-                        .execute(new JsonCallback<String>() {
+                        .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
                             @Override
-                            public void onSuccess(Response<String> response) {
-                                showNoticeToast("xxxxxxxx");
+                            public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
+                                try {
+                                    OpenVipInfo openVipInfo = response.body().data;
+                                    showNoticeToast("恭喜用户" + openVipInfo.getUser_id() +
+                                            "成功开通" + (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
             }

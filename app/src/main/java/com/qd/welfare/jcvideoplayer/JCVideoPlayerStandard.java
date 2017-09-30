@@ -26,16 +26,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anbetter.danmuku.DanMuView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
+import com.qd.welfare.entity.DanmuInfo;
 import com.qd.welfare.event.VideoOpenVipEvent;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,6 +63,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView retryTextView;
     public TextView clarity;
     public PopupWindow clarityPopWindow;
+    public DanMuHelper mDanMuHelper;
+    public DanMuView danMuView;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
     protected Dialog mProgressDialog;
@@ -131,6 +137,22 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
         totalTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
         currentTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
+
+        mDanMuHelper = new DanMuHelper(context);
+        danMuView = (DanMuView) findViewById(R.id.danmuView);
+        danMuView.prepare();
+        mDanMuHelper.add(danMuView);
+    }
+
+    /**
+     * 发送弹幕
+     */
+    public void addDanmakus(List<DanmuInfo> danmuList) {
+        if (mDanMuHelper != null) {
+            for (DanmuInfo danmuInfo : danmuList) {
+                mDanMuHelper.addDanMu(danmuInfo, false);
+            }
+        }
     }
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {

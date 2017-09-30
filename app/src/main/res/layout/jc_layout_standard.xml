@@ -12,11 +12,6 @@
 
     </FrameLayout>
 
-    <com.anbetter.danmuku.DanMuView
-        android:id="@+id/danmuView"
-        android:layout_width="match_parent"
-        android:layout_height="120dp" />
-
     <ImageView
         android:id="@+id/thumb"
         android:layout_width="match_parent"
@@ -111,7 +106,10 @@
         android:layout_marginTop="6dp"
         android:background="@drawable/jc_click_back_tiny_selector"
         android:visibility="gone" />
-
+    <com.anbetter.danmuku.DanMuView
+        android:id="@+id/danmuView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"

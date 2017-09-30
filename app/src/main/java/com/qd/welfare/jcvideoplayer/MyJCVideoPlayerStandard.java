@@ -35,7 +35,16 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     }
 
     @Override
+    public void init(Context context) {
+        super.init(context);
+//        addDanmakus();
+    }
+
+    @Override
     public void onAutoCompletion() {
+        if(danMuView!=null){
+            danMuView.hideAllDanMuView(true);
+        }
         if (App.userInfo.getRole() <= 1) {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
@@ -72,5 +81,4 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
         }
 
     }
-
 }
