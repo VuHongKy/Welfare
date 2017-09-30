@@ -6,12 +6,20 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
+import com.qd.welfare.entity.DanmuInfo;
 import com.qd.welfare.event.VideoOpenVipEvent;
+import com.qd.welfare.http.api.ApiUtil;
+import com.qd.welfare.http.base.LzyResponse;
+import com.qd.welfare.http.callback.JsonCallback;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * 自定义播放器
@@ -37,12 +45,29 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     @Override
     public void init(Context context) {
         super.init(context);
-//        addDanmakus();
+        getDanmuData();
+        SAVE_PROGRESS=false;
     }
+
+    private void getDanmuData() {
+        OkGo.<LzyResponse<List<DanmuInfo>>>get(ApiUtil.API_PRE + ApiUtil.DANMU)
+                .tag(ApiUtil.DANMU_TAG)
+                .execute(new JsonCallback<LzyResponse<List<DanmuInfo>>>() {
+                    @Override
+                    public void onSuccess(Response<LzyResponse<List<DanmuInfo>>> response) {
+                        try {
+                            addDanmakus(response.body().data);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onAutoCompletion() {
-        if(danMuView!=null){
+        if (danMuView != null) {
             danMuView.hideAllDanMuView(true);
         }
         if (App.userInfo.getRole() <= 1) {

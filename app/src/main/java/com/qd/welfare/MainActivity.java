@@ -42,8 +42,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -55,6 +53,7 @@ public class MainActivity extends SupportActivity {
     private final Handler mHandler = new MyHandler(this);
     private Toast toast;
     private TextView toastContent;
+    private long showNoticeTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +67,14 @@ public class MainActivity extends SupportActivity {
         getUpdateVersion(false);
         startService(new Intent(MainActivity.this, ChatHeadService.class));
 
-        Timer mTimer = new Timer();
-        mTimer.schedule(timerTask, 30 * 1000, 30 * 1000);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(10);
+                mHandler.postDelayed(this, 30 * 1000);
+            }
+        }, 30 * 1000);
+
     }
 
     @Override
@@ -399,14 +404,6 @@ public class MainActivity extends SupportActivity {
         return false;
     }
 
-
-    TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            mHandler.sendEmptyMessage(10);
-        }
-    };
-
     class MyHandler extends Handler {
         WeakReference<Activity> mActivityReference;
 
@@ -417,20 +414,23 @@ public class MainActivity extends SupportActivity {
         @Override
         public void handleMessage(Message msg) {
             if (!isApplicationBroughtToBackground(MainActivity.this)) {
-                OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
-                        .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
-                        .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
-                            @Override
-                            public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
-                                try {
-                                    OpenVipInfo openVipInfo = response.body().data;
-                                    showNoticeToast("恭喜用户" + openVipInfo.getUser_id() +
-                                            "成功开通" + (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员");
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                if (System.currentTimeMillis() - showNoticeTime >= 28 * 1000) {
+                    OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
+                            .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
+                            .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
+                                @Override
+                                public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
+                                    try {
+                                        showNoticeTime = System.currentTimeMillis();
+                                        OpenVipInfo openVipInfo = response.body().data;
+                                        showNoticeToast("恭喜用户" + openVipInfo.getUser_id() +
+                                                "成功开通" + (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         }
     }

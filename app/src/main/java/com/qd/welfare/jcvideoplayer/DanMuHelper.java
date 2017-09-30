@@ -11,6 +11,7 @@ import com.anbetter.danmuku.view.OnDanMuTouchCallBackListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.DanmuInfo;
 
@@ -85,7 +86,7 @@ public final class DanMuHelper {
         danMuView.avatarHeight = avatarSize;
 
         String avatarImageUrl = entity.getAvatar();
-        Glide.with(mContext).load(avatarImageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+        Glide.with(mContext).load(App.commonInfo.getFile_domain() + avatarImageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 danMuView.avatar = CircleBitmapTransform.transform(resource);

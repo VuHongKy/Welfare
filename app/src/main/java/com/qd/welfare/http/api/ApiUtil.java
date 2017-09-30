@@ -97,7 +97,9 @@ public class ApiUtil {
     //获取开通成功的用户数据
     public static final String GET_PAY_SUCCESS_INFO = "/user/open_vip";
     public static final String GET_PAY_SUCCESS_INFO_TAG = "GET_PAY_SUCCESS_INFO_TAG";
-
+    //弹幕
+    public static final String DANMU="/video/danmu";
+    public static final String DANMU_TAG="DANMU_TAG";
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19

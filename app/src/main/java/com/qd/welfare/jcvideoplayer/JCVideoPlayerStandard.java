@@ -142,6 +142,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         danMuView = (DanMuView) findViewById(R.id.danmuView);
         danMuView.prepare();
         mDanMuHelper.add(danMuView);
+
+
     }
 
     /**
