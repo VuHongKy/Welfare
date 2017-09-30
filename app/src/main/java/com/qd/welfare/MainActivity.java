@@ -441,7 +441,7 @@ public class MainActivity extends SupportActivity {
             toastContent = (TextView) v.findViewById(R.id.content);
             toast = new Toast(MainActivity.this);
             toast.setView(v);
-            toast.setGravity(Gravity.TOP, 0, PtrLocalDisplay.dp2px(80));
+            toast.setGravity(Gravity.TOP, 0, PtrLocalDisplay.dp2px(120));
             toast.setDuration(3000);
         }
         toastContent.setText(message);

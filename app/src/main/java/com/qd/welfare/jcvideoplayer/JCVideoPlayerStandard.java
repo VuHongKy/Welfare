@@ -36,7 +36,6 @@ import com.zhl.cbdialog.CBDialogBuilder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -142,8 +141,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         danMuView = (DanMuView) findViewById(R.id.danmuView);
         danMuView.prepare();
         mDanMuHelper.add(danMuView);
-
-
     }
 
     /**

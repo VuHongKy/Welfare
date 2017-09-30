@@ -15,6 +15,7 @@ import com.qd.welfare.event.VideoOpenVipEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
+import com.qd.welfare.utils.ToastUtils;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,7 +47,10 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     public void init(Context context) {
         super.init(context);
         getDanmuData();
-        SAVE_PROGRESS=false;
+        SAVE_PROGRESS = false;
+        if (App.userInfo.getRole() == 1) {
+            ToastUtils.getInstance(context).showToast("您当前非会员只能体验视频片段");
+        }
     }
 
     private void getDanmuData() {
@@ -79,7 +83,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
             titleView.setSingleLine(false);
             builder.setTouchOutSideCancelable(false)
                     .showCancelButton(true)
-                    .setTitle("非会员只能试看体验")
+                    .setTitle("非会员只能试看，请开通会员继续观看")
                     .setMessage("")
                     .setCustomIcon(0)
                     .setConfirmButtonText("确定")
