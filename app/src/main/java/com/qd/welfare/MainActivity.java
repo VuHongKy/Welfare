@@ -1,12 +1,17 @@
 package com.qd.welfare;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +47,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -393,16 +400,71 @@ public class MainActivity extends SupportActivity {
         mContext.startActivity(intent);
     }
 
+    private static boolean isCurrentApp = true;
+
     public static boolean isApplicationBroughtToBackground(Context context) {
-        ActivityManager am = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (tasks != null && !tasks.isEmpty()) {
-            String topActivity = tasks.get(0).baseActivity.getPackageName();
-            return !topActivity.equals(context.getPackageName());
+        try {
+            return isCurrentApp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
+    private void getProcess() throws Exception {
+        if (Build.VERSION.SDK_INT >= 21) {
+            isCurrentApp = getProcessNew().equals(getPackageName());
+        } else {
+            isCurrentApp = getProcessOld().equals(getPackageName());
+        }
+    }
+
+    //API 21 and above
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private String getProcessNew() throws Exception {
+        try {
+            String topPackageName = null;
+            UsageStatsManager usage = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
+            long time = System.currentTimeMillis();
+            List<UsageStats> stats = usage.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 10, time);
+            if (stats != null) {
+                SortedMap<Long, UsageStats> runningTask = new TreeMap<Long, UsageStats>();
+                for (UsageStats usageStats : stats) {
+                    runningTask.put(usageStats.getLastTimeUsed(), usageStats);
+                }
+                if (runningTask.isEmpty()) {
+                    return null;
+                }
+                topPackageName = runningTask.get(runningTask.lastKey()).getPackageName();
+            }
+            return topPackageName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
+    //API below 21
+    @SuppressWarnings("deprecation")
+    private String getProcessOld() throws Exception {
+        try {
+            String topPackageName = null;
+            ActivityManager activity = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> runningTask = activity.getRunningTasks(1);
+            if (runningTask != null) {
+                ActivityManager.RunningTaskInfo taskTop = runningTask.get(0);
+                ComponentName componentTop = taskTop.topActivity;
+                topPackageName = componentTop.getPackageName();
+            }
+            return topPackageName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
 
     class MyHandler extends Handler {
         WeakReference<Activity> mActivityReference;

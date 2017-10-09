@@ -174,12 +174,17 @@ public class ActressFragment extends BaseMainFragment {
         layout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.userInfo != null && App.userInfo.getRole() > 1) {
-                    EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
-                            .newInstance(headerList.get(1).getId(), headerList.get(1).getName())));
-                } else {
-                    DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, headerList.get(1).getId());
+                try {
+                    if (App.userInfo != null && App.userInfo.getRole() > 1) {
+                        EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
+                                .newInstance(headerList.get(1).getId(), headerList.get(1).getName())));
+                    } else {
+                        DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, headerList.get(1).getId());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         });
         layout3.setOnClickListener(new View.OnClickListener() {

@@ -79,9 +79,12 @@ public class CateGroyItemFragment extends BaseFragment {
         clickNumber.setText(info.getView_times() + "人点击");
         name.setText(info.getTitle());
         updateNumber.setText("更新至" + info.getUpdate_to() + "期");
-
-        Glide.with(getContext()).load(App.commonInfo.getFile_domain() + info.getThumb()).bitmapTransform(new RoundedCornersTransformation(getContext(), PtrLocalDisplay.dp2px(10), 0)).into(image);
-        Glide.with(getContext()).load(App.commonInfo.getFile_domain() + info.getThumb()).bitmapTransform(new BlurTransformation(getContext())).into(backImage);
+        try {
+            Glide.with(getContext()).load(App.commonInfo.getFile_domain() + info.getThumb()).bitmapTransform(new RoundedCornersTransformation(getContext(), PtrLocalDisplay.dp2px(10), 0)).into(image);
+            Glide.with(getContext()).load(App.commonInfo.getFile_domain() + info.getThumb()).bitmapTransform(new BlurTransformation(getContext())).into(backImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

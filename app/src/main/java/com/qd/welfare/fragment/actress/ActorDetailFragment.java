@@ -137,7 +137,12 @@ public class ActorDetailFragment extends BaseBackFragment {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return (position == recyclerView.getAdapter().getItemCount() - 1 || position == 0) ? 2 : 1;
+                try {
+                    return (position == recyclerView.getAdapter().getItemCount() - 1 || position == 0) ? 2 : 1;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return 2;
+                }
             }
         });
         recyclerView.setLayoutManager(layoutManager);

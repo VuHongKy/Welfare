@@ -45,8 +45,12 @@ public class ServiceCenterFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText("客服中心");
-        initToolbarNav(toolbar);
+        try {
+            toolbarTitle.setText("客服中心");
+            initToolbarNav(toolbar);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
