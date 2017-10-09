@@ -88,7 +88,7 @@ public class MineFragment extends BaseBackFragment {
             }
         });
         try {
-            if (App.userInfo.getRole() > 1) {
+            if (App.userInfo != null && App.userInfo.getRole() > 1) {
                 openVipLayout.setVisibility(View.GONE);
                 vipType.setVisibility(View.VISIBLE);
                 if (App.userInfo.getRole() == 2) {
@@ -161,7 +161,7 @@ public class MineFragment extends BaseBackFragment {
 
     @OnClick(R.id.openVip)
     public void onClickOpenVip() {
-        if (App.userInfo.getRole() <= 1) {
+        if (App.userInfo == null || App.userInfo.getRole() <= 1) {
             DialogUtil.showVipDialog(getContext(), PageConfig.VIDEO_TRY, 0);
         } else {
             ToastUtils.getInstance(getContext()).showToast("您已经是会员了，不需要再次开通");

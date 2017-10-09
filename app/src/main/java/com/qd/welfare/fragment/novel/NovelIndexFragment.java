@@ -102,7 +102,7 @@ public class NovelIndexFragment extends BaseMainFragment {
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(NovelListFragment.newInstance(list.get(position).getId(), list.get(position).getTitle())));
                 } else {
                     DialogUtil.showOpenViewDialog(getContext(), PageConfig.NOVEL_CATEGORY, 0);

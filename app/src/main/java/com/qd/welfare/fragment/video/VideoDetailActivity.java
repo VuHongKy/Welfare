@@ -127,7 +127,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
         openVip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.userInfo.getRole() <= 1) {
+                if (App.userInfo == null || App.userInfo.getRole() <= 1) {
                     DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
                 }
             }
@@ -136,7 +136,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
 
     private void bindHeaderView(final VideoDetailInfo info) {
         Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(image);
-        if (App.userInfo.getRole() > 1) {
+        if (App.userInfo != null && App.userInfo.getRole() > 1) {
             openVip.setVisibility(View.GONE);
         } else {
             openVip.setVisibility(View.VISIBLE);
@@ -146,7 +146,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
             public void onClick(View view) {
                 upLoadVideoPlayCount(videoId);
                 JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, info.getUrl(), info.getTitle());
                 } else {
                     MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, info.getShort_video_url(), info.getTitle());

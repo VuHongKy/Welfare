@@ -47,7 +47,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     public void init(Context context) {
         super.init(context);
         SAVE_PROGRESS = false;
-        if (App.userInfo.getRole() == 1) {
+        if (App.userInfo == null || App.userInfo.getRole() == 1) {
             getDanmuData();
             ToastUtils.getInstance(context).showLongToast("您当前非会员只能体验视频片段");
         }
@@ -74,7 +74,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
         if (danMuView != null) {
             danMuView.hideAllDanMuView(true);
         }
-        if (App.userInfo.getRole() <= 1) {
+        if (App.userInfo == null || App.userInfo.getRole() <= 1) {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
             onStatePause();

@@ -134,7 +134,7 @@ public class NovelListFragment extends BaseBackFragment {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
                 NovelInfo info = list.get(position);
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     if (info.getChapters_id() == 0) {
                         start(NovelChapterFragment.newInstance(info.getId(), info.getTitle()));
                     } else {

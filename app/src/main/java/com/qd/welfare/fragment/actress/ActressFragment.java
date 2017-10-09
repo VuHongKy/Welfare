@@ -118,7 +118,7 @@ public class ActressFragment extends BaseMainFragment {
         mAdapter.setOnItemClickListener(new RecyclerAdapterWithHF.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerAdapterWithHF adapter, RecyclerView.ViewHolder vh, int position) {
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment.newInstance(list.get(position).getId(), list.get(position).getName())));
                 } else {
                     DialogUtil.showOpenViewDialog(getContext(), PageConfig.ACTOR_LIST, list.get(position).getId());
@@ -163,7 +163,7 @@ public class ActressFragment extends BaseMainFragment {
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
                             .newInstance(headerList.get(0).getId(), headerList.get(0).getName())));
                 } else {
@@ -174,7 +174,7 @@ public class ActressFragment extends BaseMainFragment {
         layout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
                             .newInstance(headerList.get(1).getId(), headerList.get(1).getName())));
                 } else {
@@ -185,7 +185,7 @@ public class ActressFragment extends BaseMainFragment {
         layout3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.userInfo.getRole() > 1) {
+                if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     EventBus.getDefault().post(new StartBrotherEvent(ActorDetailFragment
                             .newInstance(headerList.get(2).getId(), headerList.get(2).getName())));
                 } else {
@@ -205,7 +205,7 @@ public class ActressFragment extends BaseMainFragment {
                     .execute(new JsonCallback<LzyResponse<List<ActressInfo>>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<List<ActressInfo>>> response) {
-                            try{
+                            try {
                                 if (isFirst) {
                                     statusLayout.showContent();
                                 } else {
@@ -226,7 +226,7 @@ public class ActressFragment extends BaseMainFragment {
                                     bindHeaderView(headerList);
                                     adapter.notifyDataSetChanged();
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -234,14 +234,14 @@ public class ActressFragment extends BaseMainFragment {
                         @Override
                         public void onError(Response<LzyResponse<List<ActressInfo>>> response) {
                             super.onError(response);
-                            try{
+                            try {
                                 if (isFirst) {
                                     statusLayout.showNetError(retryListener);
                                 } else {
                                     ptrLayout.refreshComplete();
                                     ToastUtils.getInstance(getContext()).showToast("请检查网络连接");
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

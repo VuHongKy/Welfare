@@ -134,8 +134,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
 
-        totalTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
-        currentTimeTextView.setVisibility(App.userInfo.getRole() == 1 ? GONE : VISIBLE);
+        totalTimeTextView.setVisibility(App.userInfo != null && App.userInfo.getRole() == 1 ? GONE : VISIBLE);
+        currentTimeTextView.setVisibility(App.userInfo != null && App.userInfo.getRole() == 1 ? GONE : VISIBLE);
 
         mDanMuHelper = new DanMuHelper(context);
         danMuView = (DanMuView) findViewById(R.id.danmuView);
@@ -498,7 +498,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected void onCurrentPositionListener(int position) {
 
-        if (App.userInfo.getRole() <= 1 && position > App.commonInfo.getTry_time() && position > currentTime + 10) {
+        if (App.userInfo != null && App.userInfo.getRole() <= 1 && position > App.commonInfo.getTry_time() && position > currentTime + 10) {
             onEvent(JCUserAction.ON_CLICK_PAUSE);
             JCMediaManager.instance().mediaPlayer.pause();
             onStatePause();

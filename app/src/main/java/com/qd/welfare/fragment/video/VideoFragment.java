@@ -118,7 +118,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
         listView.setAdapter(mAdapter);
         adapter.setOnVideoItemClickListener(this);
         initBanner();
-        if (App.userInfo.getRole() <= 1) {
+        if (App.userInfo != null && App.userInfo.getRole() <= 1) {
             footerView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_video_footer, null);
             mAdapter.addFooter(footerView);
             footerView.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +203,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
                                     tempList.addAll(response.body().data.getVip_other());
                                 }
                                 list.addAll(tempList);
-                                if (App.userInfo.getRole() <= 1) {
+                                if (App.userInfo == null || App.userInfo.getRole() <= 1) {
                                     if (mAdapter.getFootSize() == 0) {
                                         mAdapter.addFooter(footerView);
                                     }
@@ -269,7 +269,7 @@ public class VideoFragment extends BaseMainFragment implements VideoAdapter.OnVi
 
     @Override
     public void onVideoItemClick(VideoInfo info) {
-        if (App.userInfo.getRole() <= 1 && info.getType() == 2) {
+        if (App.userInfo == null || (App.userInfo.getRole() <= 1 && info.getType() == 2)) {
             DialogUtil.showOpenViewDialog(getContext(), "该视频为会员专享，请先开通会员", PageConfig.VIDEO_TRY, info.getId());
         } else {
             Intent intent = new Intent(getContext(), VideoDetailActivity.class);

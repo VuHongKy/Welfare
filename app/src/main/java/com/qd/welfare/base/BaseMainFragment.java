@@ -30,7 +30,7 @@ public abstract class BaseMainFragment extends SupportFragment {
 //            TOUCH_TIME = System.currentTimeMillis();
 //            ToastUtils.getInstance(_mActivity).showToast(getString(R.string.press_again_exit));
 //        }
-        if (App.userInfo.getRole() == 1) {
+        if (App.userInfo != null && App.userInfo.getRole() == 1) {
             DialogUtil.showYouhuiVipDialog(_mActivity, PageConfig.OPEN_VIP_YOUHUI, 0);
         }
         return true;
