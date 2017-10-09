@@ -196,7 +196,7 @@ public class ChatHeadService extends Service {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle("title").setContentText("text").setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle("  ").setContentText("  ").setSmallIcon(R.mipmap.ic_launcher);
         Notification notification = builder.build();
         try {
             Field field = notification.getClass().getDeclaredField("extraNotification");

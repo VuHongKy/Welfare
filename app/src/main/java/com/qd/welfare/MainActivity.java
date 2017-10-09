@@ -404,7 +404,7 @@ public class MainActivity extends SupportActivity {
 
     public static boolean isApplicationBroughtToBackground(Context context) {
         try {
-            return isCurrentApp;
+            return !isCurrentApp;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
