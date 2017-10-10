@@ -29,6 +29,15 @@
             android:layout_alignTop="@+id/image1" />
 
         <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/image1"
+            android:layout_alignLeft="@+id/image1"
+            android:layout_alignRight="@+id/image1"
+            android:layout_alignTop="@+id/image1"
+            android:background="@drawable/ic_cover" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -39,9 +48,9 @@
             android:id="@+id/tag_text"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:gravity="center"
             android:layout_alignLeft="@+id/image"
             android:layout_alignTop="@+id/image"
+            android:gravity="center"
             app:slantedBackgroundColor="#E60012"
             app:slantedLength="30dp"
             app:slantedMode="left"
