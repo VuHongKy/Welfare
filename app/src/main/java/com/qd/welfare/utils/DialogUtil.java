@@ -23,11 +23,11 @@ public class DialogUtil {
         TextView titleView = builder.getView(R.id.dialog_title);
         titleView.setSingleLine(false);
         builder.setTouchOutSideCancelable(false)
-                .showCancelButton(true)
+                .showCancelButton(false)
                 .setTitle(context.getString(R.string.open_vip_notice))
                 .setMessage("")
                 .setCustomIcon(0)
-                .setConfirmButtonText("立即开通")
+                .setConfirmButtonText("确定")
                 .setCancelButtonText("再看看")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
                 .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
@@ -51,11 +51,11 @@ public class DialogUtil {
         TextView titleView = builder.getView(R.id.dialog_title);
         titleView.setSingleLine(false);
         builder.setTouchOutSideCancelable(false)
-                .showCancelButton(true)
+                .showCancelButton(false)
                 .setTitle(message)
                 .setMessage("")
                 .setCustomIcon(0)
-                .setConfirmButtonText("立即开通")
+                .setConfirmButtonText("确定")
                 .setCancelButtonText("再看看")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
                 .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {

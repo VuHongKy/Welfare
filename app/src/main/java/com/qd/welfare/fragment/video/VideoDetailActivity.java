@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
@@ -141,7 +142,11 @@ public class VideoDetailActivity extends SwipeBackActivity {
     }
 
     private void bindHeaderView(final VideoDetailInfo info) {
-        Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(image);
+        if(info.getThumb().endsWith("gif")){
+            Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(image);
+        }else{
+            Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(image);
+        }
         if (App.userInfo != null && App.userInfo.getRole() > 1) {
             openVip.setVisibility(View.GONE);
         } else {

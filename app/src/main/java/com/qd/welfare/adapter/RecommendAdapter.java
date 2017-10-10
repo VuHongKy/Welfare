@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.VideoInfo;
@@ -62,7 +63,11 @@ public class RecommendAdapter extends BaseAdapter {
         }
         VideoInfo info = list.get(position);
         viewHolder.title.setText(info.getTitle());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu()).centerCrop().into(viewHolder.image);
+        if(info.getThumb_shu().endsWith("gif")){
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+        }else{
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu()).centerCrop().into(viewHolder.image);
+        }
         viewHolder.starLayout.setVisibility(View.GONE);
         viewHolder.title.setVisibility(View.VISIBLE);
         return view;

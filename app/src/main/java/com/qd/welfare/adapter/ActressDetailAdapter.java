@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.ActorDetailResultInfo;
@@ -47,7 +48,11 @@ public class ActressDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         ActorDetailResultInfo.GalleryBean.DataBean info = list.get(position);
         viewHolder.title.setVisibility(View.GONE);
         viewHolder.starLayout.setVisibility(View.INVISIBLE);
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        if (info.getThumb().endsWith("gif")) {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+        } else {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        }
     }
 
     @Override

@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.haozhang.lib.SlantedTextView;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
@@ -55,8 +57,13 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.videoName.setText(info.getTitle());
         viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
         viewHolder.tagLayout.setTags(info.getTags());
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu())
-                .centerCrop().into(viewHolder.image);
+        if (info.getThumb_shu().endsWith("gif")) {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu())
+                    .asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+        } else {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb_shu())
+                    .centerCrop().into(viewHolder.image);
+        }
         viewHolder.tagText.setText(info.getType() == 1 ? "免费试看" : "会员尊享");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +87,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image)
-        SelectableRoundedImageView image;
+        ImageView image;
         @BindView(R.id.videoName)
         TextView videoName;
         @BindView(R.id.videoPlayCount)

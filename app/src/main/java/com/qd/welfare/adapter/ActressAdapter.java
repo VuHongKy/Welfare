@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.haozhang.lib.SlantedTextView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
@@ -47,7 +48,11 @@ public class ActressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewHolder.name.setText(info.getName());
         viewHolder.sanwei.setText("三围：" + info.getSanwei());
         viewHolder.rank.setText("TOP " + (position + 4));
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        if (info.getThumb().endsWith("gif")) {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+        } else {
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        }
         ActressItemAdapter itemAdapter = new ActressItemAdapter(context, info.getWorks());
         viewHolder.gridView.setAdapter(itemAdapter);
     }

@@ -7,15 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.haozhang.lib.SlantedTextView;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.entity.VideoResultInfo;
+import com.qd.welfare.fragment.video.VideoDetailActivity;
 import com.qd.welfare.itemDecoration.GridSpacingItemDecoration;
 import com.qd.welfare.widgets.drawableratingbar.DrawableRatingBar;
 
@@ -24,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.lujun.androidtagview.TagContainerLayout;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 /**
@@ -85,8 +89,14 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 holder1.ratingBar.setMax(5);
                 holder1.ratingBar.setRating((int) info.getVideo().get(0).getStar());
                 holder1.tagText.setText(info.getVideo().get(0).getType() == 1 ? "免费试看" : "会员尊享");
-                Glide.with(context).load(App.commonInfo.getFile_domain() + info.getVideo().get(0).getThumb())
-                        .centerCrop().into(holder1.image);
+                if (info.getVideo().get(0).getThumb().endsWith("gif")) {
+                    Glide.with(context).load(App.commonInfo.getFile_domain() + info.getVideo().get(0).getThumb())
+                            .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
+                            .centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder1.image);
+                } else {
+                    Glide.with(context).load(App.commonInfo.getFile_domain() + info.getVideo().get(0).getThumb())
+                            .centerCrop().into(holder1.image);
+                }
                 holder1.tagLayout.setTags(info.getVideo().get(0).getTags());
                 holder1.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -142,7 +152,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @BindView(R.id.ratingBar)
         DrawableRatingBar ratingBar;
         @BindView(R.id.image)
-        SelectableRoundedImageView image;
+        ImageView image;
         @BindView(R.id.tag_layout)
         TagContainerLayout tagLayout;
         @BindView(R.id.tag_text)

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.haozhang.lib.SlantedTextView;
 import com.joooonho.SelectableRoundedImageView;
 import com.qd.welfare.App;
@@ -69,7 +70,11 @@ public class VideoRecommendAdapter extends BaseAdapter {
         viewHolder.tagLayout.setTags(info.getTags());
         viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
         viewHolder.tagText.setText(info.getType() == 1 ? "免费试看" : "会员尊享");
-        Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        if(info.getThumb().endsWith("gif")){
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+        }else{
+            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        }
         if (info.getType() > 1) {
             viewHolder.tagText.setSlantedBackgroundColor(Color.parseColor("#d462ff"));
         } else {
