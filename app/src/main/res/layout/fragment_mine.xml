@@ -4,30 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#2F2B4C"
-        android:visibility="gone">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="55dp" />
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:ellipsize="end"
-            android:lines="1"
-            android:textAppearance="@style/Toolbar_TextAppearance_White" />
-
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,6 +17,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:background="@drawable/bg_mine_top"
                 android:orientation="vertical">
 
@@ -66,6 +44,7 @@
                         android:drawablePadding="5dp"
                         android:padding="10dp"
                         android:text="返回"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </RelativeLayout>

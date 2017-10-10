@@ -4,13 +4,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.ShopPageAdapter;
-import com.qd.welfare.base.BaseMainFragment;
+import com.qd.welfare.base.BaseBackFragment;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.ScrollIndicatorView;
 import com.shizhefei.view.indicator.slidebar.DrawableBar;
@@ -30,12 +32,16 @@ import wiki.scene.loadmore.utils.PtrLocalDisplay;
  * Created by scene on 17-8-29.
  */
 
-public class ShopFragment extends BaseMainFragment {
+public class ShopFragment extends BaseBackFragment {
     @BindView(R.id.tab)
     ScrollIndicatorView tab;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     Unbinder unbinder;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     public static ShopFragment newInstance() {
         Bundle args = new Bundle();
@@ -49,12 +55,14 @@ public class ShopFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         unbinder = ButterKnife.bind(this, view);
-        return view;
+        return attachToSwipeBack(view);
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
+    public void onEnterAnimationEnd(@Nullable Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        toolbarTitle.setText("成人商城");
+        initToolbarNav(toolbar);
         List<String> list = new ArrayList<>();
         list.add("男性");
         list.add("女性");

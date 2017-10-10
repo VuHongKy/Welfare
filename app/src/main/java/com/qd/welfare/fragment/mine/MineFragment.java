@@ -3,7 +3,6 @@ package com.qd.welfare.fragment.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.qd.welfare.App;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.adapter.RecommendAdapter;
-import com.qd.welfare.base.BaseBackFragment;
+import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.event.StartBrotherEvent;
@@ -46,11 +45,7 @@ import butterknife.Unbinder;
  * Created by scene on 17-8-29.
  */
 
-public class MineFragment extends BaseBackFragment {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+public class MineFragment extends BaseMainFragment {
     @BindView(R.id.gridView)
     CustomeGridView gridView;
     @BindView(R.id.vip_type)
@@ -74,19 +69,12 @@ public class MineFragment extends BaseBackFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         unbinder = ButterKnife.bind(this, view);
-        return attachToSwipeBack(view);
+        return view;
     }
 
     @Override
-    public void onEnterAnimationEnd(Bundle savedInstanceState) {
-        super.onEnterAnimationEnd(savedInstanceState);
-        toolbar.setNavigationIcon(R.drawable.ic_back_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _mActivity.onBackPressed();
-            }
-        });
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         try {
             if (App.userInfo != null && App.userInfo.getRole() > 1) {
                 openVipLayout.setVisibility(View.GONE);

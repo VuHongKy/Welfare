@@ -7,10 +7,11 @@
     <string name="press_again_exit">再按一次退出</string>
 
     <string name="tab_name_video">热门</string>
-    <string name="tab_name_category">精选</string>
-    <string name="tab_name_actress">人气排行</string>
-    <string name="tab_name_novel">激情小说</string>
+    <string name="tab_name_category">人气精选</string>
+    <string name="tab_name_actress">女优排行</string>
+    <string name="tab_name_novel">极致诱惑</string>
     <string name="tab_name_shop">成人商城</string>
+    <string name="tab_name_mine">我的</string>
 
     <string name="open_vip_notice">该板块为会员专享，开通会员即可观看</string>
 

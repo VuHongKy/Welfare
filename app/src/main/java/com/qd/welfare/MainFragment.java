@@ -1,19 +1,14 @@
 package com.qd.welfare;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.qd.welfare.base.BaseFragment;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.event.TabSelectedEvent;
@@ -29,9 +24,7 @@ import com.qd.welfare.view.BottomBarTab;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +32,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
-import okhttp3.Call;
 import wiki.scene.loadmore.utils.SceneLogUtil;
 
 /**
@@ -61,6 +53,8 @@ public class MainFragment extends BaseFragment {
     TextView toolbarTitle;
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
+    @BindView(R.id.toolbarLayout)
+    RelativeLayout toolbarLayout;
 
     private SupportFragment[] mFragments = new SupportFragment[5];
     private List<String> tabNames = new ArrayList<>();
@@ -90,13 +84,13 @@ public class MainFragment extends BaseFragment {
         tabNames.add(getString(R.string.tab_name_category));
         tabNames.add(getString(R.string.tab_name_actress));
         tabNames.add(getString(R.string.tab_name_novel));
-        tabNames.add(getString(R.string.tab_name_shop));
+        tabNames.add(getString(R.string.tab_name_mine));
         if (firstFragment == null) {
             mFragments[FIRST] = VideoFragment.newInstance();
             mFragments[SECOND] = CategoryFragment.newInstance();
             mFragments[THIRD] = ActressFragment.newInstance();
             mFragments[FOUR] = NovelIndexFragment.newInstance();
-            mFragments[FIVE] = ShopFragment.newInstance();
+            mFragments[FIVE] = MineFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
                     mFragments[FIRST],
@@ -110,7 +104,7 @@ public class MainFragment extends BaseFragment {
             mFragments[SECOND] = findChildFragment(CategoryFragment.class);
             mFragments[THIRD] = findChildFragment(ActressFragment.class);
             mFragments[FOUR] = findChildFragment(NovelIndexFragment.class);
-            mFragments[FIVE] = findChildFragment(ShopFragment.class);
+            mFragments[FIVE] = findChildFragment(MineFragment.class);
         }
         try {
             toolbarTitle.setText(tabNames.get(0));
@@ -128,7 +122,7 @@ public class MainFragment extends BaseFragment {
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_category_d, R.drawable.ic_tab_category_s, tabNames.get(SECOND)))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_actress_d, R.drawable.ic_tab_actress_s, tabNames.get(THIRD)))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_novel_d, R.drawable.ic_tab_novel_s, tabNames.get(FOUR)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_shop_d, R.drawable.ic_tab_shop_s, tabNames.get(FIVE)));
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_mine_d, R.drawable.ic_tab_mine_s, tabNames.get(FIVE)));
 
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
@@ -136,6 +130,7 @@ public class MainFragment extends BaseFragment {
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
                 toolbarTitle.setText(tabNames.get(position));
+                toolbarLayout.setVisibility(position == 4 ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -160,7 +155,7 @@ public class MainFragment extends BaseFragment {
 
     @OnClick(R.id.toolbar_mine)
     public void onClickToolbarMine() {
-        start(MineFragment.newInstance());
+        start(ShopFragment.newInstance());
     }
 
     /**
