@@ -30,6 +30,7 @@ import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.jcvideoplayer.JCVideoPlayer;
 import com.qd.welfare.jcvideoplayer.MyJCVideoPlayerStandard;
+import com.qd.welfare.jcvideoplayer.TryVideoPlayer;
 import com.qd.welfare.utils.DialogUtil;
 import com.qd.welfare.utils.NetWorkUtils;
 import com.qd.welfare.utils.ToastUtils;
@@ -154,7 +155,7 @@ public class VideoDetailActivity extends SwipeBackActivity {
                 if (App.userInfo != null && App.userInfo.getRole() > 1) {
                     MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, info.getUrl(), info.getTitle());
                 } else {
-                    MyJCVideoPlayerStandard.startFullscreen(VideoDetailActivity.this, MyJCVideoPlayerStandard.class, info.getShort_video_url(), info.getTitle());
+                    TryVideoPlayer.startFullscreen(VideoDetailActivity.this, TryVideoPlayer.class, info.getShort_video_url(), info.getTitle());
                 }
             }
         });

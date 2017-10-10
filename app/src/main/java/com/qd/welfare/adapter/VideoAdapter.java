@@ -1,6 +1,7 @@
 package com.qd.welfare.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -95,6 +96,11 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         }
                     }
                 });
+                if (info.getVideo().get(0).getType() > 1) {
+                    holder1.tagText.setSlantedBackgroundColor(Color.parseColor("#d462ff"));
+                } else {
+                    holder1.tagText.setSlantedBackgroundColor(Color.parseColor("#E60012"));
+                }
             }
         } else {
             ViewHolder2 holder2 = (ViewHolder2) holder;

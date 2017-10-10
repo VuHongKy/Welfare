@@ -1,6 +1,7 @@
 package com.qd.welfare.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,11 @@ public class VideoRecommendAdapter extends BaseAdapter {
         viewHolder.videoPlayCount.setText("播放：" + info.getPlay_times());
         viewHolder.tagText.setText(info.getType() == 1 ? "免费试看" : "会员尊享");
         Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        if (info.getType() > 1) {
+            viewHolder.tagText.setSlantedBackgroundColor(Color.parseColor("#d462ff"));
+        } else {
+            viewHolder.tagText.setSlantedBackgroundColor(Color.parseColor("#E60012"));
+        }
         return view;
     }
 

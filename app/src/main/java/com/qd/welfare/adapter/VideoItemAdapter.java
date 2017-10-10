@@ -1,6 +1,7 @@
 package com.qd.welfare.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,11 @@ public class VideoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             }
         });
+        if (info.getType() > 1) {
+            viewHolder.tagText.setSlantedBackgroundColor(Color.parseColor("#d462ff"));
+        } else {
+            viewHolder.tagText.setSlantedBackgroundColor(Color.parseColor("#E60012"));
+        }
     }
 
     @Override
