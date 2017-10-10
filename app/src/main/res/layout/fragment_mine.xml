@@ -148,7 +148,6 @@
                     android:background="@drawable/ic_mine_open_vip"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="立即开通会员,畅爽观看"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

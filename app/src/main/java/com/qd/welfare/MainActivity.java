@@ -37,6 +37,7 @@ import com.qd.welfare.http.callback.JsonCallback;
 import com.qd.welfare.service.ChatHeadService;
 import com.qd.welfare.utils.AppUtils;
 import com.qd.welfare.utils.DialogUtil;
+import com.qd.welfare.utils.SharedPreferencesUtil;
 import com.qd.welfare.utils.ToastUtils;
 import com.qd.welfare.widgets.DownLoadDialog;
 import com.qd.welfare.widgets.LoadingDialog;
@@ -60,7 +61,6 @@ public class MainActivity extends SupportActivity {
     private final Handler mHandler = new MyHandler(this);
     private Toast toast;
     private TextView toastContent;
-    private long showNoticeTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -476,8 +476,9 @@ public class MainActivity extends SupportActivity {
         @Override
         public void handleMessage(Message msg) {
             if (!isApplicationBroughtToBackground(MainActivity.this)) {
+                long showNoticeTime = SharedPreferencesUtil.getLong(MainActivity.this, "notice_time", 0);
                 if (System.currentTimeMillis() - showNoticeTime >= 28 * 1000) {
-                    showNoticeTime = System.currentTimeMillis();
+                    SharedPreferencesUtil.putLong(MainActivity.this, "notice_time", System.currentTimeMillis());
                     OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
                             .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
                             .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {

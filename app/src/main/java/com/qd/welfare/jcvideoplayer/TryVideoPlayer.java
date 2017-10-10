@@ -171,7 +171,7 @@ public class TryVideoPlayer extends JCVideoPlayerStandard {
     }
 
     @Override
-    public void init(Context context) {
+    public void init(final Context context) {
         super.init(context);
         SAVE_PROGRESS = false;
         if (App.userInfo == null || App.userInfo.getRole() == 1) {
@@ -191,6 +191,7 @@ public class TryVideoPlayer extends JCVideoPlayerStandard {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 seekBar.setProgress(0);
+                ToastUtils.getInstance(context).showToast("该功能为会员专享，请先开通会员");
             }
         });
     }

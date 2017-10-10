@@ -331,7 +331,10 @@ public class VideoDetailActivity extends SwipeBackActivity {
 
     @Subscribe
     public void onOpenVip(VideoOpenVipEvent event) {
-        if (App.userInfo.getRole() <= 1) {
+        if (App.userInfo != null && App.userInfo.getRole() <= 1) {
+            DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
+        }
+        if (App.userInfo == null || App.userInfo.getRole() <= 1) {
             DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
         }
     }
