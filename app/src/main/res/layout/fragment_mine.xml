@@ -280,7 +280,6 @@
                 android:background="@color/white"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:paddingBottom="10dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingTop="10dp"
