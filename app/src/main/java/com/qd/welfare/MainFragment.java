@@ -13,7 +13,7 @@ import com.qd.welfare.base.BaseFragment;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
-import com.qd.welfare.fragment.category.CategoryFragment;
+import com.qd.welfare.fragment.category.CategoryNewFragment;
 import com.qd.welfare.fragment.mine.MineFragment;
 import com.qd.welfare.fragment.novel.NovelIndexNewFragment;
 import com.qd.welfare.fragment.shop.ShopFragment;
@@ -87,7 +87,7 @@ public class MainFragment extends BaseFragment {
         tabNames.add(getString(R.string.tab_name_mine));
         if (firstFragment == null) {
             mFragments[FIRST] = VideoFragment.newInstance();
-            mFragments[SECOND] = CategoryFragment.newInstance();
+            mFragments[SECOND] = CategoryNewFragment.newInstance();
             mFragments[THIRD] = ActressFragment.newInstance();
             mFragments[FOUR] = NovelIndexNewFragment.newInstance();
             mFragments[FIVE] = MineFragment.newInstance();
@@ -101,7 +101,7 @@ public class MainFragment extends BaseFragment {
         } else {
             // 这里我们需要拿到mFragments的引用,也可以通过getChildFragmentManager.findFragmentByTag自行进行判断查找(效率更高些),用下面的方法查找更方便些
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(CategoryFragment.class);
+            mFragments[SECOND] = findChildFragment(CategoryNewFragment.class);
             mFragments[THIRD] = findChildFragment(ActressFragment.class);
             mFragments[FOUR] = findChildFragment(NovelIndexNewFragment.class);
             mFragments[FIVE] = findChildFragment(MineFragment.class);
