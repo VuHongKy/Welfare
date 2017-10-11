@@ -20,6 +20,7 @@ import com.qd.welfare.adapter.RecommendAdapter;
 import com.qd.welfare.base.BaseMainFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
+import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.fragment.video.VideoDetailActivity;
 import com.qd.welfare.http.api.ApiUtil;
@@ -32,6 +33,7 @@ import com.qd.welfare.widgets.CustomeGridView;
 import com.qd.welfare.widgets.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -64,6 +66,12 @@ public class MineFragment extends BaseMainFragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +83,10 @@ public class MineFragment extends BaseMainFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        init();
+    }
+
+    private void init() {
         try {
             if (App.userInfo != null && App.userInfo.getRole() > 1) {
                 openVipLayout.setVisibility(View.GONE);
@@ -135,6 +147,7 @@ public class MineFragment extends BaseMainFragment {
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         DialogUtil.cancelDialog();
         OkGo.getInstance().cancelTag(ApiUtil.GET_PAY_INFO_TAG);
         OkGo.getInstance().cancelTag(ApiUtil.RECOMMEND_TAG);
@@ -188,5 +201,10 @@ public class MineFragment extends BaseMainFragment {
     @OnClick(R.id.ic_back)
     public void onClickTopBack() {
         _mActivity.onBackPressed();
+    }
+
+    @Subscribe
+    public void openVipSuccess(OpenVipSuccessEvent event) {
+        init();
     }
 }
