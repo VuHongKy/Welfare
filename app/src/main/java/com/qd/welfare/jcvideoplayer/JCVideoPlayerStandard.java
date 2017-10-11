@@ -389,11 +389,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                dialog.dismiss();
-                if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                try {
                     dialog.dismiss();
-                    clearFullscreenLayout();
+                    if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                        dialog.dismiss();
+                        clearFullscreenLayout();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         });
         builder.create().show();

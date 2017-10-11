@@ -101,7 +101,11 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mediaPlayer.start();
+        try{
+            mediaPlayer.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

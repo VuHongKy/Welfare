@@ -214,44 +214,49 @@ public class TryVideoPlayer extends JCVideoPlayerStandard {
 
     @Override
     public void onAutoCompletion() {
-        if (danMuView != null) {
-            danMuView.hideAllDanMuView(true);
-        }
-        if (App.userInfo == null || App.userInfo.getRole() <= 1) {
-            onEvent(JCUserAction.ON_CLICK_PAUSE);
-            JCMediaManager.instance().mediaPlayer.pause();
-            onStatePause();
-            CBDialogBuilder builder = new CBDialogBuilder(getContext());
-            TextView titleView = builder.getView(R.id.dialog_title);
-            titleView.setSingleLine(false);
-            builder.setTouchOutSideCancelable(false)
-                    .showCancelButton(true)
-                    .setTitle("非会员只能试看，请开通会员继续观看")
-                    .setMessage("")
-                    .setCustomIcon(0)
-                    .setConfirmButtonText("确定")
-                    .setCancelButtonText("取消")
-                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
-                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
-                        @Override
-                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
-                            switch (whichBtn) {
-                                case BUTTON_CONFIRM:
-                                case BUTTON_CANCEL:
-                                    backPress();
-                                    dialog.cancel();
-                                    EventBus.getDefault().post(new VideoOpenVipEvent());
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    })
-                    .create().show();
-        } else {
-            super.onAutoCompletion();
-        }
+        try {
 
+
+            if (danMuView != null) {
+                danMuView.hideAllDanMuView(true);
+            }
+            if (App.userInfo == null || App.userInfo.getRole() <= 1) {
+                onEvent(JCUserAction.ON_CLICK_PAUSE);
+                JCMediaManager.instance().mediaPlayer.pause();
+                onStatePause();
+                CBDialogBuilder builder = new CBDialogBuilder(getContext());
+                TextView titleView = builder.getView(R.id.dialog_title);
+                titleView.setSingleLine(false);
+                builder.setTouchOutSideCancelable(false)
+                        .showCancelButton(true)
+                        .setTitle("非会员只能试看，请开通会员继续观看")
+                        .setMessage("")
+                        .setCustomIcon(0)
+                        .setConfirmButtonText("确定")
+                        .setCancelButtonText("取消")
+                        .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                        .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                            @Override
+                            public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                                switch (whichBtn) {
+                                    case BUTTON_CONFIRM:
+                                    case BUTTON_CANCEL:
+                                        backPress();
+                                        dialog.cancel();
+                                        EventBus.getDefault().post(new VideoOpenVipEvent());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        })
+                        .create().show();
+            } else {
+                super.onAutoCompletion();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

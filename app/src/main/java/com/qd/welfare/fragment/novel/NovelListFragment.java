@@ -101,11 +101,15 @@ public class NovelListFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText(novelCateName);
-        initToolbarNav(toolbar);
-        initView();
-        getData(true, 1);
-        MainActivity.upLoadPageInfo(PageConfig.NOVEL_INDEX, 0);
+        try{
+            toolbarTitle.setText(novelCateName);
+            initToolbarNav(toolbar);
+            initView();
+            getData(true, 1);
+            MainActivity.upLoadPageInfo(PageConfig.NOVEL_INDEX, 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void initView() {

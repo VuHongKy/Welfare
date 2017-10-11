@@ -15,10 +15,8 @@ import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.qd.welfare.App;
-import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.base.BaseBackFragment;
-import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.http.api.ApiUtil;
 
 import java.util.ArrayList;
@@ -79,8 +77,13 @@ public class BigImageFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        initToolbarNav(toolbar);
-        initView();
+        try {
+            initToolbarNav(toolbar);
+            initView();
+        } catch (Exception e) {
+            e.printStackTrace();
+            _mActivity.onBackPressed();
+        }
     }
 
     private void initView() {

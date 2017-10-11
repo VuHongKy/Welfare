@@ -107,11 +107,15 @@ public class DialogUtil {
     }
 
     public static void cancelDialog() {
-        if (dialog != null) {
-            dialog.cancel();
-        }
-        if (youhuiDialog != null) {
-            youhuiDialog.cancel();
+        try {
+            if (dialog != null) {
+                dialog.cancel();
+            }
+            if (youhuiDialog != null) {
+                youhuiDialog.cancel();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

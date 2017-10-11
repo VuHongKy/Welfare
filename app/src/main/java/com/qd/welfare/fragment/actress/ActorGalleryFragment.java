@@ -88,9 +88,15 @@ public class ActorGalleryFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText(title);
-        initToolbarNav(toolbar);
-        initView();
+        try {
+            toolbarTitle.setText(title);
+            initToolbarNav(toolbar);
+            initView();
+        } catch (Exception e) {
+            e.printStackTrace();
+            _mActivity.onBackPressed();
+        }
+
     }
 
     private void initView() {
@@ -162,11 +168,11 @@ public class ActorGalleryFragment extends BaseBackFragment {
                     .execute(new JsonCallback<LzyResponse<List<GalleryInfo>>>() {
                         @Override
                         public void onSuccess(Response<LzyResponse<List<GalleryInfo>>> response) {
-                            try{
+                            try {
                                 statusLayout.showContent();
                                 list.addAll(response.body().data);
                                 initViewPager();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -175,9 +181,9 @@ public class ActorGalleryFragment extends BaseBackFragment {
                         @Override
                         public void onError(Response<LzyResponse<List<GalleryInfo>>> response) {
                             super.onError(response);
-                            try{
+                            try {
                                 statusLayout.showFailed(retryListener);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
