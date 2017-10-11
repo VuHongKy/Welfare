@@ -59,6 +59,8 @@ public class MineFragment extends BaseMainFragment {
 
     Unbinder unbinder;
 
+    LoadingDialog loadingDialog;
+
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
         MineFragment fragment = new MineFragment();
@@ -185,12 +187,27 @@ public class MineFragment extends BaseMainFragment {
 
     @OnClick(R.id.clear_cache)
     public void onClickClearCache() {
-        LoadingDialog loadingDialog = LoadingDialog.getInstance(getContext());
+        loadingDialog = LoadingDialog.getInstance(getContext());
         loadingDialog.showLoadingDialog("正在清理缓存...");
         GlideCacheUtil.getInstance().cleanCacheDisk(_mActivity);
         GlideCacheUtil.getInstance().clearCacheDiskSelf(_mActivity);
-        loadingDialog.cancelLoadingDialog();
-        ToastUtils.getInstance(_mActivity).showToast("缓存清理成功");
+        userId.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            loadingDialog.cancelLoadingDialog();
+                            ToastUtils.getInstance(_mActivity).showToast("缓存清理成功");
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, 2000);
+
     }
 
     @OnClick(R.id.service_center)
