@@ -15,6 +15,7 @@ import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
 import com.qd.welfare.fragment.category.CategoryNewFragment;
 import com.qd.welfare.fragment.mine.MineFragment;
+import com.qd.welfare.fragment.mine.ServiceCenterFragment;
 import com.qd.welfare.fragment.novel.NovelIndexNewFragment;
 import com.qd.welfare.fragment.shop.ShopFragment;
 import com.qd.welfare.fragment.video.VideoFragment;
@@ -155,7 +156,7 @@ public class MainFragment extends BaseFragment {
 
     @OnClick(R.id.toolbar_mine)
     public void onClickToolbarMine() {
-        start(ShopFragment.newInstance());
+        start(ServiceCenterFragment.newInstance());
     }
 
     /**
