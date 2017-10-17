@@ -1,8 +1,13 @@
 package com.qd.welfare.fragment.mine;
 
+import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import com.qd.welfare.base.BaseBackFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -26,6 +32,8 @@ public class ServiceCenterFragment extends BaseBackFragment {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     Unbinder unbinder;
+    @BindView(R.id.service_qq)
+    TextView serviceQq;
 
     public static ServiceCenterFragment newInstance() {
         Bundle args = new Bundle();
@@ -48,6 +56,21 @@ public class ServiceCenterFragment extends BaseBackFragment {
         try {
             toolbarTitle.setText("客服中心");
             initToolbarNav(toolbar);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                serviceQq.setText(Html.fromHtml("<u>170059106</u>", Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                serviceQq.setText(Html.fromHtml("<u>170059106</u>"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.service_qq)
+    public void onClickServiceQQ() {
+        try {
+            String qqUrl = "mqqwpa://im/chat?chat_type=wpa&uin=170059106&version=1";
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qqUrl)));
         } catch (Exception e) {
             e.printStackTrace();
         }
