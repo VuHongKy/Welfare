@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="\t尊敬的用户您好！如您在使用过程中遇到任何问题，可以通过客服QQ联系我们，我们会竭诚为您服务。"
+                android:text="\t尊敬的用户您好！如您在使用过程中遇到任何问题，可以通过客服QQ联系我们。如非工作时间，您也可以发邮件给我们留言,我们会竭诚为您服务。"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
@@ -106,6 +106,29 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="#317EF3"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="客服邮箱："
+                    android:textColor="@color/tab_select"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YeSheBaCSC@163.com"
+                    android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
 
