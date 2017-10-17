@@ -65,6 +65,8 @@ public class App extends Application {
         PtrLocalDisplay.init(this);
         CHANNEL_ID = getChannelName();
         RESOURCE_ID = getResouyceName();
+//        CHANNEL_ID = "1004";
+//        RESOURCE_ID = "1004";
         initOKhttp();
         CrashReport.initCrashReport(getApplicationContext(), "f4e4d1e5e4", false);
     }

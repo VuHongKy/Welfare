@@ -204,11 +204,11 @@ public class MainActivity extends SupportActivity {
                                 App.userInfo.setRole(response.body().data.getRole());
                                 EventBus.getDefault().post(new OpenVipSuccessEvent());
                             } else {
-                                ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
-                            }
-                        } catch (Exception e) {
+                                ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
+                        }
+                    } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                            ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
                         }
                     }
 
@@ -216,7 +216,7 @@ public class MainActivity extends SupportActivity {
                     public void onError(Response<LzyResponse<PayResultInfo>> response) {
                         super.onError(response);
                         try {
-                            ToastUtils.getInstance(MainActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
+                            ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
