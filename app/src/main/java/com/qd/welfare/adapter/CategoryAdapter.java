@@ -40,11 +40,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CateGroyInfo info = list.get(position);
-        NovelIndexViewHolder viewHolde = (NovelIndexViewHolder) holder;
-        viewHolde.name.setText(info.getTitle());
-        viewHolde.number.setText(+info.getView_times() + "次点击");
-        GlideUtils.loadIntoUseFitWidth(context, App.commonInfo.getFile_domain() + info.getThumb(), viewHolde.image);
+        try{
+            CateGroyInfo info = list.get(position);
+            NovelIndexViewHolder viewHolde = (NovelIndexViewHolder) holder;
+            viewHolde.name.setText(info.getTitle());
+            viewHolde.number.setText(+info.getView_times() + "次点击");
+            GlideUtils.loadIntoUseFitWidth(context, App.commonInfo.getFile_domain() + info.getThumb(), viewHolde.image);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

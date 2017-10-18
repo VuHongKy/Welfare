@@ -75,10 +75,14 @@ public class NovelDetailFragment extends BaseBackFragment {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        toolbarTitle.setText(chapterName);
-        initToolbarNav(toolbar);
-        MainActivity.upLoadPageInfo(PageConfig.NOVEL_DETAIL, chapterId);
-        getData();
+        try{
+            toolbarTitle.setText(chapterName);
+            initToolbarNav(toolbar);
+            MainActivity.upLoadPageInfo(PageConfig.NOVEL_DETAIL, chapterId);
+            getData();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void getData() {

@@ -43,18 +43,22 @@ public class ActressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ActressViewHolder viewHolder = (ActressViewHolder) holder;
-        ActressInfo info = list.get(position);
-        viewHolder.name.setText(info.getName());
-        viewHolder.sanwei.setText("三围：" + info.getSanwei());
-        viewHolder.rank.setText("TOP " + (position + 4));
-        if (info.getThumb().endsWith("gif")) {
-            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
-        } else {
-            Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+        try{
+            ActressViewHolder viewHolder = (ActressViewHolder) holder;
+            ActressInfo info = list.get(position);
+            viewHolder.name.setText(info.getName());
+            viewHolder.sanwei.setText("三围：" + info.getSanwei());
+            viewHolder.rank.setText("TOP " + (position + 4));
+            if (info.getThumb().endsWith("gif")) {
+                Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image);
+            } else {
+                Glide.with(context).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(viewHolder.image);
+            }
+            ActressItemAdapter itemAdapter = new ActressItemAdapter(context, info.getWorks());
+            viewHolder.gridView.setAdapter(itemAdapter);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        ActressItemAdapter itemAdapter = new ActressItemAdapter(context, info.getWorks());
-        viewHolder.gridView.setAdapter(itemAdapter);
     }
 
     @Override

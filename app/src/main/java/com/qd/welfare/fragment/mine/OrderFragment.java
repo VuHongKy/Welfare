@@ -112,6 +112,10 @@ public class OrderFragment extends BaseBackFragment {
                 statusLayout.showLoading();
             }
             HttpParams params = new HttpParams();
+            if (App.userInfo == null) {
+                _mActivity.onBackPressed();
+                return;
+            }
             params.put("user_id", App.userInfo.getId());
             OkGo.<LzyResponse<List<OrderInfo>>>get(ApiUtil.API_PRE + ApiUtil.ORDER_LIST)
                     .tag(ApiUtil.ORDER_LIST_TAG)
