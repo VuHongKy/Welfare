@@ -2,13 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.qd.welfare"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
+        flavorDimensions "versionCode"
     }
     productFlavors {
         NNY_1004_1004 {
@@ -17,10 +18,10 @@ android {
         NNY_1001_1001 {
             manifestPlaceholders = [CHANNEL_ID: "1001,1001"]
         }
-		NNY_1002_1002 {
+        NNY_1002_1002 {
             manifestPlaceholders = [CHANNEL_ID: "1002,1002"]
         }
-		NNY_1003_1003 {
+        NNY_1003_1003 {
             manifestPlaceholders = [CHANNEL_ID: "1003,1003"]
         }
         NNY_1005_1005 {
@@ -77,10 +78,10 @@ android {
         NNY_1022_1022 {
             manifestPlaceholders = [CHANNEL_ID: "1022,1022"]
         }
-		NNY_1023_1023 {
+        NNY_1023_1023 {
             manifestPlaceholders = [CHANNEL_ID: "1023,1023"]
         }
-		NNY_1024_1024 {
+        NNY_1024_1024 {
             manifestPlaceholders = [CHANNEL_ID: "1024,1024"]
         }
     }
@@ -99,11 +100,10 @@ android {
     }
 
     android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def file = output.outputFile
+        variant.outputs.all { output ->
             def flavorFlag = "${variant.productFlavors.get(0).name}"
-            def file_pre=flavorFlag.replace("NNY","yeseba")
-            output.outputFile = new File(file.parent, file_pre +"_"+ defaultConfig.versionCode + ".apk")
+            def file_pre = flavorFlag.replace("NNY", "yeseba")
+            outputFileName = "../../${file_pre}_${defaultConfig.versionCode}.apk"
         }
     }
 }
