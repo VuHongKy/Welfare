@@ -15,11 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
@@ -30,7 +28,7 @@ import com.qd.welfare.entity.DefaultPayTypeInfo;
 import com.qd.welfare.entity.OpenVipInfo;
 import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.UpdateVersionInfo;
-import com.qd.welfare.event.OpenVipSuccessEvent;
+import com.qd.welfare.event.ToastEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -51,16 +49,20 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import wiki.scene.loadmore.utils.PtrLocalDisplay;
 
 public class MainActivity extends SupportActivity {
     private final Handler mHandler = new MyHandler(this);
-    private Toast toast;
-    private TextView toastContent;
+    private long TOAST_DELAY = 30 * 1000;
+
+    @BindView(R.id.content)
+    TextView toastContent;
+    @BindView(R.id.toast_view)
+    LinearLayout toastView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +80,9 @@ public class MainActivity extends SupportActivity {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(10);
-                mHandler.postDelayed(this, 30 * 1000);
+                mHandler.postDelayed(this, TOAST_DELAY);
             }
-        }, 30 * 1000);
+        }, TOAST_DELAY);
 
     }
 
@@ -205,8 +207,8 @@ public class MainActivity extends SupportActivity {
 //                                EventBus.getDefault().post(new OpenVipSuccessEvent());
                             } else {
                                 ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
-                        }
-                    } catch (Exception e) {
+                            }
+                        } catch (Exception e) {
                             e.printStackTrace();
                             ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
                         }
@@ -475,39 +477,50 @@ public class MainActivity extends SupportActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            if (!isApplicationBroughtToBackground(MainActivity.this)) {
-                long showNoticeTime = SharedPreferencesUtil.getLong(MainActivity.this, "notice_time", 0);
-                if (System.currentTimeMillis() - showNoticeTime >= 28 * 1000) {
-                    SharedPreferencesUtil.putLong(MainActivity.this, "notice_time", System.currentTimeMillis());
-                    OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
-                            .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
-                            .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
-                                @Override
-                                public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
-                                    try {
-                                        OpenVipInfo openVipInfo = response.body().data;
-                                        showNoticeToast("恭喜用户" + openVipInfo.getUser_id() +
-                                                "成功开通" + (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+            long showNoticeTime = SharedPreferencesUtil.getLong(MainActivity.this, "notice_time", 0);
+            if (System.currentTimeMillis() - showNoticeTime >= TOAST_DELAY) {
+                SharedPreferencesUtil.putLong(MainActivity.this, "notice_time", System.currentTimeMillis());
+                OkGo.<LzyResponse<OpenVipInfo>>get(ApiUtil.API_PRE + ApiUtil.GET_PAY_SUCCESS_INFO)
+                        .tag(ApiUtil.GET_PAY_SUCCESS_INFO_TAG)
+                        .execute(new JsonCallback<LzyResponse<OpenVipInfo>>() {
+                            @Override
+                            public void onSuccess(Response<LzyResponse<OpenVipInfo>> response) {
+                                try {
+                                    OpenVipInfo openVipInfo = response.body().data;
+                                    String message = "恭喜用户" + openVipInfo.getUser_id() + "成功开通" +
+                                            (openVipInfo.getVip_type() == 1 ? "包月" : "包年") + "会员";
+                                    EventBus.getDefault().post(new ToastEvent(message));
+                                    showNoticeToast(message);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            });
-                }
+                            }
+                        });
             }
         }
     }
 
     private void showNoticeToast(String message) {
-        if (toast == null) {
-            View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_toast, null);
-            toastContent = (TextView) v.findViewById(R.id.content);
-            toast = new Toast(MainActivity.this);
-            toast.setView(v);
-            toast.setGravity(Gravity.TOP, 0, PtrLocalDisplay.dp2px(120));
-            toast.setDuration(3000);
+        try {
+            toastContent.setText(message);
+            toastView.setVisibility(View.VISIBLE);
+            toastView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                toastView.setVisibility(View.GONE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }, 3000);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        toastContent.setText(message);
-        toast.show();
     }
 }

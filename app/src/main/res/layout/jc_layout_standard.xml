@@ -180,6 +180,24 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/toast_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_top"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_black_round_bg"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:inAnimation="@anim/slide_in_top"
+        android:outAnimation="@anim/slide_out_top"
+        android:padding="5dp"
+        android:text="恭喜VIP4541554成功开通永久会员"
+        android:textColor="#FFFF00" />
+
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="@dimen/jc_start_button_w_h_normal"

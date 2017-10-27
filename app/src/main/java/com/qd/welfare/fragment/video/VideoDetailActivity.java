@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.VideoDetailInfo;
 import com.qd.welfare.entity.VideoInfo;
+import com.qd.welfare.event.ToastEvent;
 import com.qd.welfare.event.VideoOpenVipEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -63,6 +65,10 @@ public class VideoDetailActivity extends SwipeBackActivity {
     ListView listView;
     @BindView(R.id.status_layout)
     StatusViewLayout statusLayout;
+    @BindView(R.id.content)
+    TextView toastContent;
+    @BindView(R.id.toast_view)
+    LinearLayout toastView;
     Unbinder unbinder;
 
     private RatioImageView image;
@@ -141,9 +147,9 @@ public class VideoDetailActivity extends SwipeBackActivity {
     }
 
     private void bindHeaderView(final VideoDetailInfo info) {
-        if(info.getThumb().endsWith("gif")){
+        if (info.getThumb().endsWith("gif")) {
             Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).asGif().centerCrop().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(image);
-        }else{
+        } else {
             Glide.with(VideoDetailActivity.this).load(App.commonInfo.getFile_domain() + info.getThumb()).centerCrop().into(image);
         }
         if (App.userInfo != null && App.userInfo.getRole() > 1) {
@@ -338,6 +344,9 @@ public class VideoDetailActivity extends SwipeBackActivity {
         if (App.userInfo == null || App.userInfo.getRole() <= 1) {
             DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
         }
+        if (App.userInfo != null || App.userInfo.getRole() <= 1) {
+            DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
+        }
     }
 
     /**
@@ -352,5 +361,30 @@ public class VideoDetailActivity extends SwipeBackActivity {
 
             }
         });
+    }
+
+    @Subscribe
+    public void showNoticeToast(ToastEvent event) {
+        try {
+            toastContent.setText(event.message);
+            toastView.setVisibility(View.VISIBLE);
+            toastView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                toastView.setVisibility(View.GONE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }, 3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

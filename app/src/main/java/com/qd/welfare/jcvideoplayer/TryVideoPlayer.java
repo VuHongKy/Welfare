@@ -17,7 +17,9 @@ import com.lzy.okgo.model.Response;
 import com.qd.welfare.App;
 import com.qd.welfare.R;
 import com.qd.welfare.entity.DanmuInfo;
+import com.qd.welfare.event.ToastEvent;
 import com.qd.welfare.event.VideoOpenVipEvent;
+import com.qd.welfare.fragment.video.VideoDetailActivity;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
 import com.qd.welfare.http.callback.JsonCallback;
@@ -25,6 +27,7 @@ import com.qd.welfare.utils.ToastUtils;
 import com.zhl.cbdialog.CBDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -36,10 +39,12 @@ import java.util.List;
 public class TryVideoPlayer extends JCVideoPlayerStandard {
     public TryVideoPlayer(Context context) {
         super(context);
+        EventBus.getDefault().register(this);
     }
 
     public TryVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -241,9 +246,9 @@ public class TryVideoPlayer extends JCVideoPlayerStandard {
                                 switch (whichBtn) {
                                     case BUTTON_CONFIRM:
                                     case BUTTON_CANCEL:
+                                        EventBus.getDefault().post(new VideoOpenVipEvent());
                                         backPress();
                                         dialog.cancel();
-                                        EventBus.getDefault().post(new VideoOpenVipEvent());
                                         break;
                                     default:
                                         break;
@@ -265,4 +270,29 @@ public class TryVideoPlayer extends JCVideoPlayerStandard {
         progressBar.setProgress(progress / 20);
     }
 
+    @Subscribe
+    public void showNoticeToast(ToastEvent event) {
+        try {
+            toastContent.setText(event.message);
+            toastContent.setVisibility(View.VISIBLE);
+            toastContent.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (getContext() instanceof VideoDetailActivity)
+                        ((VideoDetailActivity) getContext()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    toastContent.setVisibility(View.GONE);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                }
+            }, 3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

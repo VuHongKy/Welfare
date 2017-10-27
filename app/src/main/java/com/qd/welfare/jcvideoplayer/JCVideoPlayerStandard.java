@@ -64,6 +64,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public PopupWindow clarityPopWindow;
     public DanMuHelper mDanMuHelper;
     public DanMuView danMuView;
+    public TextView toastContent;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
     protected Dialog mProgressDialog;
@@ -128,7 +129,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         video_current_time = (TextView) findViewById(R.id.video_current_time);
         retryTextView = (TextView) findViewById(R.id.retry_text);
         clarity = (TextView) findViewById(R.id.clarity);
-
+        toastContent = findViewById(R.id.toast_content);
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
