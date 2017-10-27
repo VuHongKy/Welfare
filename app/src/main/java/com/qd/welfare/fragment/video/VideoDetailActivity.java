@@ -296,11 +296,11 @@ public class VideoDetailActivity extends SwipeBackActivity {
                         try {
                             if (response.body().data.isPay_success()) {
                                 DialogUtil.showOpenVipSuccess(VideoDetailActivity.this);
-                                App.userInfo.setRole(response.body().data.getRole());
-                                EventBus.getDefault().post(new OpenVipSuccessEvent());
-                                if (App.userInfo.getRole() > 1) {
-                                    openVip.setVisibility(View.GONE);
-                                }
+//                                App.userInfo.setRole(response.body().data.getRole());
+//                                EventBus.getDefault().post(new OpenVipSuccessEvent());
+//                                if (App.userInfo.getRole() > 1) {
+//                                    openVip.setVisibility(View.GONE);
+//                                }
                             } else {
                                 ToastUtils.getInstance(VideoDetailActivity.this).showToast("如遇微信不能支付，请使用支付宝支付");
                             }
@@ -336,9 +336,6 @@ public class VideoDetailActivity extends SwipeBackActivity {
 
     @Subscribe
     public void onOpenVip(VideoOpenVipEvent event) {
-        if (App.userInfo != null && App.userInfo.getRole() <= 1) {
-            DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
-        }
         if (App.userInfo == null || App.userInfo.getRole() <= 1) {
             DialogUtil.showVipDialog(VideoDetailActivity.this, PageConfig.VIDEO_DETAIL_TRY, videoId);
         }

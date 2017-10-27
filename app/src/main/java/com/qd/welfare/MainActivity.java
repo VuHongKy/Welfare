@@ -201,8 +201,8 @@ public class MainActivity extends SupportActivity {
                         try {
                             if (response.body().data.isPay_success()) {
                                 DialogUtil.showOpenVipSuccess(MainActivity.this);
-                                App.userInfo.setRole(response.body().data.getRole());
-                                EventBus.getDefault().post(new OpenVipSuccessEvent());
+//                                App.userInfo.setRole(response.body().data.getRole());
+//                                EventBus.getDefault().post(new OpenVipSuccessEvent());
                             } else {
                                 ToastUtils.getInstance(MainActivity.this).showToast("请优先使用微信支付");
                         }

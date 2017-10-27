@@ -2,8 +2,10 @@ package com.qd.welfare.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.TextView;
 
+import com.qd.welfare.LauncherActivity;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.config.PageConfig;
@@ -86,6 +88,20 @@ public class DialogUtil {
                 .setConfirmButtonText("确定")
                 .setCancelButtonText("取消")
                 .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                    @Override
+                    public void onDialogbtnClick(Context context, Dialog dialog, int i) {
+                        try {
+                            Intent intent = new Intent(context, LauncherActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(intent);
+                            System.exit(0);
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            e.printStackTrace();
+                        }
+                    }
+                })
                 .create().show();
     }
 
