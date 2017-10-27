@@ -24,7 +24,6 @@ import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.PayResultInfo;
 import com.qd.welfare.entity.VideoDetailInfo;
 import com.qd.welfare.entity.VideoInfo;
-import com.qd.welfare.event.OpenVipSuccessEvent;
 import com.qd.welfare.event.VideoOpenVipEvent;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
