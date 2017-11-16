@@ -92,7 +92,7 @@ public class TheatreFragment extends BaseMainFragment implements VideoAdapter.On
     private long openVipTime;
     private long leaveTime = 0;
 
-    public static final long WAIT_TIME = 30 * 1000;
+    public static final long WAIT_TIME = 72 * 60 * 60 * 1000;
 
     public static TheatreFragment newInstance() {
         Bundle args = new Bundle();
