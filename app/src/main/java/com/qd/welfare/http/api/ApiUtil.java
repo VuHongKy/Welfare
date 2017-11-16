@@ -42,6 +42,8 @@ public class ApiUtil {
 
     public static final String VIDEO = "/video";
     public static final String VIDEO_TAG = "VIDEO_TAG";
+    public static final String VIDEO1 = "/video/video1";
+    public static final String VIDEO1_TAG = "VIDEO1_TAG";
 
     public static final String VIDEO_DETAIL = "/video/play";
     public static final String VIDEO_DETAIL_TAG = "VIDEO_DETAIL_TAG";
@@ -98,8 +100,9 @@ public class ApiUtil {
     public static final String GET_PAY_SUCCESS_INFO = "/user/open_vip";
     public static final String GET_PAY_SUCCESS_INFO_TAG = "GET_PAY_SUCCESS_INFO_TAG";
     //弹幕
-    public static final String DANMU="/video/danmu";
-    public static final String DANMU_TAG="DANMU_TAG";
+    public static final String DANMU = "/video/danmu";
+    public static final String DANMU_TAG = "DANMU_TAG";
+
     /**
      * Case By:创建参数基础信息
      * Author: scene on 2017/5/19 13:19

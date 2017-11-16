@@ -14,10 +14,11 @@ import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.event.TabSelectedEvent;
 import com.qd.welfare.fragment.actress.ActressFragment;
 import com.qd.welfare.fragment.category.CategoryNewFragment;
+import com.qd.welfare.fragment.mine.Mine2Fragment;
 import com.qd.welfare.fragment.mine.MineFragment;
 import com.qd.welfare.fragment.mine.ServiceCenterFragment;
 import com.qd.welfare.fragment.novel.NovelIndexNewFragment;
-import com.qd.welfare.fragment.shop.ShopFragment;
+import com.qd.welfare.fragment.theatre.TheatreFragment;
 import com.qd.welfare.fragment.video.VideoFragment;
 import com.qd.welfare.view.BottomBar;
 import com.qd.welfare.view.BottomBarTab;
@@ -56,6 +57,8 @@ public class MainFragment extends BaseFragment {
     BottomBar mBottomBar;
     @BindView(R.id.toolbarLayout)
     RelativeLayout toolbarLayout;
+    @BindView(R.id.toolbar_text)
+    TextView toolbarText;
 
     private SupportFragment[] mFragments = new SupportFragment[5];
     private List<String> tabNames = new ArrayList<>();
@@ -85,13 +88,21 @@ public class MainFragment extends BaseFragment {
         tabNames.add(getString(R.string.tab_name_category));
         tabNames.add(getString(R.string.tab_name_actress));
         tabNames.add(getString(R.string.tab_name_novel));
-        tabNames.add(getString(R.string.tab_name_mine));
+        if (App.userInfo.getRole() > 1) {
+            tabNames.add("剧场");
+        } else {
+            tabNames.add(getString(R.string.tab_name_mine));
+        }
         if (firstFragment == null) {
             mFragments[FIRST] = VideoFragment.newInstance();
             mFragments[SECOND] = CategoryNewFragment.newInstance();
             mFragments[THIRD] = ActressFragment.newInstance();
             mFragments[FOUR] = NovelIndexNewFragment.newInstance();
-            mFragments[FIVE] = MineFragment.newInstance();
+            if (App.userInfo.getRole() > 1) {
+                mFragments[FIVE] = TheatreFragment.newInstance();
+            } else {
+                mFragments[FIVE] = MineFragment.newInstance();
+            }
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
                     mFragments[FIRST],
@@ -105,7 +116,11 @@ public class MainFragment extends BaseFragment {
             mFragments[SECOND] = findChildFragment(CategoryNewFragment.class);
             mFragments[THIRD] = findChildFragment(ActressFragment.class);
             mFragments[FOUR] = findChildFragment(NovelIndexNewFragment.class);
-            mFragments[FIVE] = findChildFragment(MineFragment.class);
+            if (App.userInfo.getRole() > 1) {
+                mFragments[FIVE] = findChildFragment(TheatreFragment.class);
+            } else {
+                mFragments[FIVE] = findChildFragment(MineFragment.class);
+            }
         }
         try {
             toolbarTitle.setText(tabNames.get(0));
@@ -118,20 +133,27 @@ public class MainFragment extends BaseFragment {
     private void initView() {
         EventBus.getDefault().register(this);
 
-        mBottomBar
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_video_d, R.drawable.ic_tab_video_s, tabNames.get(FIRST)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_category_d, R.drawable.ic_tab_category_s, tabNames.get(SECOND)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_actress_d, R.drawable.ic_tab_actress_s, tabNames.get(THIRD)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_novel_d, R.drawable.ic_tab_novel_s, tabNames.get(FOUR)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_mine_d, R.drawable.ic_tab_mine_s, tabNames.get(FIVE)));
+        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_video_d, R.drawable.ic_tab_video_s, tabNames.get(FIRST)));
+        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_category_d, R.drawable.ic_tab_category_s, tabNames.get(SECOND)));
+        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_actress_d, R.drawable.ic_tab_actress_s, tabNames.get(THIRD)));
+        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_novel_d, R.drawable.ic_tab_novel_s, tabNames.get(FOUR)));
+        if (App.userInfo.getRole() > 1) {
+            mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tan_theatre_d, R.drawable.ic_tan_theatre_s, tabNames.get(FIVE)));
+        } else {
+            mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_tab_mine_d, R.drawable.ic_tab_mine_s, tabNames.get(FIVE)));
+        }
 
-
+        try {
+            toolbarText.setVisibility(App.userInfo.getRole() > 1 ? View.VISIBLE : View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
                 toolbarTitle.setText(tabNames.get(position));
-                toolbarLayout.setVisibility(position == 4 ? View.GONE : View.VISIBLE);
+                toolbarLayout.setVisibility(position == 4 && App.userInfo.getRole() <= 1 ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -155,8 +177,13 @@ public class MainFragment extends BaseFragment {
     }
 
     @OnClick(R.id.toolbar_mine)
-    public void onClickToolbarMine() {
+    public void onClickToolbarServiceCenter() {
         start(ServiceCenterFragment.newInstance());
+    }
+
+    @OnClick(R.id.toolbar_text)
+    public void onClickToolbarMine() {
+        start(Mine2Fragment.newInstance());
     }
 
     /**

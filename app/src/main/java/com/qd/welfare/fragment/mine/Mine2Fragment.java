@@ -22,7 +22,6 @@ import com.qd.welfare.base.BaseBackFragment;
 import com.qd.welfare.config.PageConfig;
 import com.qd.welfare.entity.VideoInfo;
 import com.qd.welfare.event.OpenVipSuccessEvent;
-import com.qd.welfare.event.StartBrotherEvent;
 import com.qd.welfare.fragment.video.VideoDetailActivity;
 import com.qd.welfare.http.api.ApiUtil;
 import com.qd.welfare.http.base.LzyResponse;
@@ -63,8 +62,6 @@ public class Mine2Fragment extends BaseBackFragment {
     LoadingDialog loadingDialog;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.back)
-    TextView back;
 
     public static Mine2Fragment newInstance() {
         Bundle args = new Bundle();
@@ -122,11 +119,6 @@ public class Mine2Fragment extends BaseBackFragment {
         }
     }
 
-    @OnClick(R.id.back)
-    public void onClickBack() {
-        onBackPressedSupport();
-    }
-
     private void getData() {
         HttpParams params = new HttpParams();
         params.put("video_id", 0);
@@ -170,7 +162,7 @@ public class Mine2Fragment extends BaseBackFragment {
 
     @OnClick(R.id.my_order)
     public void onClickMyOrder() {
-        EventBus.getDefault().post(new StartBrotherEvent(OrderFragment.newInstance()));
+        start(OrderFragment.newInstance());
     }
 
     @OnClick(R.id.openVip)
@@ -223,12 +215,12 @@ public class Mine2Fragment extends BaseBackFragment {
 
     @OnClick(R.id.service_center)
     public void onClickServiceCenter() {
-        EventBus.getDefault().post(new StartBrotherEvent(ServiceCenterFragment.newInstance()));
+        start(ServiceCenterFragment.newInstance());
     }
 
     @OnClick(R.id.ic_back)
     public void onClickTopBack() {
-        _mActivity.onBackPressed();
+       _mActivity.onBackPressed();
     }
 
     @Subscribe

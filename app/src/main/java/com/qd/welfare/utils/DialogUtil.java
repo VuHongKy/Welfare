@@ -1,5 +1,6 @@
 package com.qd.welfare.utils;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,14 @@ import com.qd.welfare.LauncherActivity;
 import com.qd.welfare.MainActivity;
 import com.qd.welfare.R;
 import com.qd.welfare.config.PageConfig;
+import com.qd.welfare.fragment.theatre.TheatreFragment;
 import com.qd.welfare.pay.OpenVipDialog;
 import com.qd.welfare.pay.YouhuiOpenVipDialog;
+import com.qd.welfare.widgets.OpenVipSuccessDialog;
 import com.zhl.cbdialog.CBDialogBuilder;
+
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * dialog相关
@@ -76,33 +82,61 @@ public class DialogUtil {
                 .create().show();
     }
 
-    public static void showOpenVipSuccess(Context context) {
+    public static void showOpenVipSuccess(final Activity activity) {
+        final long openVipTime = System.currentTimeMillis();
+        SharedPreferencesUtil.putLong(activity, "open_vip_time", openVipTime);
         cancelDialog();
-        CBDialogBuilder builder = new CBDialogBuilder(context);
-        TextView titleView = builder.getView(R.id.dialog_title);
-        titleView.setSingleLine(false);
-        builder.setTouchOutSideCancelable(false)
-                .showCancelButton(false)
-                .setTitle("恭喜你成功开通会员")
-                .setMessage("")
-                .setConfirmButtonText("确定")
-                .setCancelButtonText("取消")
-                .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
-                .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
-                    @Override
-                    public void onDialogbtnClick(Context context, Dialog dialog, int i) {
-                        try {
-                            Intent intent = new Intent(context, LauncherActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            context.startActivity(intent);
-                            System.exit(0);
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            e.printStackTrace();
+        final OpenVipSuccessDialog.Builder builder = new OpenVipSuccessDialog.Builder(activity);
+        builder.setOnClickButtonListener(new OpenVipSuccessDialog.OnClickButtonListener() {
+            @Override
+            public void onClickButton() {
+                Intent intent = new Intent(activity, LauncherActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                activity.startActivity(intent);
+                System.exit(0);
+            }
+        });
+        OpenVipSuccessDialog dialog = builder.create();
+        dialog.show();
+        try {
+            threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.SingleThread, 1);
+            scheduledFuture = threadPoolUtils.scheduleWithFixedDelay(new Runnable() {
+                @Override
+                public void run() {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                long leaveTime = TheatreFragment.WAIT_TIME - (System.currentTimeMillis() - openVipTime);
+                                builder.getCountDownView().setText(DateFormatUtils.getHours(leaveTime));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                })
-                .create().show();
+                    });
+                }
+            }, 1, 1, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    static ThreadPoolUtils threadPoolUtils;
+    static ScheduledFuture scheduledFuture;
+
+    private void cancelDownTimer() {
+        try {
+            if (scheduledFuture != null) {
+                scheduledFuture.cancel(true);
+            }
+            if (threadPoolUtils != null) {
+                threadPoolUtils.shutDownNow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static OpenVipDialog dialog;
