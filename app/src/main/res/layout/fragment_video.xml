@@ -4,25 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <wiki.scene.loadmore.StatusViewLayout
-        android:id="@+id/status_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <wiki.scene.loadmore.PtrClassicFrameLayout
-            android:id="@+id/ptr_layout"
+        <wiki.scene.loadmore.StatusViewLayout
+            android:id="@+id/status_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/listView"
+            <wiki.scene.loadmore.PtrClassicFrameLayout
+                android:id="@+id/ptr_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="#DADADA"
-                android:dividerHeight="0.5dp"
-                android:listSelector="@null" />
+                android:layout_height="match_parent">
 
-        </wiki.scene.loadmore.PtrClassicFrameLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#DADADA"
+                    android:dividerHeight="0.5dp"
+                    android:listSelector="@null" />
 
-    </wiki.scene.loadmore.StatusViewLayout>
+            </wiki.scene.loadmore.PtrClassicFrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#70000000"
+                android:gravity="center"
+                android:text="客服QQ：170059106"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </wiki.scene.loadmore.StatusViewLayout>
+    </RelativeLayout>
+
 </LinearLayout>

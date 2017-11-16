@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wiki.scene.loadmore.StatusViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/status_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,6 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tab" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab"
+            android:background="#70000000"
+            android:gravity="center"
+            android:text="客服QQ：170059106"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/pre_step"
